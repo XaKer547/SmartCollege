@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollegeManagementSystem.Domain", "CollegeManagementSystem.Domain\CollegeManagementSystem.Domain.csproj", "{9964DFB0-1A17-4168-A03E-571FDA9ADF28}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel", "SharedKernel\SharedKernel.csproj", "{7859F20B-28F3-425D-ADAF-A290CF2DF154}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollegeManagementSystem.Application", "CollegeManagementSystem.Application\CollegeManagementSystem.Application.csproj", "{7C2D1512-663B-4594-8663-1296CB0ADA5C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollegeManagementSystem.API", "CollegeManagementSystem.API\CollegeManagementSystem.API.csproj", "{18CC2748-03B8-4C58-9242-0BAB24D2FBD1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollegeManagementSystem.Infrastucture", "CollegeManagementSystem.Infrastucture\CollegeManagementSystem.Infrastucture.csproj", "{F4A45AAE-0221-47E7-BD02-A5F7CBF5C17E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartCollege.SSO", "SmartCollege.SSO\SmartCollege.SSO.csproj", "{AA7B723F-CD35-4F74-822A-C292DEEA3AC8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9964DFB0-1A17-4168-A03E-571FDA9ADF28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9964DFB0-1A17-4168-A03E-571FDA9ADF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9964DFB0-1A17-4168-A03E-571FDA9ADF28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9964DFB0-1A17-4168-A03E-571FDA9ADF28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7859F20B-28F3-425D-ADAF-A290CF2DF154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7859F20B-28F3-425D-ADAF-A290CF2DF154}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7859F20B-28F3-425D-ADAF-A290CF2DF154}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7859F20B-28F3-425D-ADAF-A290CF2DF154}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C2D1512-663B-4594-8663-1296CB0ADA5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C2D1512-663B-4594-8663-1296CB0ADA5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C2D1512-663B-4594-8663-1296CB0ADA5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C2D1512-663B-4594-8663-1296CB0ADA5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18CC2748-03B8-4C58-9242-0BAB24D2FBD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18CC2748-03B8-4C58-9242-0BAB24D2FBD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18CC2748-03B8-4C58-9242-0BAB24D2FBD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18CC2748-03B8-4C58-9242-0BAB24D2FBD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4A45AAE-0221-47E7-BD02-A5F7CBF5C17E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4A45AAE-0221-47E7-BD02-A5F7CBF5C17E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4A45AAE-0221-47E7-BD02-A5F7CBF5C17E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4A45AAE-0221-47E7-BD02-A5F7CBF5C17E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA7B723F-CD35-4F74-822A-C292DEEA3AC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA7B723F-CD35-4F74-822A-C292DEEA3AC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA7B723F-CD35-4F74-822A-C292DEEA3AC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA7B723F-CD35-4F74-822A-C292DEEA3AC8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54063696-2B37-459D-9796-03852246928A}
+	EndGlobalSection
+EndGlobal
