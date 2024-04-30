@@ -32,7 +32,6 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.User.RequireUniqueEmail = true;
 
     options.Lockout.AllowedForNewUsers = false;
-    options.Lockout.AllowedForNewUsers = false;
 
     options.User.AllowedUserNameCharacters += " ";
 
@@ -57,19 +56,6 @@ builder.Services.AddIdentityServer(options =>
    .AddInMemoryApiScopes(identitySettings.ApiScopes)
    .AddInMemoryClients(identitySettings.Clients)
    .AddInMemoryIdentityResources(identitySettings.IdentityResources)
-   .AddOperationalStore(options =>
-    {
-        options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
-            sql => sql.MigrationsAssembly(migrationsAssembly));
-
-        options.EnableTokenCleanup = true;
-        options.RemoveConsumedTokens = true;
-    })
-   .AddConfigurationStore(options =>
-   {
-       options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
-           sql => sql.MigrationsAssembly(migrationsAssembly));
-   })
    .AddAspNetIdentity<IdentityUser>()
    .AddTestUsers([
        new TestUser(){
