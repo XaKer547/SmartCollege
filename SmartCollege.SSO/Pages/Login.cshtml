@@ -1,0 +1,19 @@
+﻿@page
+@model SmartCollege.SSO.Pages.LoginModel
+@{
+}
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+    Html.HiddenFor(x => x.Input.RedirectUri);
+
+    <div>
+        @Html.LabelFor(x => x.Input.Email)
+        @Html.TextBoxFor(x => x.Input.Email)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Input.Password)
+        @Html.TextBoxFor(x => x.Input.Password)
+    </div>
+    <button>Войти</button>
+}

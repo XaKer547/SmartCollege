@@ -8,6 +8,7 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -51,6 +52,8 @@ builder.Services.AddIdentityServer(options =>
     options.Events.RaiseErrorEvents = true;
     options.Events.RaiseFailureEvents = true;
     options.Events.RaiseSuccessEvents = true;
+
+    options.UserInteraction.LoginUrl = "/login";
 })
    .AddInMemoryApiResources(identitySettings.ApiResources)
    .AddInMemoryApiScopes(identitySettings.ApiScopes)
@@ -58,7 +61,8 @@ builder.Services.AddIdentityServer(options =>
    .AddInMemoryIdentityResources(identitySettings.IdentityResources)
    .AddAspNetIdentity<IdentityUser>()
    .AddTestUsers([
-       new TestUser(){
+       new TestUser()
+       {
            SubjectId = "a9ea0f25-b964-409f-bcce-c923266249b4",
            Username = "MickMining",
            Password = "MickPassword",
@@ -77,6 +81,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
+
 app.UseHttpsRedirection();
 
 app.UseAntiforgery();
@@ -86,6 +92,6 @@ app.UseIdentityServer();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapRazorPages();
 
 app.Run();

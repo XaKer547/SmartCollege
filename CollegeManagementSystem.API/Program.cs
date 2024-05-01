@@ -1,17 +1,32 @@
-using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using static IdentityModel.OidcConstants;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMediatR(m => m.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultChallengeScheme = "oidc";
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddOpenIdConnect("oidc", options =>
     {
-        options.Authority = "https://localhost:7137/";
-        options.Audience = "CollegeManagementSystem.API";
+        options.Authority = "http://localhost:5213";
+        options.RequireHttpsMetadata = false;
+
+        options.ClientId = "CollegeManagementSystem.API";
+        options.ClientSecret = "4ccd8311a94ec24e7db7eaeb10521ffa2ba98df49503db2e1ea3a000beabbabe";
+
+        options.ResponseType = GrantTypes.ClientCredentials;
+
+        options.Scope.Clear();
+        options.Scope.Add("openid");
+
+        options.GetClaimsFromUserInfoEndpoint = true;
+        options.SaveTokens = true;
     });
 
 builder.Services.AddControllers();
@@ -50,16 +65,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-var client = new HttpClient();
-
-var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
-{
-    Address = "https://localhost:7137/connect/token",
-
-    ClientId = "CollegeManagementSystem.API",
-    ClientSecret = "GreatAPIBro",
-    Scope = "openid"
-});
 
 app.Run();
