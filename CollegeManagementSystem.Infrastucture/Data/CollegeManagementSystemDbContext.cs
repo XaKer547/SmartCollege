@@ -14,4 +14,7 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
     public DbSet<Student> Students { get; set; }
     public DbSet<Discipline> Disciplines { get; set; }
     public DbSet<Employee> Employees { get; set; }
+
+    //what about using automapper for domain entities and DAL 
+    //then domain entity -> domain POCO class
 }

@@ -3,12 +3,23 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SmartCollage.SSO;
 using SmartCollage.SSO.Data;
+using SmartCollege.SSO.Data.Entities;
+using SmartCollege.SSO.IdentityProfiles;
 using System.Reflection;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRazorPages();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder => builder
+        .WithOrigins("https://localhost:7137")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .SetIsOriginAllowed((host) => true));
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -28,7 +39,7 @@ builder.Services.AddDbContext<AuthorizationDbContext>(options =>
          sql => sql.MigrationsAssembly(migrationsAssembly));
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<AccountIdentity, IdentityRole>(options =>
 {
     options.User.RequireUniqueEmail = true;
 
@@ -59,7 +70,8 @@ builder.Services.AddIdentityServer(options =>
    .AddInMemoryApiScopes(identitySettings.ApiScopes)
    .AddInMemoryClients(identitySettings.Clients)
    .AddInMemoryIdentityResources(identitySettings.IdentityResources)
-   .AddAspNetIdentity<IdentityUser>()
+   .AddAspNetIdentity<AccountIdentity>()
+   .AddProfileService<AccountIdentityProfile>()
    .AddTestUsers([
        new TestUser()
        {
@@ -85,6 +97,8 @@ app.UseRouting();
 
 app.UseHttpsRedirection();
 
+app.UseCors();
+
 app.UseAntiforgery();
 app.UseAuthentication();
 
@@ -92,6 +106,7 @@ app.UseIdentityServer();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
+app.MapControllers()
+    .RequireCors();
 
 app.Run();

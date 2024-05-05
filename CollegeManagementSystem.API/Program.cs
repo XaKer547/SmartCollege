@@ -1,4 +1,6 @@
+using CollegeManagementSystem.API.ErrorHandling.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using static IdentityModel.OidcConstants;
@@ -6,6 +8,16 @@ using static IdentityModel.OidcConstants;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMediatR(m => m.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder => builder
+        .WithOrigins("https://localhost:7096")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .SetIsOriginAllowed((host) => true));
+});
 
 builder.Services.AddAuthentication(options =>
 {
@@ -15,15 +27,16 @@ builder.Services.AddAuthentication(options =>
     .AddOpenIdConnect("oidc", options =>
     {
         options.Authority = "http://localhost:5213";
+
         options.RequireHttpsMetadata = false;
 
         options.ClientId = "CollegeManagementSystem.API";
-        options.ClientSecret = "4ccd8311a94ec24e7db7eaeb10521ffa2ba98df49503db2e1ea3a000beabbabe";
+        options.ClientSecret = "Тёлка-тёлка, дай мне рэп! Твою жопу крутит Муз-ТВ!";
 
         options.ResponseType = GrantTypes.ClientCredentials;
 
         options.Scope.Clear();
-        options.Scope.Add("openid");
+        options.Scope.Add("fullaccess");
 
         options.GetClaimsFromUserInfoEndpoint = true;
         options.SaveTokens = true;
@@ -49,6 +62,11 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(xmlPath);
 });
 
+builder.Services.Configure<MvcOptions>(options =>
+{
+    options.Filters.Add<ExceptionMappingFilter>();
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -61,9 +79,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers()
+    .RequireCors();
 
 app.Run();
