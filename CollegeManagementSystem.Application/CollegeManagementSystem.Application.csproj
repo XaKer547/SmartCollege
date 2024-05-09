@@ -7,15 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CollegeManagementSystem.Domain\CollegeManagementSystem.Domain.csproj" />
-    <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
+    <PackageReference Include="MassTransit" Version="8.2.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EventHandlers\Employees\" />
-    <Folder Include="EventHandlers\Specializations\" />
-    <Folder Include="EventHandlers\Students\" />
-    <Folder Include="EventHandlers\Groups\" />
+    <ProjectReference Include="..\CollegeManagementSystem.Domain\CollegeManagementSystem.Domain.csproj" />
+    <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\SmartCollege.RabbitMQ.Contracts\SmartCollege.RabbitMQ.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

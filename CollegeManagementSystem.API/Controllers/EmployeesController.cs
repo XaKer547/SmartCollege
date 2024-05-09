@@ -1,6 +1,7 @@
 ﻿using CollegeManagementSystem.Application.Commands.Employees;
 using CollegeManagementSystem.Application.Queries.Employees;
 using CollegeManagementSystem.Domain.Employees;
+using CollegeManagementSystem.Domain.Posts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.DTOs.Employees;
@@ -49,6 +50,8 @@ public class EmployeesController(IMediator mediator) : ControllerBase
             FirstName = updateEmployee.FirstName,
             MiddleName = updateEmployee.MiddleName,
             LastName = updateEmployee.LastName,
+            Posts = updateEmployee.Posts.Select(p => new PostId(p))
+            .ToArray()
         };
 
         await mediator.Send(command);
@@ -62,7 +65,7 @@ public class EmployeesController(IMediator mediator) : ControllerBase
     /// <response code="200"></response>
     /// <response code="403">Пользователь не имеет доступ на получение списка сотрудников</response>
     [HttpGet]
-    [ProducesResponseType(200)] // add type
+    [ProducesResponseType(200, Type = typeof(IReadOnlyCollection<EmployeeDTO>))]
     [ProducesResponseType(403)]
     public async Task<IActionResult> GetEmployees()
     {
@@ -81,7 +84,7 @@ public class EmployeesController(IMediator mediator) : ControllerBase
     /// <response code="403">Пользователь не имеет доступ на получение сотрудника</response>
     /// <response code="404">сотрудник не найдена</response>
     [HttpGet("{employeeId}")]
-    [ProducesResponseType(200)] // add type
+    [ProducesResponseType(200, Type = typeof(EmployeeDTO))]
     [ProducesResponseType(403)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetEmployee(Guid employeeId)

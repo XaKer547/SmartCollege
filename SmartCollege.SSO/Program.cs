@@ -1,8 +1,8 @@
 using Duende.IdentityServer.Test;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SmartCollage.SSO;
-using SmartCollage.SSO.Data;
+using SmartCollege.SSO;
+using SmartCollege.SSO.Data;
 using SmartCollege.SSO.Data.Entities;
 using SmartCollege.SSO.IdentityProfiles;
 using System.Reflection;

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartCollege.SSO.Data.Entities;
 
-namespace SmartCollage.SSO.Data;
+namespace SmartCollege.SSO.Data;
 
 public class AuthorizationDbContext(DbContextOptions<AuthorizationDbContext> options) : IdentityDbContext<AccountIdentity>(options)
 {

@@ -1,6 +1,6 @@
 ﻿using Duende.IdentityServer.Models;
 
-namespace SmartCollage.SSO;
+namespace SmartCollege.SSO;
 
 public sealed record IdentityServerSettings
 {

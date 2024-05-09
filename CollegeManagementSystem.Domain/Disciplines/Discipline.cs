@@ -35,4 +35,16 @@ public sealed class Discipline : Entity
 
         AddEvent(disciplineDeletedEvent);
     }
+
+    public void Update(string name)
+    {
+        Name = name;
+
+        var disciplineUpdatedEvent = new DisciplineUpdatedEvent()
+        {
+            Discipline = this
+        };
+
+        AddEvent(disciplineUpdatedEvent);
+    }
 }

@@ -1,12 +1,18 @@
-﻿using CollegeManagementSystem.Application.Repositories.Disciplines;
+﻿using CollegeManagementSystem.Application.Commands.Disciplines;
+using CollegeManagementSystem.Domain.Services;
 using MediatR;
 
-namespace CollegeManagementSystem.Application.Commands.Disciplines;
+namespace CollegeManagementSystem.Application.CommandHandlers.Disciplines;
 
-public class DeleteDisciplineCommandHandler(IDisciplineWriteOnlyRepository repository) : IRequestHandler<DeleteDisciplineCommand>
+public class DeleteDisciplineCommandHandler(ICollegeManagementSystemRepository repository) : IRequestHandler<DeleteDisciplineCommand>
 {
-    public async Task Handle(DeleteDisciplineCommand request, CancellationToken cancellationToken)
+    private readonly ICollegeManagementSystemRepository _repository = repository;
+    public Task Handle(DeleteDisciplineCommand request, CancellationToken cancellationToken)
     {
-        await repository.DeleteAsync(request.DisciplineId, cancellationToken);
+        var discipline = _repository.Disciplines.SingleOrDefault(d => d.Id == request.DisciplineId);
+
+        discipline.Delete();
+
+        return Task.CompletedTask;
     }
 }
