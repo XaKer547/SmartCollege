@@ -1,4 +1,5 @@
 using CollegeManagementSystem.API.ErrorHandling.Filters;
+using FluentValidation;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,11 @@ using static IdentityModel.OidcConstants;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMediatR(m => m.RegisterServicesFromAssembly(typeof(Program).Assembly));
+var assembly = typeof(Program).Assembly;
+
+builder.Services.AddMediatR(m => m.RegisterServicesFromAssembly(assembly));
+
+builder.Services.AddValidatorsFromAssembly(assembly);
 
 builder.Services.AddMassTransit(options =>
 {

@@ -11,7 +11,7 @@ public sealed class CreateStudentCommandHandler(IGroupReadOnlyRepository reposit
     {
         var group = await repository.GetGroupAsync(request.GroupId);
 
-        var student = Student.Create(request.Firstname, request.Middleame, request.LastName, group);
+        var student = Student.Create(request.FirstName, request.MiddleName, request.LastName, group);
 
         return student.Id;
     }

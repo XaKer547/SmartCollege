@@ -8,6 +8,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="11.9.1" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.1" />
 		<PackageReference Include="IdentityModel" Version="7.0.0" />
 		<PackageReference Include="MassTransit" Version="8.2.2" />
 		<PackageReference Include="MassTransit.RabbitMQ" Version="8.2.2" />
@@ -21,6 +23,12 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\CollegeManagementSystem.Application\CollegeManagementSystem.Application.csproj" />
+	  <ProjectReference Include="..\CollegeManagementSystem.Infrastucture\CollegeManagementSystem.Infrastucture.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Validators\Students\" />
+	  <Folder Include="Validators\Specializations\" />
 	</ItemGroup>
 
 </Project>

@@ -3,10 +3,9 @@ using SharedKernel;
 
 namespace CollegeManagementSystem.Domain.Specializations;
 
-public sealed class Specialization : Entity
+public sealed class Specialization : Entity<SpecializationId>
 {
     private Specialization() { }
-    public SpecializationId Id { get; init; }
     public string Name { get; private set; }
 
     public static Specialization Create(string name)

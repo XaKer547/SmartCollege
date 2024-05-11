@@ -6,7 +6,6 @@ using CollegeManagementSystem.Domain.Services;
 using CollegeManagementSystem.Domain.Specializations;
 using CollegeManagementSystem.Domain.Students;
 using Microsoft.EntityFrameworkCore;
-using SharedKernel;
 
 namespace CollegeManagementSystem.Infrastucture.Data;
 
@@ -19,17 +18,17 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
     public IQueryable<Employee> Employees => Set<Employee>();
     public IQueryable<Post> Posts => Set<Post>();
 
-    public void AddEntity<TEntity>(TEntity entity) where TEntity : Entity
+    public void AddEntity<TEntity>(TEntity entity) where TEntity : class
     {
         Add(entity);
     }
 
-    public void UpdateEntity<TEntity>(TEntity entity) where TEntity : Entity
+    public void UpdateEntity<TEntity>(TEntity entity) where TEntity : class
     {
         Update(entity);
     }
 
-    public void DeleteEntity<TEntity>(TEntity entity) where TEntity : Entity
+    public void DeleteEntity<TEntity>(TEntity entity) where TEntity : class
     {
         UpdateEntity(entity);
     }

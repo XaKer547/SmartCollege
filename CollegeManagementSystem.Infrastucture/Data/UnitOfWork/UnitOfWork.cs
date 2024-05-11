@@ -12,7 +12,7 @@ public sealed class UnitOfWork(CollegeManagementSystemDbContext context, IDomain
         if (cancellationToken.IsCancellationRequested)
             return;
 
-        var domainEventEntities = _context.ChangeTracker.Entries<Entity>()
+        var domainEventEntities = _context.ChangeTracker.Entries < Entity<EntityId>()
             .Select(e => e.Entity)
             .Where(e => e.ContainsEvents())
             .ToArray();

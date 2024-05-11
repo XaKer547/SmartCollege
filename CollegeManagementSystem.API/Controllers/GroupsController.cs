@@ -113,8 +113,8 @@ public class GroupsController(IMediator mediator) : ControllerBase
         var command = new CreateStudentCommand()
         {
             GroupId = new GroupId(groupId),
-            Firstname = createStudent.Firstname,
-            Middleame = createStudent.Middlename,
+            FirstName = createStudent.Firstname,
+            MiddleName = createStudent.Middlename,
             LastName = createStudent.Lastname,
         };
 

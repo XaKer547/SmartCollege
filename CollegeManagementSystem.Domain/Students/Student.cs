@@ -5,19 +5,19 @@ using SharedKernel;
 
 namespace CollegeManagementSystem.Domain.Students;
 
-public sealed class Student : Entity
+public sealed class Student : Entity<StudentId>
 {
     private Student()
     {
         Id = new StudentId();
     }
 
-    public StudentId Id { get; private set; }
     public string Firstname { get; private set; }
     public string Middlename { get; private set; }
     public string Lastname { get; private set; }
     public bool Graduated { get; private set; }
     public Group Group { get; private set; }
+    public string Email { get; private set; }
 
     public static Student Create(string firstName, string middlename, string lastName, Group group)
     {

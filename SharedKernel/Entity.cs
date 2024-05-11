@@ -2,8 +2,10 @@
 
 namespace SharedKernel;
 
-public abstract class Entity
+public abstract class Entity<TEntityId>
+    where TEntityId : EntityId
 {
+    public TEntityId Id { get; protected set; }
     public bool Deleted { get; protected set; }
 
     private readonly List<IDomainEvent> _events = [];

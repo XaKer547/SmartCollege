@@ -17,7 +17,7 @@ public interface ICollegeManagementSystemRepository
     public IQueryable<Employee> Employees { get; }
     public IQueryable<Post> Posts { get; }
 
-    public void AddEntity<TEntity>(TEntity entity) where TEntity : Entity;
-    public void UpdateEntity<TEntity>(TEntity entity) where TEntity : Entity;
-    public void DeleteEntity<TEntityId>(TEntityId entity) where TEntityId : EntityId;
+    public void AddEntity<TEntity>(TEntity entity) where TEntity : class;
+    public void UpdateEntity<TEntity>(TEntity entity) where TEntity : class;
+    public void DeleteEntity<TEntityId>(TEntityId entity) where TEntityId : class;
 }

@@ -4,10 +4,9 @@ using SharedKernel;
 
 namespace CollegeManagementSystem.Domain.Groups;
 
-public sealed class Group : Entity
+public sealed class Group : Entity<GroupId>
 {
     private Group() { }
-    public GroupId Id { get; set; }
     public string Name { get; private set; }
     public Specialization Specialization { get; private set; }
 

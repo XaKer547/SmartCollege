@@ -1,7 +1,8 @@
-﻿namespace CollegeManagementSystem.Domain.Posts;
+﻿using SharedKernel;
 
-public sealed class Post
+namespace CollegeManagementSystem.Domain.Posts;
+
+public sealed class Post : Entity<PostId>
 {
-    public PostId Id { get; init; }
     public string Name { get; private set; }
 }

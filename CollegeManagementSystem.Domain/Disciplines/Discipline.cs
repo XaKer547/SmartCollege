@@ -3,11 +3,9 @@ using SharedKernel;
 
 namespace CollegeManagementSystem.Domain.Disciplines;
 
-public sealed class Discipline : Entity
+public sealed class Discipline : Entity<DisciplineId>
 {
     private Discipline() { }
-
-    public DisciplineId Id { get; private set; }
     public string Name { get; private set; }
 
     public static Discipline Create(string name)
