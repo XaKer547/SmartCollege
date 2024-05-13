@@ -3,7 +3,7 @@
 namespace SharedKernel;
 
 public abstract class Entity<TEntityId>
-    where TEntityId : EntityId
+    where TEntityId : class
 {
     public TEntityId Id { get; protected set; }
     public bool Deleted { get; protected set; }
