@@ -12,7 +12,6 @@ public sealed record IdentityServerSettings
     public IReadOnlyCollection<IdentityResource> IdentityResources =>
         [
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-                new IdentityResource("verify", ["verified"])
+                new IdentityResources.Profile()
         ];
 }

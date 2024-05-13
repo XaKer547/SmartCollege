@@ -4,11 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using SmartCollege.SSO;
 using SmartCollege.SSO.Data;
 using SmartCollege.SSO.Data.Entities;
-using SmartCollege.SSO.IdentityProfiles;
+using SmartCollege.SSO.Validators;
 using System.Reflection;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMediatR(x=> x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 builder.Services.AddCors(options =>
 {
@@ -45,8 +47,6 @@ builder.Services.AddIdentity<AccountIdentity, IdentityRole>(options =>
 
     options.Lockout.AllowedForNewUsers = false;
 
-    options.User.AllowedUserNameCharacters += " ";
-
     options.Password.RequiredLength = 6;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
@@ -63,15 +63,13 @@ builder.Services.AddIdentityServer(options =>
     options.Events.RaiseErrorEvents = true;
     options.Events.RaiseFailureEvents = true;
     options.Events.RaiseSuccessEvents = true;
-
-    options.UserInteraction.LoginUrl = "/login";
 })
    .AddInMemoryApiResources(identitySettings.ApiResources)
    .AddInMemoryApiScopes(identitySettings.ApiScopes)
    .AddInMemoryClients(identitySettings.Clients)
    .AddInMemoryIdentityResources(identitySettings.IdentityResources)
    .AddAspNetIdentity<AccountIdentity>()
-   .AddProfileService<AccountIdentityProfile>()
+   .AddResourceOwnerValidator<AccountOwnerPasswordValidator>()
    .AddTestUsers([
        new TestUser()
        {
