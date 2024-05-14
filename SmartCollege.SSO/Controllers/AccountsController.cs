@@ -17,14 +17,26 @@ public class AccountsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> LogUp(LogupDto logup)
+    public async Task<IActionResult> Logup(LogupDto logup)
     {
         var result = await _mediator.Send(new CreateAccountCommand(logup.Email, logup.Password, logup.Role));
 
-        return StatusCode(result.StatusCode, 
+        return StatusCode(result.StatusCode,
             new
             {
                 result.Description
             });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdatePassword(UpdatePasswordCommand command)
+    {
+        var result = await _mediator.Send(command);
+
+        return StatusCode(result.StatusCode,
+        new
+        {
+            result.Description
+        });
     }
 }
