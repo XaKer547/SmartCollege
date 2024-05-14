@@ -10,7 +10,6 @@ using SmartCollege.SSO.Data.Entities;
 using SmartCollege.SSO.Models;
 using SmartCollege.SSO.Models.Commands;
 using SmartCollege.SSO.Validators;
-using System;
 using System.Reflection;
 using System.Security.Claims;
 
@@ -23,16 +22,15 @@ builder.Services.AddScoped<IValidator<UpdatePasswordCommand>, UpdatePasswordComm
 
 builder.Services.AddMassTransit(x =>
 {
-    x.AddConsumersFromNamespaceContaining<Program>();
+    x.AddConsumers(typeof(Program).Assembly);
 
     x.UsingRabbitMq((context, conf) =>
     {
-        conf.Host("localhost", "/", c =>
+        conf.Host("localhost", 15671, "/", c =>
         {
             c.Username("guest");
             c.Password("guest");
         });
-
         conf.ConfigureEndpoints(context);
     });
 });
@@ -56,14 +54,15 @@ builder.Services.AddAntiforgery();
 var identitySettings = builder.Configuration.GetRequiredSection(nameof(IdentityServerSettings))
                                             .Get<IdentityServerSettings>()!;
 
-var connectionString = builder.Configuration.GetConnectionString("LocalConnection");
-
 var migrationsAssembly = Assembly.GetExecutingAssembly().GetName().Name;
 
 builder.Services.AddDbContext<AuthorizationDbContext>(options =>
 {
-    options.UseSqlServer(connectionString,
-         sql => sql.MigrationsAssembly(migrationsAssembly));
+    options.UseInMemoryDatabase("Test");
+    //var connectionString = builder.Configuration.GetConnectionString("LocalConnection");
+
+    //options.UseSqlServer(connectionString,
+    //     sql => sql.MigrationsAssembly(migrationsAssembly));
 });
 
 builder.Services.AddIdentity<AccountIdentity, IdentityRole>(options =>

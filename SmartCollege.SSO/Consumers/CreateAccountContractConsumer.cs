@@ -21,6 +21,7 @@ namespace SmartCollege.SSO.Consumers
             var account = new AccountIdentity
             {
                 Email = message.Email,
+                UserName = message.Email,
                 ChangeTempPassword = false,
                 EmailConfirmed = true,
             };

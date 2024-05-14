@@ -21,18 +21,22 @@ namespace SmartCollege.SSO.Handlers.Commands
         public async Task<HandleResult> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if(user is not null)
+            if (user is not null)
                 return HandleResult.Failure(StatusCodes.Status409Conflict, "Email уже занят!");
 
             try
             {
                 var result = await _userManager.CreateAsync(new AccountIdentity
                 {
-                    Email = request.Email
+                    Email = request.Email,
+                    UserName = request.Email,
+                    EmailConfirmed = false,
+                    ChangeTempPassword = true
                 }, request.Password);
 
-                if(!result.Succeeded)
-                    return HandleResult.Failure(StatusCodes.Status400BadRequest, string.Concat(',', result.Errors));
+                if (!result.Succeeded)
+                    return HandleResult.Failure(StatusCodes.Status400BadRequest, string.Concat(',', result.Errors
+                        .Select(x => x.Description)));
 
                 return HandleResult.Success(StatusCodes.Status201Created, "Пользователь успешно создан!");
             }
