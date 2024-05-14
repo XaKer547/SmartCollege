@@ -1,4 +1,4 @@
-﻿namespace SmartCollege.RabbitMQ.Contracts.User;
+﻿namespace SmartCollege.RabbitMQ.Contracts.Users;
 
 public interface IUserDeleted
 {

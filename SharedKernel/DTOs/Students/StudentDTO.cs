@@ -6,6 +6,5 @@ public sealed record StudentDTO
     public string FirstName { get; init; }
     public string MiddleName { get; init; }
     public string LastName { get; init; }
-    public string GroupName { get; init; }
     public bool Graduated { get; init; }
 }
