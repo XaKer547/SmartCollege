@@ -1,6 +1,7 @@
 ﻿using CollegeManagementSystem.Application.Commands.Groups;
 using CollegeManagementSystem.Application.Commands.Students;
 using CollegeManagementSystem.Application.Queries.Groups;
+using CollegeManagementSystem.Application.Queries.Students;
 using CollegeManagementSystem.Domain.Groups;
 using CollegeManagementSystem.Domain.Specializations;
 using MediatR;

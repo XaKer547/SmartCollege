@@ -1,15 +1,20 @@
 ﻿using CollegeManagementSystem.Application.Commands.Disciplines;
 using CollegeManagementSystem.Domain.Disciplines;
+using FluentValidation;
 using MediatR;
 
 namespace CollegeManagementSystem.Application.CommandHandlers.Disciplines;
 
-public class CreateDisciplineCommandHandler : IRequestHandler<CreateDisciplineCommand, DisciplineId>
+public class CreateDisciplineCommandHandler(IValidator<CreateDisciplineCommand> validator) : IRequestHandler<CreateDisciplineCommand, DisciplineId>
 {
-    public Task<DisciplineId> Handle(CreateDisciplineCommand request, CancellationToken cancellationToken)
+    private readonly IValidator<CreateDisciplineCommand> validator = validator;
+
+    public async Task<DisciplineId> Handle(CreateDisciplineCommand request, CancellationToken cancellationToken)
     {
+        await validator.ValidateAndThrowAsync(request, cancellationToken);
+
         var dicipline = Discipline.Create(request.Name);
 
-        return Task.FromResult(dicipline.Id);
+        return dicipline.Id;
     }
 }
