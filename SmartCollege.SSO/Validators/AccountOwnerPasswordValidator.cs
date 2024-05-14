@@ -36,6 +36,7 @@ namespace SmartCollege.SSO.Validators
                     context.Result = new GrantValidationResult(
                         subject: user.Id.ToString(),
                         authenticationMethod: AuthenticationMethods.Password,
+                        DateTime.Now.AddMinutes(5),
                         claims: claims
                     );
                     return;
