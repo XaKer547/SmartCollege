@@ -1,9 +1,9 @@
 ﻿using ProjectManagementSystem.Domain.Disciplines;
+using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Projects.Events;
 using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.ProjectTypes;
 using SharedKernel;
-using System.Text.RegularExpressions;
 
 namespace ProjectManagementSystem.Domain.Projects;
 
@@ -20,14 +20,15 @@ public sealed class Project : Entity<ProjectId>
     public bool Completed { get; private set; }
     public List<ProjectStage> Stages { get; private set; }
 
-    public static Project Create(string name, string subjectArea, ProjectType type, Discipline discipline)
+    public static Project Create(string name, string subjectArea, ProjectType type, Discipline discipline, Group group)
     {
         var project = new Project()
         {
             Name = name,
             SubjectArea = subjectArea,
             Type = type,
-            Discipline = discipline
+            Discipline = discipline,
+            Group = group
         };
 
         var projectCreatedEvent = new ProjectCreatedEvent()
@@ -39,12 +40,13 @@ public sealed class Project : Entity<ProjectId>
 
         return project;
     }
-    public void Update(string name, string subjectArea, ProjectType type, Discipline discipline)
+    public void Update(string name, string subjectArea, ProjectType type, Discipline discipline, Group group)
     {
         Name = name;
         SubjectArea = subjectArea;
         Type = type;
         Discipline = discipline;
+        Group = group;
     }
     public void Delete()
     {

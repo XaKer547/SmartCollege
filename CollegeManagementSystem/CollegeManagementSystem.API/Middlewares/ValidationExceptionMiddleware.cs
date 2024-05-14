@@ -1,13 +1,13 @@
 ﻿using CollegeManagementSystem.API.Validators.Exceptions;
-using MassTransit.Internals;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CollegeManagementSystem.API.Middlewares;
 
-public sealed class ValidationExceptionHandlingMiddleware(RequestDelegate next, ILogger logger)
+public sealed class ValidationExceptionHandlingMiddleware(RequestDelegate next,
+    ILogger<ValidationExceptionHandlingMiddleware> logger)
 {
     private readonly RequestDelegate next;
-    private readonly ILogger logger = logger;
+    private readonly ILogger<ValidationExceptionHandlingMiddleware> logger = logger;
 
     public async Task InvokeAsync(HttpContext context)
     {
