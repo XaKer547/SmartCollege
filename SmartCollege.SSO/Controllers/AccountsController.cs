@@ -19,6 +19,9 @@ public class AccountsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Logup(LogupDto logup)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
+
         var result = await _mediator.Send(new CreateAccountCommand(logup.Email, logup.Password, logup.Role));
 
         return StatusCode(result.StatusCode,
@@ -31,6 +34,9 @@ public class AccountsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> UpdatePassword(UpdatePasswordCommand command)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
+
         var result = await _mediator.Send(command);
 
         return StatusCode(result.StatusCode,

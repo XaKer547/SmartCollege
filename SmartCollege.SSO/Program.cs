@@ -1,16 +1,41 @@
 using Duende.IdentityServer.Test;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SmartCollege.SSO;
 using SmartCollege.SSO.Data;
 using SmartCollege.SSO.Data.Entities;
+using SmartCollege.SSO.Models;
+using SmartCollege.SSO.Models.Commands;
 using SmartCollege.SSO.Validators;
+using System;
 using System.Reflection;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMediatR(x=> x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddScoped<IValidator<LogupDto>, CreateAccountCommandValidator>();
+builder.Services.AddScoped<IValidator<UpdatePasswordCommand>, UpdatePasswordCommandValidator>();
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumersFromNamespaceContaining<Program>();
+
+    x.UsingRabbitMq((context, conf) =>
+    {
+        conf.Host("localhost", "/", c =>
+        {
+            c.Username("guest");
+            c.Password("guest");
+        });
+
+        conf.ConfigureEndpoints(context);
+    });
+});
 
 builder.Services.AddCors(options =>
 {

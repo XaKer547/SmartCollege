@@ -13,6 +13,8 @@
     <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.4" />
     <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.4" />
     <PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="7.0.4" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.2" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
@@ -32,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SmartCollege.RabbitMQ.Contracts\SmartCollege.RabbitMQ.Contracts.csproj" />
     <ProjectReference Include="..\SmartCollege.SSO.Shared\SmartCollege.SSO.Shared.csproj" />
   </ItemGroup>
 

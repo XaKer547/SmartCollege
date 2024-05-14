@@ -20,7 +20,7 @@ namespace SmartCollege.SSO.Validators
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
             var result = await _signInManager.PasswordSignInAsync(context.UserName, context.Password, true, false);
-            if (result.Succeeded)
+            if (result.Succeeded && !result.IsLockedOut)
             {
                 var user = await _userManager.FindByEmailAsync(context.UserName);
                 if (user != null)
