@@ -1,0 +1,2 @@
+﻿namespace CollegeManagementSystem.Domain.Exceptions;
+
