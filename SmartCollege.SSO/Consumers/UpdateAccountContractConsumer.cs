@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Identity;
-using SmartCollege.RabbitMQ.Contracts.User;
+using SmartCollege.RabbitMQ.Contracts.Users;
 using SmartCollege.SSO.Data.Entities;
 
 namespace SmartCollege.SSO.Consumers

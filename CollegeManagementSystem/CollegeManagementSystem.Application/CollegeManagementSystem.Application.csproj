@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\SharedKernel\SharedKernel.csproj" />
     <ProjectReference Include="..\..\SmartCollege.RabbitMQ.Contracts\SmartCollege.RabbitMQ.Contracts.csproj" />
+    <ProjectReference Include="..\..\SmartCollege.SSO.Shared\SmartCollege.SSO.Shared.csproj" />
     <ProjectReference Include="..\CollegeManagementSystem.Domain\CollegeManagementSystem.Domain.csproj" />
   </ItemGroup>
 

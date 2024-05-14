@@ -9,6 +9,7 @@ using FluentValidation;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SharedKernel;
 using System.Globalization;
@@ -32,7 +33,14 @@ builder.Services.AddValidatorsFromAssembly(assembly);
 
 builder.Services.AddMassTransit(options =>
 {
-    options.UsingRabbitMq();
+    options.UsingRabbitMq((context, conf) =>
+    {
+        conf.Host("localhost", 5672, "/", c =>
+        {
+            c.Username("guest");
+            c.Password("guest");
+        });
+    });
 });
 
 builder.Services.AddCors(options =>
@@ -70,7 +78,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddDbContext<CollegeManagementSystemDbContext>(options =>
 {
-
+    options.UseInMemoryDatabase("TestT");
 });
 
 builder.Services.AddScoped<ICollegeManagementSystemRepository, CollegeManagementSystemDbContext>();

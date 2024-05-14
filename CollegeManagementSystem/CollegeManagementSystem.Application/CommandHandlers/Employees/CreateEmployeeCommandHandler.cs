@@ -4,6 +4,7 @@ using CollegeManagementSystem.Domain.Posts;
 using CollegeManagementSystem.Domain.Services;
 using FluentValidation;
 using MediatR;
+using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Application.CommandHandlers.Employees;
 
@@ -16,9 +17,9 @@ public sealed class CreateEmployeeCommandHandler(ICollegeManagementSystemReposit
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        Post[] posts = [.. repository.Posts.Where(p => request.Posts.Contains(p.Id))];
+        //Post[] posts = [.. repository.Posts.Where(p => request.Posts.Contains(p.Id))];
 
-        var employee = Employee.Create(request.FirstName, request.MiddleName, request.LastName, posts, request.Email);
+        var employee = Employee.Create(request.FirstName, request.MiddleName, request.LastName, Array.Empty<Post>(), request.Email);
 
         return employee.Id;
     }

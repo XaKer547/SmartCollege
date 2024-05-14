@@ -1,4 +1,5 @@
 ﻿using CollegeManagementSystem.Application.Commands.Specializations;
+using CollegeManagementSystem.Application.Queries.Specializations;
 using CollegeManagementSystem.Application.QueryHandlers.Specializations;
 using CollegeManagementSystem.Domain.Specializations;
 using MediatR;
