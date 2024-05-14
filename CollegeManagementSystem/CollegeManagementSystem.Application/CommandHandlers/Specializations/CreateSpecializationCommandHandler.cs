@@ -6,11 +6,11 @@ namespace CollegeManagementSystem.Application.CommandHandlers.Specializations
 {
     public sealed class CreateSpecializationCommandHandler : IRequestHandler<CreateSpecializationCommand, SpecializationId>
     {
-        public async Task<SpecializationId> Handle(CreateSpecializationCommand request, CancellationToken cancellationToken)
+        public Task<SpecializationId> Handle(CreateSpecializationCommand request, CancellationToken cancellationToken)
         {
             var specialization = Specialization.Create(request.Name);
 
-            return specialization.Id;
+            return Task.FromResult(specialization.Id);
         }
     }
 }

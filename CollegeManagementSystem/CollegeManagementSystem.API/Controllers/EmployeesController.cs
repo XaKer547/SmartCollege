@@ -71,9 +71,9 @@ public class EmployeesController(IMediator mediator) : ControllerBase
     {
         var query = new GetEmployeesQuery();
 
-        await mediator.Send(query);
+        var employees = await mediator.Send(query);
 
-        return Ok();
+        return Ok(employees);
     }
 
     /// <summary>
@@ -94,9 +94,9 @@ public class EmployeesController(IMediator mediator) : ControllerBase
             EmployeeId = new EmployeeId(employeeId)
         };
 
-        await mediator.Send(query);
+        var employee = await mediator.Send(query);
 
-        return Ok();
+        return Ok(employee);
     }
 
     /// <summary>

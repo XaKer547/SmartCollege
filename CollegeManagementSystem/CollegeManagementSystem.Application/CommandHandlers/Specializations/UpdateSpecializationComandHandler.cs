@@ -1,17 +1,21 @@
 ﻿using CollegeManagementSystem.Application.Commands.Specializations;
 using CollegeManagementSystem.Domain.Services;
+using FluentValidation;
 using MediatR;
 
 namespace CollegeManagementSystem.Application.CommandHandlers.Specializations;
 
-public sealed class UpdateSpecializationComandHandler(ICollegeManagementSystemRepository repository) : IRequestHandler<UpdateSpecializationCommand>
+public sealed class UpdateSpecializationComandHandler(ICollegeManagementSystemRepository repository, IValidator<UpdateSpecializationCommand> validator) : IRequestHandler<UpdateSpecializationCommand>
 {
-    public Task Handle(UpdateSpecializationCommand request, CancellationToken cancellationToken)
+    private readonly ICollegeManagementSystemRepository repository = repository;
+    private readonly IValidator<UpdateSpecializationCommand> validator = validator;
+
+    public async Task Handle(UpdateSpecializationCommand request, CancellationToken cancellationToken)
     {
-        var specialization = repository.Specializations.SingleOrDefault(s => s.Id == request.SpecializationId);
+        await validator.ValidateAndThrowAsync(request, cancellationToken);
+
+        var specialization = repository.Specializations.Single(s => s.Id == request.SpecializationId);
 
         specialization.Update(request.Name);
-
-        return Task.CompletedTask;
     }
 }

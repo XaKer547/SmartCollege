@@ -134,7 +134,7 @@ public class GroupsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(403)]
     public async Task<IActionResult> GetGroupStudents(Guid groupId)
     {
-        var query = new GetGroupStudentsQuery()
+        var query = new GetStudentsQuery()
         {
             GroupId = new GroupId(groupId)
         };

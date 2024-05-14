@@ -1,5 +1,4 @@
-﻿using CollegeManagementSystem.Domain.Disciplines;
-using CollegeManagementSystem.Domain.Disciplines.Events;
+﻿using CollegeManagementSystem.Domain.Disciplines.Events;
 using CollegeManagementSystem.Domain.Services;
 using MassTransit;
 using MediatR;

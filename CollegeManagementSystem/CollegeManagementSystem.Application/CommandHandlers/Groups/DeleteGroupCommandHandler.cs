@@ -1,17 +1,21 @@
 ﻿using CollegeManagementSystem.Application.Commands.Groups;
 using CollegeManagementSystem.Domain.Services;
+using FluentValidation;
 using MediatR;
 
 namespace CollegeManagementSystem.Application.CommandHandlers.Groups;
 
-public sealed class DeleteGroupCommandHandler(ICollegeManagementSystemRepository repository) : IRequestHandler<DeleteGroupCommand>
+public sealed class DeleteGroupCommandHandler(ICollegeManagementSystemRepository repository, IValidator<DeleteGroupCommand> validator) : IRequestHandler<DeleteGroupCommand>
 {
-    public Task Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
+    private readonly ICollegeManagementSystemRepository repository = repository;
+    private readonly IValidator<DeleteGroupCommand> validator = validator;
+
+    public async Task Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
     {
-        var group = repository.Groups.SingleOrDefault(g => g.Id == request.GroupId);
+        await validator.ValidateAndThrowAsync(request, cancellationToken);
+
+        var group = repository.Groups.Single(g => g.Id == request.GroupId);
 
         group.Delete();
-
-        return Task.CompletedTask;
     }
 }

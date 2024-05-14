@@ -1,18 +1,24 @@
 ﻿using CollegeManagementSystem.Application.Commands.Groups;
 using CollegeManagementSystem.Domain.Groups;
 using CollegeManagementSystem.Domain.Services;
+using FluentValidation;
 using MediatR;
 
 namespace CollegeManagementSystem.Application.CommandHandlers.Groups;
 
-public sealed class CreateGroupCommandHandler(ICollegeManagementSystemRepository repository) : IRequestHandler<CreateGroupCommand, GroupId>
+public sealed class CreateGroupCommandHandler(ICollegeManagementSystemRepository repository, IValidator<CreateGroupCommand> validator) : IRequestHandler<CreateGroupCommand, GroupId>
 {
-    public Task<GroupId> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
+    private readonly ICollegeManagementSystemRepository repository = repository;
+    private readonly IValidator<CreateGroupCommand> validator = validator;
+
+    public async Task<GroupId> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
     {
-        var specialization = repository.Specializations.SingleOrDefault(s => s.Id == request.SpecializationId);
+        await validator.ValidateAndThrowAsync(request, cancellationToken);
+
+        var specialization = repository.Specializations.Single(s => s.Id == request.SpecializationId);
 
         var group = Group.Create(request.Name, specialization);
 
-        return Task.FromResult(group.Id);
+        return group.Id;
     }
 }

@@ -1,9 +1,9 @@
-﻿using CollegeManagementSystem.Application.QueryHandlers.Specializations;
+﻿using CollegeManagementSystem.Application.Queries.Specializations;
 using CollegeManagementSystem.Domain.Services;
 using MediatR;
 using SharedKernel.DTOs.Specializations;
 
-namespace CollegeManagementSystem.Application.Queries.Specializations;
+namespace CollegeManagementSystem.Application.QueryHandlers.Specializations;
 
 public sealed class GetSpecializationsQueryHandler(ICollegeManagementSystemRepository repository) : IRequestHandler<GetSpecializationsQuery, IReadOnlyCollection<SpecializationDTO>>
 {

@@ -1,26 +1,29 @@
 ﻿using CollegeManagementSystem.Application.Queries.Students;
 using CollegeManagementSystem.Domain.Services;
+using FluentValidation;
 using MediatR;
 using SharedKernel.DTOs.Students;
 
 namespace CollegeManagementSystem.Application.QueryHandlers.Students;
 
-public sealed class GetStudentQueryHandler(ICollegeManagementSystemRepository repository) : IRequestHandler<GetStudentQuery, StudentDTO>
+public sealed class GetStudentQueryHandler(ICollegeManagementSystemRepository repository, IValidator<GetStudentQuery> validator) : IRequestHandler<GetStudentQuery, StudentDTO>
 {
     private readonly ICollegeManagementSystemRepository repository = repository;
+    private readonly IValidator<GetStudentQuery> validator = validator;
 
-    public Task<StudentDTO> Handle(GetStudentQuery request, CancellationToken cancellationToken)
+    public async Task<StudentDTO> Handle(GetStudentQuery request, CancellationToken cancellationToken)
     {
-        var student = repository.Students.SingleOrDefault(s => s.Id == request.StudentId);
+        await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        return Task.FromResult(new StudentDTO()
+        var student = repository.Students.Select(s => new StudentDTO
         {
-            Id = student.Id.Value,
-            FirstName = student.Firstname,
-            MiddleName = student.Middlename,
-            LastName = student.Lastname,
-            Graduated = student.Graduated,
-            GroupName = student.Group.Name,
-        });
+            Id = s.Id.Value,
+            FirstName = s.Firstname,
+            MiddleName = s.Middlename,
+            LastName = s.Lastname,
+            Graduated = s.Graduated,
+        }).Single(s => s.Id == request.StudentId.Value);
+
+        return student;
     }
 }

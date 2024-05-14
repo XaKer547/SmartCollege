@@ -1,7 +1,9 @@
 ﻿using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Domain.Projects.Events;
+using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.ProjectTypes;
 using SharedKernel;
+using System.Text.RegularExpressions;
 
 namespace ProjectManagementSystem.Domain.Projects;
 
@@ -13,6 +15,10 @@ public sealed class Project : Entity<ProjectId>
     public string SubjectArea { get; private set; }
     public ProjectType Type { get; private set; }
     public Discipline Discipline { get; private set; }
+    public Group Group { get; private set; }
+
+    public bool Completed { get; private set; }
+    public List<ProjectStage> Stages { get; private set; }
 
     public static Project Create(string name, string subjectArea, ProjectType type, Discipline discipline)
     {
