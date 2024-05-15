@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CollegeManagementSystem.Application.CommandHandlers.Students;
 
-public sealed class UpdateEmployeeCommandHandler(ICollegeManagementSystemRepository repository, IValidator<UpdateStudentCommand> validator) : IRequestHandler<UpdateStudentCommand>
+public sealed class UpdateStudentCommandHandler(ICollegeManagementSystemRepository repository, IValidator<UpdateStudentCommand> validator) : IRequestHandler<UpdateStudentCommand>
 {
     private readonly ICollegeManagementSystemRepository repository = repository;
     private readonly IValidator<UpdateStudentCommand> validator = validator;
@@ -18,6 +18,6 @@ public sealed class UpdateEmployeeCommandHandler(ICollegeManagementSystemReposit
 
         var group = repository.Groups.Single(g => g.Id == request.GroupId);
 
-        student.Update(request.Firstname, request.Middlename, request.Lastname, group);
+        student.Update(request.FirstName, request.MiddleName, request.LastName, group);
     }
 }

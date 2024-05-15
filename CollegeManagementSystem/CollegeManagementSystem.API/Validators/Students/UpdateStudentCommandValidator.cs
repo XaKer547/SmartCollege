@@ -3,7 +3,7 @@ using CollegeManagementSystem.Application.Commands.Students;
 using CollegeManagementSystem.Infrastucture.Data;
 using FluentValidation;
 
-public class UpdateStudentCommandValidator : AbstractValidator<CreateStudentCommand>
+public class UpdateStudentCommandValidator : AbstractValidator<UpdateStudentCommand>
 {
     public UpdateStudentCommandValidator(CollegeManagementSystemDbContext context)
     {

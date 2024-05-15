@@ -7,7 +7,7 @@ using SharedKernel.DTOs.Disciplines;
 
 namespace CollegeManagementSystem.API.Controllers;
 
-[Authorize]
+//[Authorize]
 [ApiController]
 [Route("/api/[controller]")]
 public class DisciplinesController(IMediator mediator) : ControllerBase
