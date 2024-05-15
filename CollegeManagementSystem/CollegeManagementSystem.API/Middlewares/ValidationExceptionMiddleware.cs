@@ -1,5 +1,4 @@
 ﻿using CollegeManagementSystem.API.Validators.Exceptions;
-using MassTransit.Internals;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CollegeManagementSystem.API.Middlewares;
@@ -28,15 +27,16 @@ public sealed class ValidationExceptionHandlingMiddleware(RequestDelegate next, 
             if (exception.Errors is not null)
                 problemDetails.Extensions["errors"] = exception.Errors;
 
-
-            if (exception.Errors.Count > 1)
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            else
+            if (exception.Errors?.Count == 1)
             {
                 var error = exception.Errors[0];
 
-                //context.Response.StatusCode = new StatusCodeResult(int.Parse(error.ToCode()));
+                var statusCode = int.Parse(error.ErrorCode);
+
+                context.Response.StatusCode = statusCode;
             }
+            else
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
 
             await context.Response.WriteAsJsonAsync(problemDetails);
         }

@@ -1,4 +1,5 @@
-﻿using CollegeManagementSystem.Application.Queries.Employees;
+﻿using CollegeManagementSystem.Application.Helpers;
+using CollegeManagementSystem.Application.Queries.Employees;
 using CollegeManagementSystem.Domain.Services;
 using MediatR;
 using SharedKernel.DTOs.Employees;
@@ -18,10 +19,10 @@ public sealed class GetEmployeesQueryHandler(ICollegeManagementSystemRepository 
             FirstName = e.FirstName,
             MiddleName = e.MiddleName,
             LastName = e.LastName,
-            Posts = e.Posts.Select(p => new PostDTO
+            Posts = e.Roles.Select(p => new PostDTO
             {
-                Id = p.Id.Value,
-                Name = p.Name,
+                Id = (int)p,
+                Name = p.GetDisplayName(),
             }).ToArray(),
             Blocked = e.Blocked,
         })];

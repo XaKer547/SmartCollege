@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\..\SmartCollege.SSO.Shared\SmartCollege.SSO.Shared.csproj" />
   </ItemGroup>
 
 </Project>

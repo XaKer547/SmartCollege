@@ -15,11 +15,4 @@
     <ProjectReference Include="..\ProjectManagementSystem.Domain\ProjectManagementSystem.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CommandHandlers\ProjectStages\" />
-    <Folder Include="CommandHandlers\Projects\" />
-    <Folder Include="QueryHandlers\ProjectStages\" />
-    <Folder Include="QueryHandlers\Projects\" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,4 @@
-﻿using CollegeManagementSystem.API.Helpers;
-using CollegeManagementSystem.Application.Commands.Employees;
+﻿using CollegeManagementSystem.Application.Commands.Employees;
 using CollegeManagementSystem.Infrastucture.Data;
 using FluentValidation;
 
@@ -20,8 +19,5 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
 
         RuleFor(x => x.Email)
             .NotEmpty();
-
-        RuleForEach(x => x.Posts)
-            .Exists(context);
     }
 }

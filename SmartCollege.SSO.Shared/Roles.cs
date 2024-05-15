@@ -1,11 +1,22 @@
-﻿namespace SmartCollege.SSO.Shared
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SmartCollege.SSO.Shared;
+
+public enum Roles
 {
-    public enum Roles
-    {
-        Student,
-        Teacher,
-        HeadOfDepartment,
-        ClassroomTeacher,
-        RepresentativeOfTheCompany
-    }
+    [Display(Name = "Студент")]
+    Student,
+
+    [Display(Name = "Преподаватель")]
+    Teacher,
+
+    [Display(Name = "Заведующий отделением")]
+    HeadOfDepartment,
+
+    [Display(Name = "Классный руководитель")]
+    ClassroomTeacher,
+
+    [Display(Name = "Представитель компании")]
+    RepresentativeOfTheCompany
 }
+

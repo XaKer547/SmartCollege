@@ -1,6 +1,6 @@
 ﻿using CollegeManagementSystem.Domain.Employees.Events;
-using CollegeManagementSystem.Domain.Posts;
 using SharedKernel;
+using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Domain.Employees;
 
@@ -12,9 +12,9 @@ public sealed class Employee : Entity<EmployeeId>
     public string MiddleName { get; private set; }
     public string LastName { get; private set; }
     public bool Blocked { get; private set; }
-    public Post[] Posts { get; private set; }
+    public Roles[] Roles { get; private set; }
     public string Email { get; private set; }
-    public static Employee Create(string firstName, string middleName, string lastName, Post[] posts, string email)
+    public static Employee Create(string firstName, string middleName, string lastName, Roles[] posts, string email)
     {
         var employee = new Employee()
         {
@@ -22,7 +22,7 @@ public sealed class Employee : Entity<EmployeeId>
             MiddleName = middleName,
             LastName = lastName,
             Email = email,
-            Posts = posts
+            Roles = posts
         };
 
         var employeeCreatedEvent = new EmployeeCreatedEvent()
@@ -34,9 +34,9 @@ public sealed class Employee : Entity<EmployeeId>
 
         return employee;
     }
-    public void Update(string firstName, string middlename, string lastName, bool blocked, Post[] posts, string email)
+    public void Update(string firstName, string middlename, string lastName, bool blocked, Roles[] posts, string email)
     {
-        Posts = posts;
+        Roles = posts;
 
         FirstName = firstName;
         MiddleName = middlename;
