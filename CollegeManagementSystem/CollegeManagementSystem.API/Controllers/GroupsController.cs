@@ -15,6 +15,8 @@ namespace CollegeManagementSystem.API.Controllers;
 [Route("/api/[controller]")]
 public class GroupsController(IMediator mediator) : ControllerBase
 {
+    private readonly IMediator mediator = mediator;
+
     /// <summary>
     /// Добавить студенческую группу
     /// </summary>

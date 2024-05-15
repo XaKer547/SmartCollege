@@ -4,5 +4,10 @@ namespace CollegeManagementSystem.Domain.Disciplines.Events;
 
 public sealed class DisciplineCreatedEvent : IDomainEvent
 {
-    public required Discipline Discipline { get; init; }
+    public DisciplineCreatedEvent(Discipline discipline)
+    {
+        Discipline = discipline;
+    }
+
+    public Discipline Discipline { get; init; }
 }

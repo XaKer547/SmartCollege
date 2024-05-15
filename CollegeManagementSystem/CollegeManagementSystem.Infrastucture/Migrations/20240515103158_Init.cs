@@ -71,7 +71,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         name: "FK_Group_Specialization_SpecializationId",
                         column: x => x.SpecializationId,
                         principalTable: "Specialization",
-                        principalColumn: "Id",
+                        principalColumn: "StudentId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -95,7 +95,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         name: "FK_Student_Group_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Group",
-                        principalColumn: "Id",
+                        principalColumn: "StudentId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

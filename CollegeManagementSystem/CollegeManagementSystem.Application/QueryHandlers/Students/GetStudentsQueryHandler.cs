@@ -19,9 +19,9 @@ public sealed class GetStudentsQueryHandler(ICollegeManagementSystemRepository r
             .Select(s => new StudentDTO
             {
                 Id = s.Id.Value,
-                FirstName = s.Firstname,
-                MiddleName = s.Middlename,
-                LastName = s.Lastname,
+                FirstName = s.FirstName,
+                MiddleName = s.MiddleName,
+                LastName = s.LastName,
                 Graduated = s.Graduated,
             })];
 

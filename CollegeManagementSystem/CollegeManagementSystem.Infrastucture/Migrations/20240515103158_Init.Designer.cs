@@ -27,7 +27,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
 
             modelBuilder.Entity("CollegeManagementSystem.Domain.Disciplines.Discipline", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Deleted")
@@ -37,14 +37,14 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("StudentId");
 
                     b.ToTable("Discipline");
                 });
 
             modelBuilder.Entity("CollegeManagementSystem.Domain.Employees.Employee", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Blocked")
@@ -73,14 +73,14 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("StudentId");
 
                     b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("CollegeManagementSystem.Domain.Groups.Group", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Deleted")
@@ -93,7 +93,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                     b.Property<Guid>("SpecializationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("StudentId");
 
                     b.HasIndex("SpecializationId");
 
@@ -102,7 +102,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
 
             modelBuilder.Entity("CollegeManagementSystem.Domain.Specializations.Specialization", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Deleted")
@@ -112,14 +112,14 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("StudentId");
 
                     b.ToTable("Specialization");
                 });
 
             modelBuilder.Entity("CollegeManagementSystem.Domain.Students.Student", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Deleted")
@@ -147,7 +147,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("StudentId");
 
                     b.HasIndex("GroupId");
 

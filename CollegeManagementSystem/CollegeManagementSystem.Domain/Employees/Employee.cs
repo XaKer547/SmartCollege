@@ -6,8 +6,11 @@ namespace CollegeManagementSystem.Domain.Employees;
 
 public sealed class Employee : Entity<EmployeeId>
 {
-    private Employee() { }
-    public EmployeeId Id { get; init; }
+    private Employee()
+    {
+        Id = new EmployeeId();
+    }
+
     public string FirstName { get; private set; }
     public string MiddleName { get; private set; }
     public string LastName { get; private set; }
@@ -25,10 +28,7 @@ public sealed class Employee : Entity<EmployeeId>
             Roles = posts
         };
 
-        var employeeCreatedEvent = new EmployeeCreatedEvent()
-        {
-            Employee = employee
-        };
+        var employeeCreatedEvent = new EmployeeCreatedEvent(employee);
 
         employee.AddEvent(employeeCreatedEvent);
 
@@ -44,10 +44,7 @@ public sealed class Employee : Entity<EmployeeId>
         Email = email;
         Blocked = blocked;
 
-        var employeeeUpdatedEvent = new EmployeeUpdatedEvent()
-        {
-            Employee = this
-        };
+        var employeeeUpdatedEvent = new EmployeeUpdatedEvent(this);
 
         AddEvent(employeeeUpdatedEvent);
     }
@@ -55,10 +52,7 @@ public sealed class Employee : Entity<EmployeeId>
     {
         Deleted = true;
 
-        var employeeDeletedEvent = new EmployeeDeletedEvent()
-        {
-            EmployeeId = Id
-        };
+        var employeeDeletedEvent = new EmployeeDeletedEvent(Id);
 
         AddEvent(employeeDeletedEvent);
     }

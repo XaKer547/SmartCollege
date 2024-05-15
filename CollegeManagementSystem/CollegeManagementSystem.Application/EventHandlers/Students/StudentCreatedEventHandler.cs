@@ -20,9 +20,9 @@ public sealed class StudentCreatedEventHandler(IUnitOfWork unitOfWork, IPublishE
         await publishEndpoint.Publish<IStudentCreated>(new
         {
             notification.Student.Id,
-            notification.Student.Firstname,
-            notification.Student.Middlename,
-            notification.Student.Lastname,
+            notification.Student.FirstName,
+            notification.Student.MiddleName,
+            notification.Student.LastName,
             GroupId = notification.Student.Group.Id,
         }, cancellationToken);
     }

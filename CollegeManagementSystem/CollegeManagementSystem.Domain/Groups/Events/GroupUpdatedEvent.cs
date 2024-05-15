@@ -4,5 +4,10 @@ namespace CollegeManagementSystem.Domain.Groups.Events;
 
 public sealed record GroupUpdatedEvent : IDomainEvent
 {
-    public required Group Group { get; init; }
+    public GroupUpdatedEvent(Group group)
+    {
+        Group = group;
+    }
+
+    public Group Group { get; init; }
 }

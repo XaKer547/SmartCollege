@@ -21,9 +21,9 @@ public sealed class StudentUpdatedEventHandler(IUnitOfWork unitOfWork, IPublishE
         await publishEndpoint.Publish<IStudentUpdated>(new
         {
             notification.Student.Id,
-            notification.Student.Firstname,
-            notification.Student.Middlename,
-            notification.Student.Lastname,
+            notification.Student.FirstName,
+            notification.Student.MiddleName,
+            notification.Student.LastName,
             GroupId = notification.Student.Group.Id,
         }, cancellationToken);
     }

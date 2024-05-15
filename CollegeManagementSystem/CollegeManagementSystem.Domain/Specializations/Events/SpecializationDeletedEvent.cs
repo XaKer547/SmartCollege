@@ -4,5 +4,10 @@ namespace CollegeManagementSystem.Domain.Specializations.Events;
 
 public sealed class SpecializationDeletedEvent : IDomainEvent
 {
-    public required SpecializationId SpecializationId { get; init; }
+    public SpecializationDeletedEvent(SpecializationId specializationId)
+    {
+        SpecializationId = specializationId;
+    }
+
+    public SpecializationId SpecializationId { get; init; }
 }

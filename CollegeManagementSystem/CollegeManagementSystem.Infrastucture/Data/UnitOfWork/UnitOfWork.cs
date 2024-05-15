@@ -1,5 +1,4 @@
-﻿using CollegeManagementSystem.Domain.Disciplines;
-using CollegeManagementSystem.Domain.Services;
+﻿using CollegeManagementSystem.Domain.Services;
 using SharedKernel;
 
 namespace CollegeManagementSystem.Infrastucture.Data.UnitOfWork;

@@ -4,5 +4,10 @@ namespace CollegeManagementSystem.Domain.Groups.Events;
 
 public sealed record GroupDeletedEvent : IDomainEvent
 {
-    public required GroupId GroupId { get; init; }
+    public GroupDeletedEvent(GroupId groupId)
+    {
+        GroupId = groupId;
+    }
+
+    public GroupId GroupId { get; init; }
 }

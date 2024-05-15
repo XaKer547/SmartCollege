@@ -5,6 +5,7 @@ using CollegeManagementSystem.Domain.Services;
 using CollegeManagementSystem.Domain.Specializations;
 using CollegeManagementSystem.Domain.Students;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CollegeManagementSystem.Infrastucture.Data;
 
@@ -33,26 +34,125 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Group>()
-            .Property(x => x.Id)
-            .HasConversion(x => x.Value, x => new GroupId(x));
+        modelBuilder.ApplyConfiguration(new GroupConfiguration());
 
-        modelBuilder.Entity<Discipline>()
-           .Property(x => x.Id)
-           .HasConversion(x => x.Value, x => new DisciplineId(x));
+        modelBuilder.ApplyConfiguration(new DisciplineConfiguration());
 
-        modelBuilder.Entity<Employee>()
-            .Property(x => x.Id)
-            .HasConversion(x => x.Value, x => new EmployeeId(x));
+        modelBuilder.ApplyConfiguration(new StudentConfiguration());
 
-        modelBuilder.Entity<Specialization>()
-            .Property(x => x.Id)
-            .HasConversion(x => x.Value, x => new SpecializationId(x));
+        modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
 
-        modelBuilder.Entity<Student>()
-            .Property(x => x.Id)
-            .HasConversion(x => x.Value, x => new StudentId(x));
+        modelBuilder.ApplyConfiguration(new SpecializationConfiguration());
 
         base.OnModelCreating(modelBuilder);
+    }
+
+    private class GroupConfiguration : IEntityTypeConfiguration<Group>
+    {
+        public void Configure(EntityTypeBuilder<Group> builder)
+        {
+            builder.Property(e => e.Id)
+                .HasConversion(e => e.Value, e => new GroupId(e))
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Name)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Navigation(e => e.Specialization)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Deleted)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+        }
+    }
+    private class DisciplineConfiguration : IEntityTypeConfiguration<Discipline>
+    {
+        public void Configure(EntityTypeBuilder<Discipline> builder)
+        {
+            builder.Property(e => e.Id)
+                .HasConversion(e => e.Value, e => new DisciplineId(e))
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Name)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Deleted)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+        }
+    }
+    private class SpecializationConfiguration : IEntityTypeConfiguration<Specialization>
+    {
+        public void Configure(EntityTypeBuilder<Specialization> builder)
+        {
+            builder.Property(e => e.Id)
+                .HasConversion(e => e.Value, e => new SpecializationId(e))
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Name)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Deleted)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+        }
+    }
+    private class StudentConfiguration : IEntityTypeConfiguration<Student>
+    {
+        public void Configure(EntityTypeBuilder<Student> builder)
+        {
+            builder.Property(e => e.Id)
+                .HasConversion(e => e.Value, e => new StudentId(e))
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.FirstName)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.MiddleName)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.LastName)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Email)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Graduated)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Navigation(e => e.Group)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Deleted)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+        }
+    }
+    private class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
+    {
+        public void Configure(EntityTypeBuilder<Employee> builder)
+        {
+            builder.Property(e => e.Id)
+                .HasConversion(e => e.Value, e => new EmployeeId(e))
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.FirstName)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.MiddleName)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.LastName)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Email)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Blocked)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Roles)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Deleted)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+        }
     }
 }

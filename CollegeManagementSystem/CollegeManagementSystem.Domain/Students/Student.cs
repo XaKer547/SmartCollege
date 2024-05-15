@@ -1,5 +1,4 @@
 ﻿using CollegeManagementSystem.Domain.Groups;
-using CollegeManagementSystem.Domain.Specializations;
 using CollegeManagementSystem.Domain.Students.Events;
 using SharedKernel;
 
@@ -12,9 +11,9 @@ public sealed class Student : Entity<StudentId>
         Id = new StudentId();
     }
 
-    public string Firstname { get; private set; }
-    public string Middlename { get; private set; }
-    public string Lastname { get; private set; }
+    public string FirstName { get; private set; }
+    public string MiddleName { get; private set; }
+    public string LastName { get; private set; }
     public bool Graduated { get; private set; }
     public Group Group { get; private set; }
     public string Email { get; private set; }
@@ -23,16 +22,13 @@ public sealed class Student : Entity<StudentId>
     {
         var student = new Student()
         {
-            Firstname = firstName,
-            Middlename = middlename,
-            Lastname = lastName,
+            FirstName = firstName,
+            MiddleName = middlename,
+            LastName = lastName,
             Group = group
         };
 
-        var studentCreatedEvent = new StudentCreatedEvent()
-        {
-            Student = student
-        };
+        var studentCreatedEvent = new StudentCreatedEvent(student);
 
         student.AddEvent(studentCreatedEvent);
 
@@ -40,34 +36,26 @@ public sealed class Student : Entity<StudentId>
     }
     public void Delete()
     {
-        var studentDeletedEvent = new StudentDeletedEvent()
-        {
-            StudentId = Id
-        };
+        var studentDeletedEvent = new StudentDeletedEvent(Id);
 
         AddEvent(studentDeletedEvent);
     }
     public void Graduate(bool graduated)
     {
-        var studentGraduatedEvent = new StudentGraduatedEvent()
-        {
-            Id = Id,
-            Graduated = graduated
-        };
+        Graduated = graduated;
+
+        var studentGraduatedEvent = new StudentGraduatedEvent(Id, Graduated);
 
         AddEvent(studentGraduatedEvent);
     }
     public void Update(string firstname, string middlename, string lastname, Group group)
     {
-        Firstname = firstname;
-        Middlename = middlename;
-        Lastname = lastname;
+        FirstName = firstname;
+        MiddleName = middlename;
+        LastName = lastname;
         Group = group;
 
-        var studentUpdatedEvent = new StudentUpdatedEvent()
-        {
-            Student = this
-        };
+        var studentUpdatedEvent = new StudentUpdatedEvent(this);
 
         AddEvent(studentUpdatedEvent);
     }

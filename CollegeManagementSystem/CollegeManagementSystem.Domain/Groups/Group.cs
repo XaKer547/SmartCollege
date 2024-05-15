@@ -6,7 +6,11 @@ namespace CollegeManagementSystem.Domain.Groups;
 
 public sealed class Group : Entity<GroupId>
 {
-    private Group() { }
+    private Group()
+    {
+        Id = new GroupId();
+    }
+
     public string Name { get; private set; }
     public Specialization Specialization { get; private set; }
 
@@ -18,10 +22,7 @@ public sealed class Group : Entity<GroupId>
             Specialization = specialization
         };
 
-        var groupCreatedEvent = new GroupCreatedEvent()
-        {
-            Group = group
-        };
+        var groupCreatedEvent = new GroupCreatedEvent(group);
 
         group.AddEvent(groupCreatedEvent);
 
@@ -29,10 +30,7 @@ public sealed class Group : Entity<GroupId>
     }
     public void Delete()
     {
-        var groupDeletedEvent = new GroupDeletedEvent()
-        {
-            GroupId = Id,
-        };
+        var groupDeletedEvent = new GroupDeletedEvent(Id);
 
         AddEvent(groupDeletedEvent);
     }
@@ -42,10 +40,7 @@ public sealed class Group : Entity<GroupId>
 
         Name = name;
 
-        var groupUpdatedEvent = new GroupUpdatedEvent()
-        {
-            Group = this
-        };
+        var groupUpdatedEvent = new GroupUpdatedEvent(this);
 
         AddEvent(groupUpdatedEvent);
     }

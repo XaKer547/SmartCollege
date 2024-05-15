@@ -5,7 +5,11 @@ namespace CollegeManagementSystem.Domain.Disciplines;
 
 public sealed class Discipline : Entity<DisciplineId>
 {
-    private Discipline() { }
+    private Discipline()
+    {
+        Id = new DisciplineId();
+    }
+
     public string Name { get; private set; }
 
     public static Discipline Create(string name)
@@ -15,10 +19,7 @@ public sealed class Discipline : Entity<DisciplineId>
             Name = name,
         };
 
-        var disciplineCreatedEvent = new DisciplineCreatedEvent()
-        {
-            Discipline = discipline,
-        };
+        var disciplineCreatedEvent = new DisciplineCreatedEvent(discipline);
 
         discipline.AddEvent(disciplineCreatedEvent);
 
@@ -26,10 +27,7 @@ public sealed class Discipline : Entity<DisciplineId>
     }
     public void Delete()
     {
-        var disciplineDeletedEvent = new DisciplineDeletedEvent()
-        {
-            DisciplineId = Id,
-        };
+        var disciplineDeletedEvent = new DisciplineDeletedEvent(Id);
 
         AddEvent(disciplineDeletedEvent);
     }
@@ -38,10 +36,7 @@ public sealed class Discipline : Entity<DisciplineId>
     {
         Name = name;
 
-        var disciplineUpdatedEvent = new DisciplineUpdatedEvent()
-        {
-            Discipline = this
-        };
+        var disciplineUpdatedEvent = new DisciplineUpdatedEvent(this);
 
         AddEvent(disciplineUpdatedEvent);
     }
