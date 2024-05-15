@@ -31,9 +31,9 @@ public class StudentsController(IMediator mediator) : ControllerBase
         {
             StudentId = new StudentId(studentId),
             GroupId = new GroupId(updateStudent.GroupId),
-            Firstname = updateStudent.Firstname,
-            Middlename = updateStudent.Middlename,
-            Lastname = updateStudent.Lastname,
+            FirstName = updateStudent.Firstname,
+            MiddleName = updateStudent.Middlename,
+            LastName = updateStudent.Lastname,
         };
 
         await mediator.Send(command);

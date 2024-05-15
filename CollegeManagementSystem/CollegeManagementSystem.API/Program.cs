@@ -1,6 +1,6 @@
-using CollegeManagementSystem.API.ErrorHandling.Filters;
 using CollegeManagementSystem.API.Middlewares;
 using CollegeManagementSystem.API.Validators.Behaviors;
+using CollegeManagementSystem.Application.Commands.Employees;
 using CollegeManagementSystem.Domain.Services;
 using CollegeManagementSystem.Infrastucture.Data;
 using CollegeManagementSystem.Infrastucture.Data.UnitOfWork;
@@ -8,7 +8,6 @@ using CollegeManagementSystem.Infrastucture.EventDispatcher;
 using FluentValidation;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SharedKernel;
@@ -18,18 +17,18 @@ using static IdentityModel.OidcConstants;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var assembly = typeof(Program).Assembly;
-
 ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("ru");
 
 builder.Services.AddMediatR(m =>
 {
+    var assembly = typeof(CreateEmployeeCommand).GetTypeInfo().Assembly;
+
     m.RegisterServicesFromAssembly(assembly);
 
     m.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 
-builder.Services.AddValidatorsFromAssembly(assembly);
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 builder.Services.AddMassTransit(options =>
 {
@@ -105,11 +104,6 @@ builder.Services.AddSwaggerGen(options =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
     options.IncludeXmlComments(xmlPath);
-});
-
-builder.Services.Configure<MvcOptions>(options =>
-{
-    options.Filters.Add<ExceptionMappingFilter>();
 });
 
 var app = builder.Build();
