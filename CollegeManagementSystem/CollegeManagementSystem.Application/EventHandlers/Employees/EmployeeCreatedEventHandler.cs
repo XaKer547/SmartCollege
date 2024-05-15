@@ -20,8 +20,7 @@ public sealed class EmployeeCreatedEventHandler(IUnitOfWork unitOfWork, IPublish
         await publishEndpoint.Publish<IUserCreated>(new
         {
             notification.Employee.Email,
-            Roles = notification.Employee.Posts.Select(p => p.Id.ToString())
-            .ToArray(),
+            notification.Employee.Roles,
             Password = ""
             //там же одноразовый и прочее
         }, cancellationToken);

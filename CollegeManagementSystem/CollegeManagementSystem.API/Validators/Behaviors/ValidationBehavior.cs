@@ -24,13 +24,12 @@ public sealed class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidat
             .SelectMany(validationResult => validationResult.Errors)
             .Select(validationFailure => new ValidationError(
                 validationFailure.PropertyName,
-                validationFailure.ErrorMessage))
+                validationFailure.ErrorMessage,
+                validationFailure.ErrorCode))
             .ToList();
 
         if (errors.Count != 0)
-        {
             throw new Exceptions.ValidationException(errors);
-        }
 
         var response = await next();
 

@@ -1,9 +1,9 @@
 ﻿using CollegeManagementSystem.Domain.Disciplines;
 using CollegeManagementSystem.Domain.Employees;
 using CollegeManagementSystem.Domain.Groups;
-using CollegeManagementSystem.Domain.Posts;
 using CollegeManagementSystem.Domain.Specializations;
 using CollegeManagementSystem.Domain.Students;
+using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Domain.Services;
 
@@ -14,7 +14,6 @@ public interface ICollegeManagementSystemRepository
     public IQueryable<Student> Students { get; }
     public IQueryable<Discipline> Disciplines { get; }
     public IQueryable<Employee> Employees { get; }
-    public IQueryable<Post> Posts { get; }
 
     public void AddEntity<TEntity>(TEntity entity) where TEntity : class;
     public void UpdateEntity<TEntity>(TEntity entity) where TEntity : class;

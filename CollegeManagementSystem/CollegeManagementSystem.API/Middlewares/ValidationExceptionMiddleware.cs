@@ -6,7 +6,7 @@ namespace CollegeManagementSystem.API.Middlewares;
 public sealed class ValidationExceptionHandlingMiddleware(RequestDelegate next,
     ILogger<ValidationExceptionHandlingMiddleware> logger)
 {
-    private readonly RequestDelegate next;
+    private readonly RequestDelegate next = next;
     private readonly ILogger<ValidationExceptionHandlingMiddleware> logger = logger;
 
     public async Task InvokeAsync(HttpContext context)
@@ -28,15 +28,16 @@ public sealed class ValidationExceptionHandlingMiddleware(RequestDelegate next,
             if (exception.Errors is not null)
                 problemDetails.Extensions["errors"] = exception.Errors;
 
-
-            if (exception.Errors.Count > 1)
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            else
+            if (exception.Errors?.Count == 1)
             {
                 var error = exception.Errors[0];
 
-                //context.Response.StatusCode = new StatusCodeResult(int.Parse(error.ToCode()));
+                var statusCode = int.Parse(error.ErrorCode);
+
+                context.Response.StatusCode = statusCode;
             }
+            else
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
 
             await context.Response.WriteAsJsonAsync(problemDetails);
         }

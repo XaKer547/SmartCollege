@@ -1,7 +1,6 @@
 ﻿using CollegeManagementSystem.Application.Commands.Employees;
 using CollegeManagementSystem.Application.Queries.Employees;
 using CollegeManagementSystem.Domain.Employees;
-using CollegeManagementSystem.Domain.Posts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.DTOs.Employees;
@@ -50,8 +49,7 @@ public class EmployeesController(IMediator mediator) : ControllerBase
             FirstName = updateEmployee.FirstName,
             MiddleName = updateEmployee.MiddleName,
             LastName = updateEmployee.LastName,
-            Posts = updateEmployee.Posts.Select(p => new PostId(p))
-            .ToArray()
+            Posts = updateEmployee.Posts
         };
 
         await mediator.Send(command);

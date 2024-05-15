@@ -1,6 +1,6 @@
 ﻿using CollegeManagementSystem.Domain.Employees;
-using CollegeManagementSystem.Domain.Posts;
 using MediatR;
+using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Application.Commands.Employees;
 
@@ -10,6 +10,6 @@ public sealed record CreateEmployeeCommand : IRequest<EmployeeId>
     public string MiddleName { get; init; }
     public string LastName { get; init; }
     public bool Blocked { get; init; }
-    public PostId[] Posts { get; init; }
+    public Roles[] Posts { get; init; }
     public string Email { get; init; }
 }
