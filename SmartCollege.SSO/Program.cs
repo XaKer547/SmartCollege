@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using SmartCollege.SSO;
 using SmartCollege.SSO.Data;
 using SmartCollege.SSO.Data.Entities;
+using SmartCollege.SSO.HostedServices;
 using SmartCollege.SSO.Models;
 using SmartCollege.SSO.Models.Commands;
 using SmartCollege.SSO.Validators;
@@ -54,16 +55,18 @@ builder.Services.AddAntiforgery();
 var identitySettings = builder.Configuration.GetRequiredSection(nameof(IdentityServerSettings))
                                             .Get<IdentityServerSettings>()!;
 
-var migrationsAssembly = Assembly.GetExecutingAssembly().GetName().Name;
+//var migrationsAssembly = Assembly.GetExecutingAssembly().GetName().Name;
 
 builder.Services.AddDbContext<AuthorizationDbContext>(options =>
 {
-    options.UseInMemoryDatabase("Test");
-    //var connectionString = builder.Configuration.GetConnectionString("LocalConnection");
+    var connectionString = builder.Configuration.GetConnectionString("LocalConnection");
 
+    options.UseNpgsql(connectionString);
     //options.UseSqlServer(connectionString,
     //     sql => sql.MigrationsAssembly(migrationsAssembly));
 });
+
+builder.Services.AddHostedService<InizializationRoleBGService>();
 
 builder.Services.AddIdentity<AccountIdentity, IdentityRole>(options =>
 {
