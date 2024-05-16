@@ -1,31 +1,29 @@
 ﻿using CollegeManagementSystem.Domain.Groups;
 using CollegeManagementSystem.Domain.Students.Events;
-using SharedKernel;
+using CollegeManagementSystem.Domain.Users;
+using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Domain.Students;
 
-public sealed class Student : Entity<StudentId>
+public sealed class Student : User<StudentId>
 {
     private Student()
     {
         Id = new StudentId();
     }
 
-    public string FirstName { get; private set; }
-    public string MiddleName { get; private set; }
-    public string LastName { get; private set; }
     public bool Graduated { get; private set; }
     public Group Group { get; private set; }
-    public string Email { get; private set; }
 
-    public static Student Create(string firstName, string middlename, string lastName, Group group)
+    public static Student Create(string firstName, string middlename, string lastName, string email, Group group)
     {
         var student = new Student()
         {
             FirstName = firstName,
             MiddleName = middlename,
             LastName = lastName,
-            Group = group
+            Email = email,
+            Group = group,
         };
 
         var studentCreatedEvent = new StudentCreatedEvent(student);
@@ -54,6 +52,15 @@ public sealed class Student : Entity<StudentId>
         MiddleName = middlename;
         LastName = lastname;
         Group = group;
+
+        var studentUpdatedEvent = new StudentUpdatedEvent(this);
+
+        AddEvent(studentUpdatedEvent);
+    }
+
+    public override void Update(string email, string password, Roles[] roles)
+    {
+        base.Update(email, password, roles);
 
         var studentUpdatedEvent = new StudentUpdatedEvent(this);
 

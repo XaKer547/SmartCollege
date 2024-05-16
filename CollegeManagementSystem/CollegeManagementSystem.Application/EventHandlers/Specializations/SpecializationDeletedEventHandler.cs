@@ -1,17 +1,20 @@
 ﻿using CollegeManagementSystem.Domain.Services;
 using CollegeManagementSystem.Domain.Specializations.Events;
+using MassTransit;
 using MediatR;
+using SmartCollege.RabbitMQ.Contracts.Disciplines;
 
 namespace CollegeManagementSystem.Application.EventHandlers.Specializations;
 
-public sealed class SpecializationDeletedEventHandler(IUnitOfWork unitOfWork) : INotificationHandler<SpecializationDeletedEvent>
+public sealed class SpecializationDeletedEventHandler(IPublishEndpoint publishEndpoint) : INotificationHandler<SpecializationDeletedEvent>
 {
-    private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly IPublishEndpoint publishEndpoint = publishEndpoint;
 
     public async Task Handle(SpecializationDeletedEvent notification, CancellationToken cancellationToken)
     {
-        unitOfWork.Repository.DeleteEntity(notification.SpecializationId);
+        await publishEndpoint.Publish<IDisciplineDeleted>(new
+        {
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        }, cancellationToken);
     }
 }

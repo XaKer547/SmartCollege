@@ -5,17 +5,21 @@ using MediatR;
 
 namespace CollegeManagementSystem.Application.CommandHandlers.Employees;
 
-public sealed class DeleteEmployeeCommandHandler(ICollegeManagementSystemRepository repository, IValidator<DeleteEmployeeCommand> validator) : IRequestHandler<DeleteEmployeeCommand>
+public sealed class DeleteEmployeeCommandHandler(IUnitOfWork unitOfWork, IValidator<DeleteEmployeeCommand> validator) : IRequestHandler<DeleteEmployeeCommand>
 {
-    private readonly ICollegeManagementSystemRepository repository = repository;
+    private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IValidator<DeleteEmployeeCommand> validator = validator;
 
     public async Task Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var employee = repository.Employees.Single(e => e.Id == request.EmployeeId);
+        var employee = unitOfWork.Repository.Employees.Single(e => e.Id == request.EmployeeId);
 
         employee.Delete();
+
+        unitOfWork.Repository.DeleteEntity(employee);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

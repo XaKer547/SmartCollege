@@ -5,17 +5,21 @@ using MediatR;
 
 namespace CollegeManagementSystem.Application.CommandHandlers.Specializations;
 
-public sealed class DeleteSpecializationCommandHandler(ICollegeManagementSystemRepository repository, IValidator<DeleteSpecializationCommand> validator) : IRequestHandler<DeleteSpecializationCommand>
+public sealed class DeleteSpecializationCommandHandler(IUnitOfWork unitOfWork, IValidator<DeleteSpecializationCommand> validator) : IRequestHandler<DeleteSpecializationCommand>
 {
-    private readonly ICollegeManagementSystemRepository repository = repository;
+    private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IValidator<DeleteSpecializationCommand> validator = validator;
 
     public async Task Handle(DeleteSpecializationCommand request, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var specialization = repository.Specializations.Single(s => s.Id == request.SpecializationId);
+        var specialization = unitOfWork.Repository.Specializations.Single(s => s.Id == request.SpecializationId);
 
         specialization.Delete();
+
+        unitOfWork.Repository.DeleteEntity(specialization);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

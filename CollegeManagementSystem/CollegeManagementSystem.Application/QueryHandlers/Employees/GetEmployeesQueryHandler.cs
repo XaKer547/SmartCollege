@@ -7,13 +7,13 @@ using SharedKernel.DTOs.Posts;
 
 namespace CollegeManagementSystem.Application.QueryHandlers.Employees;
 
-public sealed class GetEmployeesQueryHandler(ICollegeManagementSystemRepository repository) : IRequestHandler<GetEmployeesQuery, IReadOnlyCollection<EmployeeDTO>>
+public sealed class GetEmployeesQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetEmployeesQuery, IReadOnlyCollection<EmployeeDTO>>
 {
-    private readonly ICollegeManagementSystemRepository repository = repository;
+    private readonly IUnitOfWork unitOfWork = unitOfWork;
 
     public Task<IReadOnlyCollection<EmployeeDTO>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
     {
-        IReadOnlyCollection<EmployeeDTO> employees = [.. repository.Employees.Select(e => new EmployeeDTO
+        IReadOnlyCollection<EmployeeDTO> employees = [.. unitOfWork.Repository.Employees.Select(e => new EmployeeDTO
         {
             Id = e.Id.Value,
             FirstName = e.FirstName,
@@ -22,7 +22,7 @@ public sealed class GetEmployeesQueryHandler(ICollegeManagementSystemRepository 
             Posts = e.Roles.Select(p => new PostDTO
             {
                 Id = (int)p,
-                Name = p.GetDisplayName(),
+                Name = p.GetDisplayName()!,
             }).ToArray(),
             Blocked = e.Blocked,
         })];

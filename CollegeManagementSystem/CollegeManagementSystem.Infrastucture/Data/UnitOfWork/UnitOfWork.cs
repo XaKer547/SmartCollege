@@ -14,7 +14,7 @@ public sealed class UnitOfWork(CollegeManagementSystemDbContext context, IDomain
         if (cancellationToken.IsCancellationRequested)
             return;
 
-        var domainEventEntities = context.ChangeTracker.Entries<Entity<EntityId>>()
+        var domainEventEntities = context.ChangeTracker.Entries<Entity>()
             .Select(e => e.Entity)
             .Where(e => e.ContainsEvents())
             .ToArray();

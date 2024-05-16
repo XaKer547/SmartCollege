@@ -5,7 +5,7 @@ using SmartCollege.RabbitMQ.Contracts.Users;
 
 namespace CollegeManagementSystem.Application.EventHandlers.Employees;
 
-public sealed class EmployeeUpdatedEventHandler(IPublishEndpoint publishEndpoint) : INotificationHandler<EmployeeUpdatedEvent>
+internal class UserUpdatedEventHandler(IPublishEndpoint publishEndpoint) : INotificationHandler<EmployeeUpdatedEvent>
 {
     private readonly IPublishEndpoint publishEndpoint = publishEndpoint;
 
