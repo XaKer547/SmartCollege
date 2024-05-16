@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using SmartCollege.SSO.Data.Entities;
 using SmartCollege.SSO.Models;
 using SmartCollege.SSO.Models.Commands;
+using SmartCollege.SSO.Models.Events;
 
 namespace SmartCollege.SSO.Handlers.Commands
 {
@@ -11,6 +12,8 @@ namespace SmartCollege.SSO.Handlers.Commands
         private readonly UserManager<AccountIdentity> _userManager;
 
         private readonly ILogger<CreateAccountCommandHandler> _logger;
+
+        private readonly IMediator _mediator;
 
         public CreateAccountCommandHandler(UserManager<AccountIdentity> userManager, ILogger<CreateAccountCommandHandler> logger)
         {
@@ -31,12 +34,15 @@ namespace SmartCollege.SSO.Handlers.Commands
                     Email = request.Email,
                     UserName = request.Email,
                     EmailConfirmed = false,
-                    ChangeTempPassword = true
+                    ChangeTempPassword = true,
+                    LockoutEnabled = true,
                 }, request.Password);
 
                 if (!result.Succeeded)
                     return HandleResult.Failure(StatusCodes.Status400BadRequest, string.Concat(',', result.Errors
                         .Select(x => x.Description)));
+
+                _mediator.Publish(new CreateAccountEvent(request.Email, $"", request.Phone, request.))
 
                 return HandleResult.Success(StatusCodes.Status201Created, "Пользователь успешно создан!");
             }
