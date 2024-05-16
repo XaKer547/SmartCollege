@@ -18,6 +18,10 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
             .NotEmpty();
 
         RuleFor(x => x.Email)
-            .NotEmpty();
+            .EmailAddress();
+
+        RuleFor(x => x.Posts)
+            .NotEmpty()
+            .IsInEnum();
     }
 }

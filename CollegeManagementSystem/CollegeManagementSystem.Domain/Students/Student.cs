@@ -15,7 +15,7 @@ public sealed class Student : User<StudentId>
     public bool Graduated { get; private set; }
     public Group Group { get; private set; }
 
-    public static Student Create(string firstName, string middlename, string lastName, string email, Group group)
+    public static Student Create(string firstName, string middlename, string lastName, Group group, string email, string password)
     {
         var student = new Student()
         {
@@ -26,6 +26,8 @@ public sealed class Student : User<StudentId>
             Group = group,
         };
 
+        student.CreateAccount(password, [Roles.Student]);
+
         var studentCreatedEvent = new StudentCreatedEvent(student);
 
         student.AddEvent(studentCreatedEvent);
@@ -34,6 +36,8 @@ public sealed class Student : User<StudentId>
     }
     public void Delete()
     {
+        DeleteAccount();
+
         var studentDeletedEvent = new StudentDeletedEvent(Id);
 
         AddEvent(studentDeletedEvent);
@@ -58,10 +62,10 @@ public sealed class Student : User<StudentId>
         AddEvent(studentUpdatedEvent);
     }
 
-    public override void Update(string email, string password, Roles[] roles)
+    public void Update(string password)
     {
-        base.Update(email, password, roles);
-
+        UpdateAccount(password, [Roles.Student]);
+        
         var studentUpdatedEvent = new StudentUpdatedEvent(this);
 
         AddEvent(studentUpdatedEvent);

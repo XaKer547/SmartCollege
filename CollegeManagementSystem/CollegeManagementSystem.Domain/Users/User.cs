@@ -11,16 +11,32 @@ public abstract class User<TEntityId> : Entity<TEntityId>
     public string MiddleName { get; protected set; }
     public string LastName { get; protected set; }
     public string Email { get; protected set; }
+    public bool Blocked { get; protected set; }
 
-    public virtual void Update(string email, string password, Roles[] roles)
+
+    protected void CreateAccount(string password, Roles[] roles)
     {
-        Email = email;
+        var userCreatedEvent = new UserCreatedEvent(Email, password);
 
+        AddEvent(userCreatedEvent);
+    }
+
+    protected void UpdateAccount(string password, Roles[] roles)
+    {
         var posts = roles.Select(p => p.ToString())
             .ToArray();
 
         var userUpdatedEvent = new UserUpdatedEvent(Email, password, posts);
 
         AddEvent(userUpdatedEvent);
+    }
+
+    protected void DeleteAccount()
+    {
+        Deleted = true;
+
+        var userDeletedEvent = new UserDeletedEvent(Email);
+
+        AddEvent(userDeletedEvent);
     }
 }

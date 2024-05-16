@@ -7,6 +7,7 @@ public abstract class Entity<TEntityId> : Entity
 {
     public TEntityId Id { get; protected set; }
 }
+
 public abstract class Entity
 {
     public bool Deleted { get; protected set; }

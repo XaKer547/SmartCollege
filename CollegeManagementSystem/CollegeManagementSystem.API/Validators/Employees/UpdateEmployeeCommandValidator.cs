@@ -11,5 +11,12 @@ public class UpdateEmployeeCommandValidator : AbstractValidator<UpdateEmployeeCo
     {
         RuleFor(x => x.EmployeeId)
            .Exists(context);
+
+        RuleFor(x => x.Email)
+            .EmailAddress();
+
+        RuleFor(x => x.Posts)
+            .NotEmpty()
+            .IsInEnum();
     }
 }

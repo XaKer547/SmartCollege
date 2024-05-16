@@ -4,6 +4,7 @@ using CollegeManagementSystem.Domain.Employees;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.DTOs.Employees;
+using System.Runtime.CompilerServices;
 
 namespace CollegeManagementSystem.API.Controllers;
 
@@ -34,6 +35,7 @@ public class EmployeesController(IMediator mediator) : ControllerBase
     /// Обновить сотрудника
     /// </summary>
     /// <param name="employeeId">Идентификатор сотрудника</param>
+    /// <param name="updateEmployee"></param>
     /// <response code="204">Успешное обновление</response>
     /// <response code="400">Запрос не прошел валидацию</response>
     /// <response code="403">Пользователь не имеет доступ на изменение сотрудника</response>

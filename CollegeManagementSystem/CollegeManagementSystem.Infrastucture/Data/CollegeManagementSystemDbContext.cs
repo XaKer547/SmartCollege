@@ -1,4 +1,5 @@
-﻿using CollegeManagementSystem.Domain.Disciplines;
+﻿using CollegeManagementSystem.Domain.CompanyRepresentatives;
+using CollegeManagementSystem.Domain.Disciplines;
 using CollegeManagementSystem.Domain.Employees;
 using CollegeManagementSystem.Domain.Groups;
 using CollegeManagementSystem.Domain.Services;
@@ -17,6 +18,7 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
     public IQueryable<Student> Students => Set<Student>();
     public IQueryable<Discipline> Disciplines => Set<Discipline>();
     public IQueryable<Employee> Employees => Set<Employee>();
+    public IQueryable<CompanyRepresentative> CompanyRepresentatives => Set<CompanyRepresentative>();
 
     public void AddEntity<TEntity>(TEntity entity) where TEntity : Entity
     {
@@ -44,6 +46,8 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
         modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
 
         modelBuilder.ApplyConfiguration(new SpecializationConfiguration());
+
+        modelBuilder.ApplyConfiguration(new CompanyRepresentativeConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }
@@ -150,6 +154,39 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
 
             builder.Property(e => e.Roles)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Deleted)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+        }
+    }
+    private class CompanyRepresentativeConfiguration : IEntityTypeConfiguration<CompanyRepresentative>
+    {
+        public void Configure(EntityTypeBuilder<CompanyRepresentative> builder)
+        {
+            builder.Property(e => e.Id)
+                .HasConversion(e => e.Value, e => new CompanyRepresentativeId(e))
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.FirstName)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.MiddleName)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.LastName)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Email)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.Blocked)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.CompanyName)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+            builder.Property(e => e.PhoneNumber)
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
 
             builder.Property(e => e.Deleted)

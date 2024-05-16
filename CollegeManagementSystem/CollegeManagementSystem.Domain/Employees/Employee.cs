@@ -13,7 +13,6 @@ public sealed class Employee : User<EmployeeId>
         Id = new EmployeeId();
     }
 
-    public bool Blocked { get; private set; }
     public Roles[] Roles { get; private set; }
 
     public static Employee Create(string firstName, string middleName, string lastName, Roles[] posts, string email)
@@ -44,20 +43,21 @@ public sealed class Employee : User<EmployeeId>
 
         AddEvent(employeeeUpdatedEvent);
     }
-    public override void Update(string email, string password, Roles[] roles)
-    {
-        base.Update(email, password, roles);
 
+    public void Update(string email, string password, Roles[] roles)
+    {
         Roles = roles;
 
         var employeeeUpdatedEvent = new EmployeeUpdatedEvent(this);
 
         AddEvent(employeeeUpdatedEvent);
+
+        UpdateAccount(email, password, roles);
     }
 
     public void Delete()
     {
-        Deleted = true;
+        DeleteAccount();
 
         var employeeDeletedEvent = new EmployeeDeletedEvent(Id);
 
