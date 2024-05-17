@@ -5,6 +5,7 @@ using CollegeManagementSystem.Domain.Groups;
 using CollegeManagementSystem.Domain.Services;
 using CollegeManagementSystem.Domain.Specializations;
 using CollegeManagementSystem.Domain.Students;
+using CollegeManagementSystem.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedKernel;
@@ -50,6 +51,12 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
         modelBuilder.ApplyConfiguration(new CompanyRepresentativeConfiguration());
 
         base.OnModelCreating(modelBuilder);
+    }
+
+    public User GetUser(string email)
+    {
+        return Set<User>()
+            .Single(u => u.Email == email);
     }
 
     private class GroupConfiguration : IEntityTypeConfiguration<Group>
@@ -117,8 +124,8 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
             builder.Property(e => e.LastName)
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
 
-            builder.Property(e => e.Email)
-                .UsePropertyAccessMode(PropertyAccessMode.Property);
+            builder.HasIndex(e => e.Email)
+                .IsUnique();
 
             builder.Property(e => e.Graduated)
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
@@ -147,8 +154,8 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
             builder.Property(e => e.LastName)
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
 
-            builder.Property(e => e.Email)
-                .UsePropertyAccessMode(PropertyAccessMode.Property);
+            builder.HasIndex(e => e.Email)
+                .IsUnique();
 
             builder.Property(e => e.Blocked)
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
@@ -177,8 +184,8 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
             builder.Property(e => e.LastName)
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
 
-            builder.Property(e => e.Email)
-                .UsePropertyAccessMode(PropertyAccessMode.Property);
+            builder.HasIndex(e => e.Email)
+                .IsUnique();
 
             builder.Property(e => e.Blocked)
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
