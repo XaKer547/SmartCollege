@@ -4,14 +4,14 @@ namespace CollegeManagementSystem.Domain.Users.Events;
 
 public sealed class UserCreatedEvent : IDomainEvent
 {
-    public string Email { get; init; }
-
-    public UserCreatedEvent(string email, string password)
+    public UserCreatedEvent(string email, string password, string[] roles)
     {
         Email = email;
         Password = password;
+        Roles = roles;
     }
 
-    public string Password { get; init; }
-    public string[] Roles { get; init; }
+    public string Email { get; }
+    public string Password { get; }
+    public string[] Roles { get; }
 }

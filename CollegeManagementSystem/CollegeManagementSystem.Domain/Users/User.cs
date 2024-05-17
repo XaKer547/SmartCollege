@@ -7,38 +7,7 @@ namespace CollegeManagementSystem.Domain.Users;
 public abstract class User<TEntityId> : User
     where TEntityId : EntityId
 {
-    public TEntityId Id { get; private set; }
-    public string FirstName { get; protected set; }
-    public string MiddleName { get; protected set; }
-    public string LastName { get; protected set; }
-    public string Email { get; protected set; }
-    public bool Blocked { get; protected set; }
-
-    protected void CreateAccount(string password, Roles[] roles)
-    {
-        var userCreatedEvent = new UserCreatedEvent(Email, password);
-
-        AddEvent(userCreatedEvent);
-    }
-
-    protected void UpdateAccount(string password, Roles[] roles)
-    {
-        var posts = roles.Select(p => p.ToString())
-            .ToArray();
-
-        var userUpdatedEvent = new UserUpdatedEvent(Email, password, posts);
-
-        AddEvent(userUpdatedEvent);
-    }
-
-    protected void DeleteAccount()
-    {
-        Deleted = true;
-
-        var userDeletedEvent = new UserDeletedEvent(Email);
-
-        AddEvent(userDeletedEvent);
-    }
+    public TEntityId Id { get; protected set; }
 }
 public abstract class User : Entity
 {
@@ -46,22 +15,26 @@ public abstract class User : Entity
     public string MiddleName { get; protected set; }
     public string LastName { get; protected set; }
     public string Email { get; protected set; }
-    public bool Blocked { get; protected set; }
+    public bool Blocked { get; protected set; } = false;
+    public Roles[] Roles { get; protected set; }
 
+    private string[] RoleNames => [.. Roles.Select(r => r.ToString())];
 
     protected void CreateAccount(string password, Roles[] roles)
     {
-        var userCreatedEvent = new UserCreatedEvent(Email, password);
+        Roles = roles;
+
+        var userCreatedEvent = new UserCreatedEvent(Email, password, RoleNames);
 
         AddEvent(userCreatedEvent);
     }
 
-    protected void UpdateAccount(string password, Roles[] roles)
+    public void UpdateAccount(string password, Roles[] roles, bool blocked)
     {
-        var posts = roles.Select(p => p.ToString())
-            .ToArray();
+        Roles = roles;
+        Blocked = blocked;
 
-        var userUpdatedEvent = new UserUpdatedEvent(Email, password, posts);
+        var userUpdatedEvent = new UserUpdatedEvent(Email, password, RoleNames, Blocked);
 
         AddEvent(userUpdatedEvent);
     }

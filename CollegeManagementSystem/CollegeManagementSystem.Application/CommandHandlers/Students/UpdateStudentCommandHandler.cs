@@ -16,9 +16,9 @@ public sealed class UpdateStudentCommandHandler(IUnitOfWork unitOfWork, IValidat
 
         var student = unitOfWork.Repository.Students.Single(s => s.Id == request.StudentId);
 
-        var group = unitOfWork.Repository.Groups.Single(g => g.Id == request.GroupId);
+        var group = unitOfWork.Repository.Groups.SingleOrDefault(g => g.Id == request.GroupId);
 
-        student.Update(request.FirstName, request.MiddleName, request.LastName, group);
+        student.Update(request.FirstName ?? student.FirstName, request.MiddleName ?? student.MiddleName, request.LastName ?? student.LastName, group ?? student.Group);
 
         unitOfWork.Repository.UpdateEntity(student);
 

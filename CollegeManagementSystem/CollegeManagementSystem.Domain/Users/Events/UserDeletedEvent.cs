@@ -9,5 +9,5 @@ public sealed class UserDeletedEvent : IDomainEvent
         Email = email;
     }
 
-    public string Email { get; init; }
+    public string Email { get; }
 }

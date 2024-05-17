@@ -3,7 +3,7 @@ using CollegeManagementSystem.Infrastucture.Data;
 
 namespace CollegeManagementSystem.API.Validators.Employees;
 
-public class EmployeeExistsValidator(CollegeManagementSystemDbContext context) : EntityExistsValidator<EmployeeId, Employee>(context)
+public class EmployeeExistsValidator(CollegeManagementSystemDbContext context) : UserExistsValidator<EmployeeId, Employee>(context)
 {
 
 }

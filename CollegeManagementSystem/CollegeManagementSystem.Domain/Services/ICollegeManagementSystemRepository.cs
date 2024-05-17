@@ -23,4 +23,5 @@ public interface ICollegeManagementSystemRepository
     public void DeleteEntity<TEntity>(TEntity entity) where TEntity : Entity;
 
     public User GetUser(string email);
+    public bool UserExists(string email);
 }

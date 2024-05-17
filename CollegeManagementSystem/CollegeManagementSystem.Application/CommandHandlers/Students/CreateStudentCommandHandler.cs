@@ -17,7 +17,7 @@ public sealed class CreateStudentCommandHandler(IUnitOfWork unitOfWork, IValidat
 
         var group = unitOfWork.Repository.Groups.Single(g => g.Id == request.GroupId);
 
-        var student = Student.Create(request.FirstName, request.MiddleName, request.Email, request.LastName, group);
+        var student = Student.Create(request.FirstName, request.MiddleName, request.LastName, group, request.Email, request.Password);
 
         unitOfWork.Repository.AddEntity(student);
 

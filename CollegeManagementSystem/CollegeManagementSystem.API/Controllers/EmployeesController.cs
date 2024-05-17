@@ -40,7 +40,7 @@ public class EmployeesController(IMediator mediator) : ControllerBase
     /// <response code="400">Запрос не прошел валидацию</response>
     /// <response code="403">Пользователь не имеет доступ на изменение сотрудника</response>
     /// <response code="404">сотрудник не найдена</response>
-    [HttpPut("{employeeId}")]
+    [HttpPatch("{employeeId}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
@@ -53,7 +53,6 @@ public class EmployeesController(IMediator mediator) : ControllerBase
             FirstName = updateEmployee.FirstName,
             MiddleName = updateEmployee.MiddleName,
             LastName = updateEmployee.LastName,
-            Posts = updateEmployee.Posts
         };
 
         await mediator.Send(command);

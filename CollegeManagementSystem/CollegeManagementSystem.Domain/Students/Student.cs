@@ -12,6 +12,8 @@ public sealed class Student : User<StudentId>
         Id = new StudentId();
     }
 
+    public new Roles Roles => Roles.Student;
+
     public bool Graduated { get; private set; }
     public Group Group { get; private set; }
 
@@ -61,13 +63,17 @@ public sealed class Student : User<StudentId>
 
         AddEvent(studentUpdatedEvent);
     }
-
-    public void Update(string password)
+    public void Update(string password, bool blocked)
     {
-        UpdateAccount(password, [Roles.Student]);
-        
+        UpdateAccount(password, [Roles], blocked);
+
         var studentUpdatedEvent = new StudentUpdatedEvent(this);
 
         AddEvent(studentUpdatedEvent);
+    }
+
+    public new void UpdateAccount(string password, Roles[] roles, bool blocked)
+    {
+        Update(password, blocked);
     }
 }

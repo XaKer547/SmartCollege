@@ -59,6 +59,12 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
             .Single(u => u.Email == email);
     }
 
+    public bool UserExists(string email)
+    {
+        return Set<User>()
+            .Any(u => u.Email == email);
+    }
+
     private class GroupConfiguration : IEntityTypeConfiguration<Group>
     {
         public void Configure(EntityTypeBuilder<Group> builder)

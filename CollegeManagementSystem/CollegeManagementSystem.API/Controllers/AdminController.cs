@@ -17,12 +17,4 @@ public class AdminController(IMediator mediator) : ControllerBase
 
         return Ok();
     }
-
-    [HttpPatch("Block")]
-    public async Task<IActionResult> DeleteAccount(BlockUserCommand command)
-    {
-        await mediator.Send(command);
-
-        return Ok();
-    }
 }

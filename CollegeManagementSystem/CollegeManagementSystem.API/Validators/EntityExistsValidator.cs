@@ -1,4 +1,5 @@
-﻿using CollegeManagementSystem.Infrastucture.Data;
+﻿using CollegeManagementSystem.Domain.Users;
+using CollegeManagementSystem.Infrastucture.Data;
 using FluentValidation;
 using SharedKernel;
 
@@ -12,9 +13,24 @@ public abstract class EntityExistsValidator<TEntityId, TEntity> : AbstractValida
     {
         RuleFor(x => x)
             .NotNull()
-            .Must(x => context.Set<TEntity>()
+            .Must(x=> context.Set<TEntity>()
             .Any(e => e.Id == x))
             .WithMessage($"Объект {nameof(TEntity)} c таким идентификатором не найден или не существует")
+            .WithErrorCode("404");
+    }
+}
+
+public abstract class UserExistsValidator<TEntityId, TEntity> : AbstractValidator<TEntityId>
+    where TEntityId : EntityId
+    where TEntity : User<TEntityId>
+{
+    public UserExistsValidator(CollegeManagementSystemDbContext context)
+    {
+        RuleFor(x => x)
+            .NotNull()
+            .Must(x => context.Set<TEntity>()
+            .Any(e => e.Id == x))
+            .WithMessage($"Пользователь {nameof(TEntity)} c таким идентификатором не найден или не существует")
             .WithErrorCode("404");
     }
 }

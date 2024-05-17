@@ -1,13 +1,11 @@
 ﻿using CollegeManagementSystem.Application.Commands.Disciplines;
 using CollegeManagementSystem.Application.Queries.Disciplines;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.DTOs.Disciplines;
 
 namespace CollegeManagementSystem.API.Controllers;
 
-//[Authorize]
 [ApiController]
 [Route("/api/[controller]")]
 public class DisciplinesController(IMediator mediator) : ControllerBase
