@@ -1,5 +1,5 @@
 ﻿using CollegeManagementSystem.Domain.Users;
-using CollegeManagementSystem.Infrastucture.Data;
+using CollegeManagementSystem.Infrastucture.Common;
 using FluentValidation;
 using SharedKernel;
 

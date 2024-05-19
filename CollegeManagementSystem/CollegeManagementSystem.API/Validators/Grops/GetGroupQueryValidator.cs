@@ -1,6 +1,6 @@
 ﻿using CollegeManagementSystem.API.Helpers;
 using CollegeManagementSystem.Application.Queries.Groups;
-using CollegeManagementSystem.Infrastucture.Data;
+using CollegeManagementSystem.Infrastucture.Common;
 using FluentValidation;
 
 namespace CollegeManagementSystem.API.Validators.Grops;

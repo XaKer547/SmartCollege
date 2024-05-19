@@ -1,6 +1,6 @@
 ﻿using CollegeManagementSystem.API.Helpers;
 using CollegeManagementSystem.Application.Commands.Students;
-using CollegeManagementSystem.Infrastucture.Data;
+using CollegeManagementSystem.Infrastucture.Common;
 using FluentValidation;
 
 public class UpdateStudentCommandValidator : AbstractValidator<UpdateStudentCommand>

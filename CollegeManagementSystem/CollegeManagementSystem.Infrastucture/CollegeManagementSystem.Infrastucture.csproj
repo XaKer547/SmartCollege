@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,6 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\CollegeManagementSystem.Application\CollegeManagementSystem.Application.csproj" />
     <ProjectReference Include="..\CollegeManagementSystem.Domain\CollegeManagementSystem.Domain.csproj" />
+    <ProjectReference Include="..\CollegeManagementSystem.Infrastucture.MSSQL\CollegeManagementSystem.Infrastucture.MSSQL.csproj" />
+    <ProjectReference Include="..\CollegeManagementSystem.Infrastucture.Postgres\CollegeManagementSystem.Infrastucture.Postgres.csproj" />
   </ItemGroup>
 
 </Project>

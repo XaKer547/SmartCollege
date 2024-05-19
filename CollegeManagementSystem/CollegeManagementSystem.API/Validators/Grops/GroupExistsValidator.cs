@@ -1,5 +1,5 @@
 ﻿using CollegeManagementSystem.Domain.Groups;
-using CollegeManagementSystem.Infrastucture.Data;
+using CollegeManagementSystem.Infrastucture.Common;
 
 namespace CollegeManagementSystem.API.Validators.Grops;
 

@@ -1,5 +1,5 @@
 ﻿using CollegeManagementSystem.Application.Commands.Users;
-using CollegeManagementSystem.Infrastucture.Data;
+using CollegeManagementSystem.Infrastucture.Common;
 using FluentValidation;
 
 namespace CollegeManagementSystem.API.Validators.Users;

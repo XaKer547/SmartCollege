@@ -12,9 +12,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json;
 using SharedKernel;
-using SmartCollege.SSO.Shared;
 
-namespace CollegeManagementSystem.Infrastucture.Data;
+namespace CollegeManagementSystem.Infrastucture.Common;
 
 public sealed class CollegeManagementSystemDbContext(DbContextOptions options) : DbContext(options), ICollegeManagementSystemRepository
 {

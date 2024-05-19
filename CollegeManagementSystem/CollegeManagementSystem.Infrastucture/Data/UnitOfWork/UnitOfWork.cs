@@ -1,4 +1,5 @@
 ﻿using CollegeManagementSystem.Domain.Services;
+using CollegeManagementSystem.Infrastucture.Common;
 using SharedKernel;
 
 namespace CollegeManagementSystem.Infrastucture.Data.UnitOfWork;

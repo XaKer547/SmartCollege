@@ -1,5 +1,5 @@
 ﻿using CollegeManagementSystem.Domain.Employees;
-using CollegeManagementSystem.Infrastucture.Data;
+using CollegeManagementSystem.Infrastucture.Common;
 
 namespace CollegeManagementSystem.API.Validators.Employees;
 
