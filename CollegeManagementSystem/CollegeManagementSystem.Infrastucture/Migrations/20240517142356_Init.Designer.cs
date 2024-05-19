@@ -60,7 +60,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Roles")
+                    b.Property<int>("Posts")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -115,7 +115,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Roles")
+                    b.Property<string>("Posts")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -199,7 +199,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Roles")
+                    b.Property<int>("Posts")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

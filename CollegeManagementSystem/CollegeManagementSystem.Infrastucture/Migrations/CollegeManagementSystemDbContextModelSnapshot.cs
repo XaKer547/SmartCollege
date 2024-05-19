@@ -57,7 +57,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Roles")
+                    b.Property<int>("Posts")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -65,7 +65,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("CompanyRepresentative");
+                    b.ToTable("CompanyRepresentative", (string)null);
                 });
 
             modelBuilder.Entity("CollegeManagementSystem.Domain.Disciplines.Discipline", b =>
@@ -82,7 +82,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Discipline");
+                    b.ToTable("Discipline", (string)null);
                 });
 
             modelBuilder.Entity("CollegeManagementSystem.Domain.Employees.Employee", b =>
@@ -112,7 +112,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Roles")
+                    b.Property<string>("Posts")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -121,7 +121,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employee", (string)null);
                 });
 
             modelBuilder.Entity("CollegeManagementSystem.Domain.Groups.Group", b =>
@@ -143,7 +143,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
 
                     b.HasIndex("SpecializationId");
 
-                    b.ToTable("Group");
+                    b.ToTable("Group", (string)null);
                 });
 
             modelBuilder.Entity("CollegeManagementSystem.Domain.Specializations.Specialization", b =>
@@ -160,7 +160,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Specialization");
+                    b.ToTable("Specialization", (string)null);
                 });
 
             modelBuilder.Entity("CollegeManagementSystem.Domain.Students.Student", b =>
@@ -196,7 +196,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Roles")
+                    b.Property<int>("Posts")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -206,7 +206,7 @@ namespace CollegeManagementSystem.Infrastucture.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Student");
+                    b.ToTable("Student", (string)null);
                 });
 
             modelBuilder.Entity("CollegeManagementSystem.Domain.Groups.Group", b =>

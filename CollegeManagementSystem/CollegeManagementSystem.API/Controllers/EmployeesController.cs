@@ -4,7 +4,6 @@ using CollegeManagementSystem.Domain.Employees;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.DTOs.Employees;
-using System.Runtime.CompilerServices;
 
 namespace CollegeManagementSystem.API.Controllers;
 
@@ -28,7 +27,7 @@ public class EmployeesController(IMediator mediator) : ControllerBase
     {
         var employeeId = await mediator.Send(createEmployee);
 
-        return Ok(employeeId);
+        return Created(string.Empty, employeeId);
     }
 
     /// <summary>
@@ -57,7 +56,7 @@ public class EmployeesController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 
     /// <summary>
@@ -120,8 +119,6 @@ public class EmployeesController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
-
-    //block unblock
 }

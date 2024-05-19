@@ -10,7 +10,7 @@ public abstract class Entity<TEntityId> : Entity
 
 public abstract class Entity
 {
-    public bool Deleted { get; protected set; }
+    public bool Deleted { get; protected set; } = false;
 
     private readonly List<IDomainEvent> _events = [];
     protected void AddEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);

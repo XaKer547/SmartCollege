@@ -19,7 +19,7 @@ public sealed class Employee : User<EmployeeId>
             MiddleName = middleName,
             LastName = lastName,
             Email = email,
-            Roles = posts
+            Posts = posts
         };
 
         var employeeCreatedEvent = new EmployeeCreatedEvent(employee);
@@ -38,19 +38,17 @@ public sealed class Employee : User<EmployeeId>
 
         AddEvent(employeeeUpdatedEvent);
     }
-
     public void Update(string password, Roles[] roles, bool blocked)
     {
-        Roles = roles;
+        Posts = roles;
         Blocked = blocked;
 
         var employeeeUpdatedEvent = new EmployeeUpdatedEvent(this);
 
         AddEvent(employeeeUpdatedEvent);
 
-        UpdateAccount(password, Roles, Blocked);
+        UpdateAccount(password, Posts.ToArray(), Blocked);
     }
-
     public void Delete()
     {
         DeleteAccount();

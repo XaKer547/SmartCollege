@@ -17,17 +17,6 @@ public sealed class ValidationExceptionHandlingMiddleware(RequestDelegate next,
         }
         catch (ValidationException exception)
         {
-            var problemDetails = new ProblemDetails
-            {
-                Status = StatusCodes.Status400BadRequest,
-                Type = "ValidationFailure",
-                Title = "Ошибка валидации",
-                Detail = "Произошла одна или множество ошибок валидации"
-            };
-
-            if (exception.Errors is not null)
-                problemDetails.Extensions["errors"] = exception.Errors;
-
             if (exception.Errors?.Count == 1)
             {
                 var error = exception.Errors[0];
@@ -38,6 +27,17 @@ public sealed class ValidationExceptionHandlingMiddleware(RequestDelegate next,
             }
             else
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
+
+            var problemDetails = new ProblemDetails
+            {
+                Status = context.Response.StatusCode,
+                Type = "ValidationFailure",
+                Title = "Ошибка валидации",
+                Detail = "Произошла одна или множество ошибок валидации"
+            };
+
+            if (exception.Errors is not null)
+                problemDetails.Extensions["errors"] = exception.Errors;
 
             await context.Response.WriteAsJsonAsync(problemDetails);
         }

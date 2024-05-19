@@ -35,6 +35,8 @@ public sealed class Specialization : Entity<SpecializationId>
     }
     public void Delete()
     {
+        Deleted = true;
+
         var specializationDeletedEvent = new SpecializationDeletedEvent(Id);
 
         AddEvent(specializationDeletedEvent);

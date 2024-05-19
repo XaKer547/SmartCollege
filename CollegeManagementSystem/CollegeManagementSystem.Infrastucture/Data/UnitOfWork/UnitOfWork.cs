@@ -19,10 +19,14 @@ public sealed class UnitOfWork(CollegeManagementSystemDbContext context, IDomain
             .Where(e => e.ContainsEvents())
             .ToArray();
 
+        await context.SaveChangesAsync(cancellationToken);
+
         foreach (var entity in domainEventEntities)
         {
             foreach (var @event in entity.Events)
+            {
                 await eventDispatcher.DispatchAsync(@event);
+            }
         }
     }
 }

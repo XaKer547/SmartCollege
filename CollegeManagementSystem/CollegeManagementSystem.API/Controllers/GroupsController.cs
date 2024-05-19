@@ -31,7 +31,7 @@ public class GroupsController(IMediator mediator) : ControllerBase
     {
         var groupId = await mediator.Send(createGroup);
 
-        return Ok(groupId);
+        return Created(string.Empty, groupId);
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ public class GroupsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public class GroupsController(IMediator mediator) : ControllerBase
 
         var studentId = await mediator.Send(command);
 
-        return Ok(studentId);
+        return Created(string.Empty, studentId);
     }
 
     /// <summary>
@@ -167,6 +167,6 @@ public class GroupsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 }

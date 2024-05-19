@@ -10,8 +10,6 @@ public sealed class SpecializationUpdatedEventHandler(IUnitOfWork unitOfWork) : 
 
     public async Task Handle(SpecializationUpdatedEvent notification, CancellationToken cancellationToken)
     {
-        unitOfWork.Repository.UpdateEntity(notification.Specialization);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

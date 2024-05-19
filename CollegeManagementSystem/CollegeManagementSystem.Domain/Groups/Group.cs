@@ -30,6 +30,8 @@ public sealed class Group : Entity<GroupId>
     }
     public void Delete()
     {
+        Deleted = true;
+
         var groupDeletedEvent = new GroupDeletedEvent(Id);
 
         AddEvent(groupDeletedEvent);

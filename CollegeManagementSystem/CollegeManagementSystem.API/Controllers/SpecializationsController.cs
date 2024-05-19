@@ -27,7 +27,7 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
     {
         var specializationId = await mediator.Send(createSpecialization);
 
-        return Ok(specializationId);
+        return Created(string.Empty, specializationId);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 
     /// <summary>
@@ -93,6 +93,6 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 }

@@ -1,4 +1,5 @@
-﻿using CollegeManagementSystem.Domain.Users.Events;
+﻿using CollegeManagementSystem.Domain.Posts;
+using CollegeManagementSystem.Domain.Users.Events;
 using SharedKernel;
 using SmartCollege.SSO.Shared;
 
@@ -16,13 +17,13 @@ public abstract class User : Entity
     public string LastName { get; protected set; }
     public string Email { get; protected set; }
     public bool Blocked { get; protected set; } = false;
-    public Roles[] Roles { get; protected set; }
+    public Roles[] Posts { get; protected set; }
 
-    private string[] RoleNames => [.. Roles.Select(r => r.ToString())];
+    private string[] RoleNames => [.. Posts.Select(r => r.ToString())];
 
     protected void CreateAccount(string password, Roles[] roles)
     {
-        Roles = roles;
+        Posts = roles;
 
         var userCreatedEvent = new UserCreatedEvent(Email, password, RoleNames);
 
@@ -31,7 +32,7 @@ public abstract class User : Entity
 
     public void UpdateAccount(string password, Roles[] roles, bool blocked)
     {
-        Roles = roles;
+        Posts = roles;
         Blocked = blocked;
 
         var userUpdatedEvent = new UserUpdatedEvent(Email, password, RoleNames, Blocked);

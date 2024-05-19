@@ -7,8 +7,12 @@ using CollegeManagementSystem.Domain.Specializations;
 using CollegeManagementSystem.Domain.Students;
 using CollegeManagementSystem.Domain.Users;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Newtonsoft.Json;
 using SharedKernel;
+using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Infrastucture.Data;
 
@@ -20,7 +24,7 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
     public IQueryable<Discipline> Disciplines => Set<Discipline>();
     public IQueryable<Employee> Employees => Set<Employee>();
     public IQueryable<CompanyRepresentative> CompanyRepresentatives => Set<CompanyRepresentative>();
-
+    //public IQueryable<Post> Posts => Set<Post>();
     public void AddEntity<TEntity>(TEntity entity) where TEntity : Entity
     {
         Add(entity);
@@ -50,6 +54,8 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
 
         modelBuilder.ApplyConfiguration(new CompanyRepresentativeConfiguration());
 
+        //modelBuilder.ApplyConfiguration(new PostConfiguration());
+
         base.OnModelCreating(modelBuilder);
     }
 
@@ -65,6 +71,20 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
             .Any(u => u.Email == email);
     }
 
+    //private class PostConfiguration : IEntityTypeConfiguration<Post>
+    //{
+    //    public void Configure(EntityTypeBuilder<Post> builder)
+    //    {
+    //        var posts = Enum.GetValues<Roles>()
+    //            .Select(r => new Post
+    //            {
+    //                Id = (int)r,
+    //                Name = r.GetDisplayName()!
+    //            });
+
+    //        builder.HasData(posts);
+    //    }
+    //}
     private class GroupConfiguration : IEntityTypeConfiguration<Group>
     {
         public void Configure(EntityTypeBuilder<Group> builder)
@@ -166,7 +186,8 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
             builder.Property(e => e.Blocked)
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
 
-            builder.Property(e => e.Roles)
+            builder.Property(e => e.Posts)
+                .HasJsonConversion()
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
 
             builder.Property(e => e.Deleted)
@@ -205,5 +226,27 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
             builder.Property(e => e.Deleted)
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
         }
+    }
+}
+public static class ValueConversionExtensions
+{
+    public static PropertyBuilder<T> HasJsonConversion<T>(this PropertyBuilder<T> propertyBuilder) where T : class
+    {
+        ValueConverter<T, string> converter = new(
+            v => JsonConvert.SerializeObject(v),
+            v => JsonConvert.DeserializeObject<T>(v)
+        );
+
+        ValueComparer<T> comparer = new(
+            (l, r) => JsonConvert.SerializeObject(l) == JsonConvert.SerializeObject(r),
+            v => v == null ? 0 : JsonConvert.SerializeObject(v).GetHashCode(),
+            v => JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(v))
+        );
+
+        propertyBuilder.HasConversion(converter);
+        propertyBuilder.Metadata.SetValueConverter(converter);
+        propertyBuilder.Metadata.SetValueComparer(comparer);
+
+        return propertyBuilder;
     }
 }

@@ -27,6 +27,8 @@ public sealed class Discipline : Entity<DisciplineId>
     }
     public void Delete()
     {
+        Deleted = true;
+
         var disciplineDeletedEvent = new DisciplineDeletedEvent(Id);
 
         AddEvent(disciplineDeletedEvent);

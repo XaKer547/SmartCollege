@@ -1,4 +1,5 @@
 ﻿using CollegeManagementSystem.Application.Commands.Users;
+using CollegeManagementSystem.Domain.Helpers;
 using CollegeManagementSystem.Domain.Services;
 using FluentValidation;
 using MediatR;
@@ -16,7 +17,7 @@ public sealed class UpdateUserCommandHandler(IUnitOfWork unitOfWork, IValidator<
 
         var user = unitOfWork.Repository.GetUser(request.Email);
 
-        user.UpdateAccount(request.Password, request.Roles ?? user.Roles, request.Blocked ?? user.Blocked);
+        user.UpdateAccount(request.Password, request.Roles ?? user.Posts.ToArray(), request.Blocked ?? user.Blocked);
 
         unitOfWork.Repository.UpdateEntity(user);
 

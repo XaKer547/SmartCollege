@@ -1,4 +1,5 @@
 ﻿using CollegeManagementSystem.Domain.Employees.Events;
+using CollegeManagementSystem.Domain.Helpers;
 using MassTransit;
 using MediatR;
 using SmartCollege.RabbitMQ.Contracts.Users;
@@ -14,7 +15,7 @@ internal class UserUpdatedEventHandler(IPublishEndpoint publishEndpoint) : INoti
         await publishEndpoint.Publish<IUserUpdated>(new
         {
             notification.Employee.Email,
-            Roles = notification.Employee.Roles.Select(r => r.ToString())
+            Roles = notification.Employee.Posts.Select(r => r.GetDisplayName()!)
             .ToArray(),
         }, cancellationToken);
     }

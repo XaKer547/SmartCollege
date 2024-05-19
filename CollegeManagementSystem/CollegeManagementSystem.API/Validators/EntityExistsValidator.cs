@@ -15,7 +15,7 @@ public abstract class EntityExistsValidator<TEntityId, TEntity> : AbstractValida
             .NotNull()
             .Must(x=> context.Set<TEntity>()
             .Any(e => e.Id == x))
-            .WithMessage($"Объект {nameof(TEntity)} c таким идентификатором не найден или не существует")
+            .WithMessage($"Объект c таким идентификатором не найден или не существует")
             .WithErrorCode("404");
     }
 }
@@ -30,7 +30,7 @@ public abstract class UserExistsValidator<TEntityId, TEntity> : AbstractValidato
             .NotNull()
             .Must(x => context.Set<TEntity>()
             .Any(e => e.Id == x))
-            .WithMessage($"Пользователь {nameof(TEntity)} c таким идентификатором не найден или не существует")
+            .WithMessage($"Пользователь c таким идентификатором не найден или не существует")
             .WithErrorCode("404");
     }
 }
