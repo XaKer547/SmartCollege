@@ -9,5 +9,5 @@ public sealed record EmployeeDTO
     public string LastName { get; init; }
     public string MiddleName { get; init; }
     public bool Blocked { get; init; }
-    public PostDTO[] Posts { get; init; }
+    public IReadOnlyCollection<PostDTO> Posts { get; init; }
 }

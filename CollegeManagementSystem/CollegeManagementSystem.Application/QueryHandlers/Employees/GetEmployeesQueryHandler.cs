@@ -4,6 +4,7 @@ using CollegeManagementSystem.Domain.Services;
 using MediatR;
 using SharedKernel.DTOs.Employees;
 using SharedKernel.DTOs.Posts;
+using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Application.QueryHandlers.Employees;
 
@@ -19,14 +20,23 @@ public sealed class GetEmployeesQueryHandler(IUnitOfWork unitOfWork) : IRequestH
             FirstName = e.FirstName,
             MiddleName = e.MiddleName,
             LastName = e.LastName,
-            Posts = e.Posts.Select(p => new PostDTO
-            {
-                Id = (int)p,
-                Name = p.GetDisplayName()!,
-            }).ToArray(),
+            Posts = e.Posts.MapFromEnum(),
             Blocked = e.Blocked,
         }).ToArray();
 
         return employees;
+    }
+}
+
+file static class RoleExtenstions
+{
+    public static IReadOnlyCollection<PostDTO> MapFromEnum(this Roles[] roles)
+    {
+        return roles.Select(x => new PostDTO
+        {
+            Id = (int)x,
+            Name = x.GetDisplayName()!
+        })
+            .ToArray();
     }
 }
