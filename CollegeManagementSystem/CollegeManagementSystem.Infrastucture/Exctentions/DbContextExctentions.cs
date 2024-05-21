@@ -12,7 +12,7 @@ namespace CollegeManagementSystem.Infrastucture.Exctentions
             services.AddDbContext<CollegeManagementSystemDbContext>(options =>
             {
                 #if true
-                    options.UseSqlServer(configuration.GetConnectionString("LocalConnection"));
+                    options.UseSqlServer(configuration.GetConnectionString("LocalConnection"), b => b.MigrationsAssembly("CollegeManagementSystem.Infrastucture.MSSQL"));
 
 #else
                                 options.UseNpgsql(configuration.GetConnectionString("PgLocalConnection"), b => b.MigrationsAssembly("CollegeManagementSystem.Infrastucture.Postgres"));

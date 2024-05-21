@@ -1,6 +1,5 @@
 using CollegeManagementSystem.API.Middlewares;
 using CollegeManagementSystem.API.Validators.Behaviors;
-using CollegeManagementSystem.Application.Commands.Employees;
 using CollegeManagementSystem.Domain.Services;
 using CollegeManagementSystem.Infrastucture.Common;
 using CollegeManagementSystem.Infrastucture.Data.UnitOfWork;
@@ -22,7 +21,7 @@ ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("ru");
 
 builder.Services.AddMediatR(m =>
 {
-    var assembly = typeof(CreateEmployeeCommand).GetTypeInfo().Assembly;
+    var assembly = Assembly.Load("CollegeManagementSystem.Application");
 
     m.RegisterServicesFromAssembly(assembly);
 
