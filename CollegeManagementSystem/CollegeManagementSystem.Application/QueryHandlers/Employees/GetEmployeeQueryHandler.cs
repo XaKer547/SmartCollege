@@ -1,4 +1,5 @@
 ﻿using CollegeManagementSystem.Application.Queries.Employees;
+using CollegeManagementSystem.Domain.Helpers;
 using CollegeManagementSystem.Domain.Services;
 using FluentValidation;
 using MediatR;
@@ -16,20 +17,21 @@ public sealed class GetEmployeeQueryHandler(IUnitOfWork unitOfWork, IValidator<G
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var employee = unitOfWork.Repository.Employees.Select(e => new EmployeeDTO
-        {
-            Id = e.Id.Value,
-            FirstName = e.FirstName,
-            MiddleName = e.MiddleName,
-            LastName = e.LastName,
-            //Posts = e.Posts.Select(p => new PostDTO
-            //{
-            //    Id = p.Id,
-            //    Name = p.Name,
-            //}).ToArray(),
-            Blocked = e.Blocked,
-        }).Single(e => e.Id == request.EmployeeId.Value);
+        var employee = unitOfWork.Repository.Employees.Single(e => e.Id == request.EmployeeId);
 
-        return employee;
+        return new EmployeeDTO
+        {
+            Id = employee.Id.Value,
+            FirstName = employee.FirstName,
+            MiddleName = employee.MiddleName,
+            LastName = employee.LastName,
+            Posts = employee.Posts.Select(x => new PostDTO
+            {
+                Id = (int)x,
+                Name = x.GetDisplayName()!
+            })
+            .ToArray(),
+            Blocked = employee.Blocked,
+        };
     }
 }

@@ -15,6 +15,6 @@ public class AdminController(IMediator mediator) : ControllerBase
     {
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 }

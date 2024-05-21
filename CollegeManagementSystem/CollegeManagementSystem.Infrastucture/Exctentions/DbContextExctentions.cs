@@ -11,7 +11,7 @@ namespace CollegeManagementSystem.Infrastucture.Exctentions
         {
             services.AddDbContext<CollegeManagementSystemDbContext>(options =>
             {
-                #if false
+                #if true
                     options.UseSqlServer(configuration.GetConnectionString("LocalConnection"));
 
 #else

@@ -47,7 +47,7 @@ public sealed class Employee : User<EmployeeId>
 
         AddEvent(employeeeUpdatedEvent);
 
-        UpdateAccount(password, Posts.ToArray(), Blocked);
+        UpdateAccount(password, Posts, Blocked);
     }
     public void Delete()
     {

@@ -23,7 +23,6 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
     public IQueryable<Discipline> Disciplines => Set<Discipline>();
     public IQueryable<Employee> Employees => Set<Employee>();
     public IQueryable<CompanyRepresentative> CompanyRepresentatives => Set<CompanyRepresentative>();
-    //public IQueryable<Post> Posts => Set<Post>();
     public void AddEntity<TEntity>(TEntity entity) where TEntity : Entity
     {
         Add(entity);
@@ -53,8 +52,6 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
 
         modelBuilder.ApplyConfiguration(new CompanyRepresentativeConfiguration());
 
-        //modelBuilder.ApplyConfiguration(new PostConfiguration());
-
         base.OnModelCreating(modelBuilder);
     }
 
@@ -69,21 +66,6 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
         return Set<User>()
             .Any(u => u.Email == email);
     }
-
-    //private class PostConfiguration : IEntityTypeConfiguration<Post>
-    //{
-    //    public void Configure(EntityTypeBuilder<Post> builder)
-    //    {
-    //        var posts = Enum.GetValues<Roles>()
-    //            .Select(r => new Post
-    //            {
-    //                Id = (int)r,
-    //                Name = r.GetDisplayName()!
-    //            });
-
-    //        builder.HasData(posts);
-    //    }
-    //}
     private class GroupConfiguration : IEntityTypeConfiguration<Group>
     {
         public void Configure(EntityTypeBuilder<Group> builder)
@@ -186,7 +168,7 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
 
             builder.Property(e => e.Posts)
-                .HasJsonConversion()
+                //.HasJsonConversion()
                 .UsePropertyAccessMode(PropertyAccessMode.Property);
 
             builder.Property(e => e.Deleted)

@@ -1,6 +1,8 @@
-﻿using CollegeManagementSystem.Application.Commands.Disciplines;
+﻿using CollegeManagementSystem.Application.CommandHandlers.Disciplines;
+using CollegeManagementSystem.Application.Commands.Disciplines;
 using CollegeManagementSystem.Application.Queries.Disciplines;
 using CollegeManagementSystem.Domain.Disciplines;
+using CollegeManagementSystem.Domain.Employees;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.DTOs.Disciplines;
@@ -107,15 +109,21 @@ public class DisciplinesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> AssingDiscipline(AssignDisciplineCommand assignDiscipline)
+    public async Task<IActionResult> AssingDiscipline(DisciplineAssignmentDTO assignDiscipline)
     {
-        await mediator.Send(assignDiscipline);
+        var command = new AssignDisciplineCommand()
+        {
+            DisciplineId = new DisciplineId(assignDiscipline.DisciplineId),
+            EmployeeId = new EmployeeId(assignDiscipline.EmployeeId)
+        };
+
+        await mediator.Send(command);
 
         return NoContent();
     }
 
     /// <summary>
-    /// Отвязать дисциплину от преподавателем
+    /// Отвязать дисциплину от преподавателя
     /// </summary>
     /// <param name="unAssignDiscipline"></param>
     /// <response code="204">Дисциплина успешно снята</response>
@@ -127,9 +135,15 @@ public class DisciplinesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> UnAssignDiscipline(UnAssignDisciplineCommand unAssignDiscipline)
+    public async Task<IActionResult> UnAssignDiscipline(DisciplineAssignmentDTO unAssignDiscipline)
     {
-        await mediator.Send(unAssignDiscipline);
+        var command = new AssignDisciplineCommand()
+        {
+            DisciplineId = new DisciplineId(unAssignDiscipline.DisciplineId),
+            EmployeeId = new EmployeeId(unAssignDiscipline.EmployeeId)
+        };
+
+        await mediator.Send(command);
 
         return NoContent();
     }

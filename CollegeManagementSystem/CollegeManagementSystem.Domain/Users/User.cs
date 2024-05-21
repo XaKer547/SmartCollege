@@ -1,5 +1,4 @@
-﻿using CollegeManagementSystem.Domain.Posts;
-using CollegeManagementSystem.Domain.Users.Events;
+﻿using CollegeManagementSystem.Domain.Users.Events;
 using SharedKernel;
 using SmartCollege.SSO.Shared;
 
