@@ -18,19 +18,19 @@ namespace SmartCollege.SSO.HostedServices
             using(var scope = _serviceProvider.CreateScope())
             {
                 var service = scope.ServiceProvider;
-                var dbContext = service.GetRequiredService<AuthorizationDbContext>();
+                var dbContext = service.GetRequiredService<RoleManager<IdentityRole>>();
 
                 var roleExists = await dbContext.Roles.AnyAsync(cancellationToken: cancellationToken);
                 if (!roleExists)
                 {
-                    await dbContext.Roles.AddRangeAsync(
-                        new IdentityRole(Shared.Roles.Teacher.ToString()),
-                        new IdentityRole(Shared.Roles.Student.ToString()),
-                        new IdentityRole(Shared.Roles.HeadOfDepartment.ToString()),
-                        new IdentityRole(Shared.Roles.ClassroomTeacher.ToString()),
-                        new IdentityRole(Shared.Roles.RepresentativeOfTheCompany.ToString()));
+                    await dbContext.CreateAsync(new IdentityRole(Shared.Roles.Teacher.ToString()));
+                    await dbContext.CreateAsync(new IdentityRole(Shared.Roles.Student.ToString()));
 
-                    await dbContext.SaveChangesAsync(cancellationToken);
+                    await dbContext.CreateAsync(new IdentityRole(Shared.Roles.HeadOfDepartment.ToString()));
+
+                    await dbContext.CreateAsync(new IdentityRole(Shared.Roles.ClassroomTeacher.ToString()));
+
+                    await dbContext.CreateAsync(new IdentityRole(Shared.Roles.RepresentativeOfTheCompany.ToString()));
                 }
             }
         }

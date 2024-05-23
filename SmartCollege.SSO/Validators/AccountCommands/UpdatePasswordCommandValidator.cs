@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using SmartCollege.SSO.Models.Commands;
 
-namespace SmartCollege.SSO.Validators
+namespace SmartCollege.SSO.Validators.AccountCommands
 {
     public class UpdatePasswordCommandValidator : AbstractValidator<UpdatePasswordCommand>
     {

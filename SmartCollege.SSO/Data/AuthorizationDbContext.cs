@@ -5,7 +5,7 @@ using SmartCollege.SSO.Data.Entities;
 
 namespace SmartCollege.SSO.Data;
 
-public class AuthorizationDbContext(DbContextOptions<AuthorizationDbContext> options) : IdentityDbContext<AccountIdentity>(options)
+public class AuthorizationDbContext(DbContextOptions<AuthorizationDbContext> options) : IdentityDbContext<AccountIdentity, IdentityRole, string>(options)
 {
- 
+    public DbSet<RepresentationOfTheCompany> RepresentationOfTheCompanies => Set<RepresentationOfTheCompany>();
 }

@@ -1,7 +1,8 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SmartCollege.SSO.Models;
 using SmartCollege.SSO.Models.Commands;
+using System.Security.Claims;
 
 namespace SmartCollege.SSO.Controllers;
 
@@ -17,12 +18,12 @@ public class AccountsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Logup(LogupDto logup)
+    public async Task<IActionResult> Logup(CreateRepresentativeOfCompanyCommand command)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
 
-        var result = await _mediator.Send(new CreateAccountCommand(logup.Email, logup.Password, logup.Role));
+        var result = await _mediator.Send(command);
 
         return StatusCode(result.StatusCode,
             new
@@ -38,6 +39,24 @@ public class AccountsController : ControllerBase
             return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
 
         var result = await _mediator.Send(command);
+
+        return StatusCode(result.StatusCode,
+        new
+        {
+            result.Description
+        });
+    }
+
+    [HttpPatch]
+    [Authorize(Policy = "RepresentationRolePolicy")]
+    public async Task<IActionResult> UpdateAccount(UpdateRepresentativeOfCompanyCommand command)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
+
+        var email = User.FindFirst(ClaimsIdentity.DefaultNameClaimType)!;
+        
+        var result = await _mediator.Send(new UpdateRepresentativeOfCompanyWithEmailCommand(email.Value, command));
 
         return StatusCode(result.StatusCode,
         new

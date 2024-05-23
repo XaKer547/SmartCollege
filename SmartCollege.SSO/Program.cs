@@ -1,4 +1,4 @@
-using Duende.IdentityServer.Test;
+using Duende.IdentityServer.AspNetIdentity;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MassTransit;
@@ -8,18 +8,25 @@ using SmartCollege.SSO;
 using SmartCollege.SSO.Data;
 using SmartCollege.SSO.Data.Entities;
 using SmartCollege.SSO.HostedServices;
-using SmartCollege.SSO.Models;
 using SmartCollege.SSO.Models.Commands;
+using SmartCollege.SSO.Shared;
 using SmartCollege.SSO.Validators;
+using SmartCollege.SSO.Validators.AccountCommands;
 using System.Reflection;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMediatR(x=> x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.Services.AddLogging(x =>
+{
+    x.AddSeq(builder.Configuration.GetSection("SeqLogging"));
+});
+
+builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddScoped<IValidator<LogupDto>, CreateAccountCommandValidator>();
+builder.Services.AddScoped<IValidator<CreateRepresentativeOfCompanyCommand>, CreateAccountCommandValidator>();
 builder.Services.AddScoped<IValidator<UpdatePasswordCommand>, UpdatePasswordCommandValidator>();
+builder.Services.AddScoped<IValidator<UpdateRepresentativeOfCompanyCommand>, UpdateAccountCommandValidator>();
 
 builder.Services.AddMassTransit(x =>
 {
@@ -57,6 +64,14 @@ var identitySettings = builder.Configuration.GetRequiredSection(nameof(IdentityS
 
 //var migrationsAssembly = Assembly.GetExecutingAssembly().GetName().Name;
 
+builder.Services.AddAuthorization(x =>
+{
+    x.AddPolicy("RepresentationRolePolicy", x =>
+    {
+        x.RequireClaim(ClaimsIdentity.DefaultRoleClaimType, Roles.RepresentativeOfTheCompany.ToString());
+    });
+});
+
 builder.Services.AddDbContext<AuthorizationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("LocalConnection");
@@ -79,7 +94,7 @@ builder.Services.AddIdentity<AccountIdentity, IdentityRole>(options =>
     options.Password.RequireLowercase = false;
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
-    
+
     options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
 })
     .AddEntityFrameworkStores<AuthorizationDbContext>()
@@ -97,18 +112,7 @@ builder.Services.AddIdentityServer(options =>
    .AddInMemoryIdentityResources(identitySettings.IdentityResources)
    .AddAspNetIdentity<AccountIdentity>()
    .AddResourceOwnerValidator<AccountOwnerPasswordValidator>()
-   .AddTestUsers([
-       new TestUser()
-       {
-           SubjectId = "a9ea0f25-b964-409f-bcce-c923266249b4",
-           Username = "MickMining",
-           Password = "MickPassword",
-           Claims = [
-               new Claim("given_name", "Mick"),
-               new Claim("family_name", "Mining")
-               ]
-       }
-       ]);
+   .AddProfileService<ProfileService<AccountIdentity>>();
 
 var app = builder.Build();
 

@@ -25,12 +25,12 @@ namespace SmartCollege.SSO.Validators
                 var user = await _userManager.FindByEmailAsync(context.UserName);
                 if (user != null)
                 {
-                    if(!user.ChangeTempPassword)
+                    if (!user.ChangeTempPassword)
                     {
                         context.Result = new GrantValidationResult(TokenRequestErrors.InvalidRequest, "Client need set new password!");
                         return;
                     }
-                    
+
                     var claims = await _userManager.GetClaimsAsync(user);
 
                     context.Result = new GrantValidationResult(
