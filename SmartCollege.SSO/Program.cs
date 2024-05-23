@@ -77,10 +77,9 @@ builder.Services.AddDbContext<AuthorizationDbContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("LocalConnection");
 
     options.UseNpgsql(connectionString);
-    //options.UseSqlServer(connectionString,
-    //     sql => sql.MigrationsAssembly(migrationsAssembly));
 });
 
+builder.Services.AddHostedService<ApplyMigrationService>();
 builder.Services.AddHostedService<InizializationRoleBGService>();
 
 builder.Services.AddIdentity<AccountIdentity, IdentityRole>(options =>
