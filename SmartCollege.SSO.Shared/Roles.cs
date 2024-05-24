@@ -19,3 +19,4 @@ public enum Roles
     [Display(Name = "Представитель компании")]
     RepresentativeOfTheCompany
 }
+

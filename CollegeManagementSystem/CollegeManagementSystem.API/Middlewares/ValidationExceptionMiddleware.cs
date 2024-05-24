@@ -3,17 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CollegeManagementSystem.API.Middlewares;
 
-public sealed class ValidationExceptionHandlingMiddleware(RequestDelegate next,
-    ILogger<ValidationExceptionHandlingMiddleware> logger)
+public sealed class ValidationExceptionHandlingMiddleware(RequestDelegate next, ILogger<ValidationExceptionHandlingMiddleware> logger)
 {
-    private readonly RequestDelegate next = next;
-    private readonly ILogger<ValidationExceptionHandlingMiddleware> logger = logger;
+    private readonly RequestDelegate _next = next;
+    private readonly ILogger<ValidationExceptionHandlingMiddleware> _logger = logger;
 
     public async Task InvokeAsync(HttpContext context)
     {
         try
         {
-            await next(context);
+            await _next(context);
         }
         catch (ValidationException exception)
         {

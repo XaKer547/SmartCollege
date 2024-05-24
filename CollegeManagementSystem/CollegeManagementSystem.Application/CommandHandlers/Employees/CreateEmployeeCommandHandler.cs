@@ -4,6 +4,7 @@ using CollegeManagementSystem.Domain.Helpers;
 using CollegeManagementSystem.Domain.Services;
 using FluentValidation;
 using MediatR;
+using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Application.CommandHandlers.Employees;
 
