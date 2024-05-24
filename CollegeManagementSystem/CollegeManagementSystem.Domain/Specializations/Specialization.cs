@@ -5,7 +5,11 @@ namespace CollegeManagementSystem.Domain.Specializations;
 
 public sealed class Specialization : Entity<SpecializationId>
 {
-    private Specialization() { }
+    private Specialization()
+    {
+        Id = new SpecializationId();
+    }
+
     public string Name { get; private set; }
 
     public static Specialization Create(string name)
@@ -15,10 +19,9 @@ public sealed class Specialization : Entity<SpecializationId>
             Name = name
         };
 
-        specialization.AddEvent(new SpecializationCreatedEvent()
-        {
-            Specialization = specialization
-        });
+        var specializationCreatedEvent = new SpecializationCreatedEvent(specialization);
+
+        specialization.AddEvent(specializationCreatedEvent);
 
         return specialization;
     }
@@ -26,19 +29,15 @@ public sealed class Specialization : Entity<SpecializationId>
     {
         Name = name;
 
-        var specializationUpdatedEvent = new SpecializationUpdatedEvent()
-        {
-            Specialization = this
-        };
+        var specializationUpdatedEvent = new SpecializationUpdatedEvent(this);
 
         AddEvent(specializationUpdatedEvent);
     }
     public void Delete()
     {
-        var specializationDeletedEvent = new SpecializationDeletedEvent()
-        {
-            SpecializationId = Id
-        };
+        Deleted = true;
+
+        var specializationDeletedEvent = new SpecializationDeletedEvent(Id);
 
         AddEvent(specializationDeletedEvent);
     }

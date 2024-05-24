@@ -1,17 +1,15 @@
-﻿using CollegeManagementSystem.Domain.Services;
-using CollegeManagementSystem.Domain.Specializations.Events;
+﻿using CollegeManagementSystem.Domain.Specializations.Events;
+using MassTransit;
 using MediatR;
 
 namespace CollegeManagementSystem.Application.EventHandlers.Specializations;
 
-public sealed class SpecializationCreatedEventHandler(IUnitOfWork unitOfWork) : INotificationHandler<SpecializationCreatedEvent>
+public sealed class SpecializationCreatedEventHandler(IPublishEndpoint publishEndpoint) : INotificationHandler<SpecializationCreatedEvent>
 {
-    private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly IPublishEndpoint publishEndpoint = publishEndpoint;
 
     public async Task Handle(SpecializationCreatedEvent notification, CancellationToken cancellationToken)
     {
-        unitOfWork.Repository.AddEntity(notification.Specialization);
-
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        //await publishEndpoint.Publish<ISpecia>(cancellationToken);
     }
 }

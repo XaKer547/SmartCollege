@@ -1,7 +1,5 @@
 ﻿using ProjectManagementSystem.Domain.Disciplines;
-using ProjectManagementSystem.Domain.Employees;
 using ProjectManagementSystem.Domain.Groups;
-using ProjectManagementSystem.Domain.Posts;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.ProjectTypes;
@@ -15,8 +13,6 @@ public interface IProjectManagementSystemRepository
     IQueryable<ProjectType> ProjectTypes { get; }
     IQueryable<ProjectStage> ProjectStages { get; }
     IQueryable<Student> Students { get; }
-    IQueryable<Employee> Employees { get; }
-    IQueryable<Post> Posts { get; }
     IQueryable<Discipline> Disciplines { get; }
     IQueryable<Group> Groups { get; }
 

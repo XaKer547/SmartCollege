@@ -4,5 +4,10 @@ namespace CollegeManagementSystem.Domain.Employees.Events;
 
 public sealed class EmployeeCreatedEvent : IDomainEvent
 {
-    public required Employee Employee { get; init; }
+    public EmployeeCreatedEvent(Employee employee)
+    {
+        Employee = employee;
+    }
+
+    public Employee Employee { get; init; }
 }

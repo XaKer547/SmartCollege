@@ -11,6 +11,8 @@ namespace CollegeManagementSystem.API.Controllers;
 [Route("/api/[controller]")]
 public class EmployeesController(IMediator mediator) : ControllerBase
 {
+    private readonly IMediator mediator = mediator;
+
     /// <summary>
     /// Добавить сотрудника
     /// </summary>
@@ -25,18 +27,19 @@ public class EmployeesController(IMediator mediator) : ControllerBase
     {
         var employeeId = await mediator.Send(createEmployee);
 
-        return Ok(employeeId);
+        return Created(string.Empty, employeeId);
     }
 
     /// <summary>
     /// Обновить сотрудника
     /// </summary>
     /// <param name="employeeId">Идентификатор сотрудника</param>
+    /// <param name="updateEmployee"></param>
     /// <response code="204">Успешное обновление</response>
     /// <response code="400">Запрос не прошел валидацию</response>
     /// <response code="403">Пользователь не имеет доступ на изменение сотрудника</response>
     /// <response code="404">сотрудник не найдена</response>
-    [HttpPut("{employeeId}")]
+    [HttpPatch("{employeeId}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
@@ -49,12 +52,11 @@ public class EmployeesController(IMediator mediator) : ControllerBase
             FirstName = updateEmployee.FirstName,
             MiddleName = updateEmployee.MiddleName,
             LastName = updateEmployee.LastName,
-            Posts = updateEmployee.Posts
         };
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 
     /// <summary>
@@ -117,8 +119,6 @@ public class EmployeesController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
-
-    //block unblock
 }

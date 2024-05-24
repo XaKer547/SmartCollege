@@ -1,5 +1,5 @@
 ﻿using CollegeManagementSystem.Domain.Specializations;
-using CollegeManagementSystem.Infrastucture.Data;
+using CollegeManagementSystem.Infrastucture.Common;
 
 namespace CollegeManagementSystem.API.Validators.Specializations;
 

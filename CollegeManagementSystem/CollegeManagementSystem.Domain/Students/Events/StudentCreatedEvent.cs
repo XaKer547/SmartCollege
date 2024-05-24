@@ -4,6 +4,11 @@ namespace CollegeManagementSystem.Domain.Students.Events
 {
     public sealed class StudentCreatedEvent : IDomainEvent
     {
-        public required Student Student { get; set; }
+        public StudentCreatedEvent(Student student)
+        {
+            Student = student;
+        }
+
+        public Student Student { get; set; }
     }
 }

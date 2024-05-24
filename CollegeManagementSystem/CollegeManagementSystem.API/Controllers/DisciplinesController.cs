@@ -1,17 +1,19 @@
 ﻿using CollegeManagementSystem.Application.Commands.Disciplines;
 using CollegeManagementSystem.Application.Queries.Disciplines;
+using CollegeManagementSystem.Domain.Disciplines;
+using CollegeManagementSystem.Domain.Employees;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.DTOs.Disciplines;
 
 namespace CollegeManagementSystem.API.Controllers;
 
-//[Authorize]
 [ApiController]
 [Route("/api/[controller]")]
 public class DisciplinesController(IMediator mediator) : ControllerBase
 {
+    private readonly IMediator mediator = mediator;
+
     /// <summary>
     /// Добавить дисциплину
     /// </summary>
@@ -26,7 +28,7 @@ public class DisciplinesController(IMediator mediator) : ControllerBase
     {
         var disciplineId = await mediator.Send(createDiscipline);
 
-        return Ok(disciplineId);
+        return Created(string.Empty, disciplineId);
     }
 
     /// <summary>
@@ -47,13 +49,13 @@ public class DisciplinesController(IMediator mediator) : ControllerBase
     {
         var command = new UpdateDisciplineCommand()
         {
-            DisciplineId = new Domain.Disciplines.DisciplineId(disciplineId),
+            DisciplineId = new DisciplineId(disciplineId),
             Name = updateDiscipline.Name,
         };
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 
     /// <summary>
@@ -77,15 +79,20 @@ public class DisciplinesController(IMediator mediator) : ControllerBase
     /// <response code="204">Успешно удалена</response>
     /// <response code="403">Пользователь не имеет доступ на удаление дисциплины</response>
     /// <response code="404">Дисциплина не найдена</response>
-    [HttpDelete]
+    [HttpDelete("{disciplineId:guid}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(403)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> DeleteDiscipline(DeleteDisciplineCommand deleteDiscipline)
+    public async Task<IActionResult> DeleteDiscipline(Guid disciplineId)
     {
-        await mediator.Send(deleteDiscipline);
+        var command = new DeleteDisciplineCommand()
+        {
+            DisciplineId = new DisciplineId(disciplineId)
+        };
 
-        return Ok();
+        await mediator.Send(command);
+
+        return NoContent();
     }
 
     /// <summary>
@@ -101,15 +108,21 @@ public class DisciplinesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> AssingDiscipline(AssignDisciplineCommand assignDiscipline)
+    public async Task<IActionResult> AssingDiscipline(DisciplineAssignmentDTO assignDiscipline)
     {
-        await mediator.Send(assignDiscipline);
+        var command = new AssignDisciplineCommand()
+        {
+            DisciplineId = new DisciplineId(assignDiscipline.DisciplineId),
+            EmployeeId = new EmployeeId(assignDiscipline.EmployeeId)
+        };
 
-        return Ok();
+        await mediator.Send(command);
+
+        return NoContent();
     }
 
     /// <summary>
-    /// Отвязать дисциплину от преподавателем
+    /// Отвязать дисциплину от преподавателя
     /// </summary>
     /// <param name="unAssignDiscipline"></param>
     /// <response code="204">Дисциплина успешно снята</response>
@@ -121,10 +134,16 @@ public class DisciplinesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> UnAssignDiscipline(UnAssignDisciplineCommand unAssignDiscipline)
+    public async Task<IActionResult> UnAssignDiscipline(DisciplineAssignmentDTO unAssignDiscipline)
     {
-        await mediator.Send(unAssignDiscipline);
+        var command = new AssignDisciplineCommand()
+        {
+            DisciplineId = new DisciplineId(unAssignDiscipline.DisciplineId),
+            EmployeeId = new EmployeeId(unAssignDiscipline.EmployeeId)
+        };
 
-        return Ok();
+        await mediator.Send(command);
+
+        return NoContent();
     }
 }

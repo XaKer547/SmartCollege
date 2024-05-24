@@ -17,7 +17,7 @@ public sealed class Project : Entity<ProjectId>
     public Discipline Discipline { get; private set; }
     public Group Group { get; private set; }
 
-    public bool Completed { get; private set; }
+    public bool Completed { get; private set; } = false;
     public List<ProjectStage> Stages { get; private set; }
 
     public static Project Create(string name, string subjectArea, ProjectType type, Discipline discipline, Group group)

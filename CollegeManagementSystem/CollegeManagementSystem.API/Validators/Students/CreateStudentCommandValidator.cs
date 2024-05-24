@@ -1,6 +1,6 @@
 ﻿using CollegeManagementSystem.API.Helpers;
 using CollegeManagementSystem.Application.Commands.Students;
-using CollegeManagementSystem.Infrastucture.Data;
+using CollegeManagementSystem.Infrastucture.Common;
 using FluentValidation;
 
 namespace CollegeManagementSystem.API.Validators.Students;
@@ -17,6 +17,9 @@ public class CreateStudentCommandValidator : AbstractValidator<CreateStudentComm
 
         RuleFor(x => x.LastName)
             .NotEmpty();
+
+        RuleFor(x => x.Email)
+            .EmailAddress();
 
         RuleFor(x => x.GroupId)
             .Exists(context);

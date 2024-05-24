@@ -1,10 +1,10 @@
 using CollegeManagementSystem.API.Middlewares;
 using CollegeManagementSystem.API.Validators.Behaviors;
-using CollegeManagementSystem.Application.Commands.Employees;
 using CollegeManagementSystem.Domain.Services;
-using CollegeManagementSystem.Infrastucture.Data;
+using CollegeManagementSystem.Infrastucture.Common;
 using CollegeManagementSystem.Infrastucture.Data.UnitOfWork;
 using CollegeManagementSystem.Infrastucture.EventDispatcher;
+using CollegeManagementSystem.Infrastucture.Exctentions;
 using FluentValidation;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,12 +21,14 @@ ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("ru");
 
 builder.Services.AddMediatR(m =>
 {
-    var assembly = typeof(CreateEmployeeCommand).GetTypeInfo().Assembly;
+    var assembly = Assembly.Load("CollegeManagementSystem.Application");
 
     m.RegisterServicesFromAssembly(assembly);
 
     m.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
+
+builder.Services.AddDbContext(builder.Configuration);
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
@@ -74,11 +76,6 @@ builder.Services.AddAuthentication(options =>
         options.GetClaimsFromUserInfoEndpoint = true;
         options.SaveTokens = true;
     });
-
-builder.Services.AddDbContext<CollegeManagementSystemDbContext>(options =>
-{
-    options.UseInMemoryDatabase("TestT");
-});
 
 builder.Services.AddScoped<ICollegeManagementSystemRepository, CollegeManagementSystemDbContext>();
 

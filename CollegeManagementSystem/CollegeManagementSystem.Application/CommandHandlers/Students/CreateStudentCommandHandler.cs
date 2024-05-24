@@ -6,18 +6,22 @@ using MediatR;
 
 namespace CollegeManagementSystem.Application.CommandHandlers.Students;
 
-public sealed class CreateStudentCommandHandler(ICollegeManagementSystemRepository repository, IValidator<CreateStudentCommand> validator) : IRequestHandler<CreateStudentCommand, StudentId>
+public sealed class CreateStudentCommandHandler(IUnitOfWork unitOfWork, IValidator<CreateStudentCommand> validator) : IRequestHandler<CreateStudentCommand, StudentId>
 {
-    private readonly ICollegeManagementSystemRepository repository = repository;
+    private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IValidator<CreateStudentCommand> validator = validator;
 
     public async Task<StudentId> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var group = repository.Groups.Single(g => g.Id == request.GroupId);
+        var group = unitOfWork.Repository.Groups.Single(g => g.Id == request.GroupId);
 
-        var student = Student.Create(request.FirstName, request.MiddleName, request.LastName, group);
+        var student = Student.Create(request.FirstName, request.MiddleName, request.LastName, group, request.Email, request.Password);
+
+        unitOfWork.Repository.AddEntity(student);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return student.Id;
     }

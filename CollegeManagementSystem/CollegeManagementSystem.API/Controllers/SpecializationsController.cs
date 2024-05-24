@@ -1,6 +1,5 @@
 ﻿using CollegeManagementSystem.Application.Commands.Specializations;
 using CollegeManagementSystem.Application.Queries.Specializations;
-using CollegeManagementSystem.Application.QueryHandlers.Specializations;
 using CollegeManagementSystem.Domain.Specializations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +11,8 @@ namespace CollegeManagementSystem.API.Controllers;
 [Route("/api/[controller]")]
 public class SpecializationsController(IMediator mediator) : ControllerBase
 {
+    private readonly IMediator mediator = mediator;
+
     /// <summary>
     /// Добавить специализацию
     /// </summary>
@@ -26,7 +27,7 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
     {
         var specializationId = await mediator.Send(createSpecialization);
 
-        return Ok(specializationId);
+        return Created(string.Empty, specializationId);
     }
 
     /// <summary>
@@ -52,7 +53,7 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 
     /// <summary>
@@ -92,6 +93,6 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 }

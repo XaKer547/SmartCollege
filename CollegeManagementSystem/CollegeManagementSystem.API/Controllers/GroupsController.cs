@@ -15,6 +15,8 @@ namespace CollegeManagementSystem.API.Controllers;
 [Route("/api/[controller]")]
 public class GroupsController(IMediator mediator) : ControllerBase
 {
+    private readonly IMediator mediator = mediator;
+
     /// <summary>
     /// Добавить студенческую группу
     /// </summary>
@@ -25,11 +27,17 @@ public class GroupsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(201)]
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
-    public async Task<IActionResult> CreateGroup(CreateGroupCommand createGroup)
+    public async Task<IActionResult> CreateGroup(CreateGroupDTO createGroup)
     {
-        var groupId = await mediator.Send(createGroup);
+        var command = new CreateGroupCommand()
+        {
+            Name = createGroup.Name,
+            SpecializationId = new SpecializationId(createGroup.SpecializationId)
+        };
 
-        return Ok(groupId);
+        var groupId = await mediator.Send(command);
+
+        return Created(string.Empty, groupId.Value);
     }
 
     /// <summary>
@@ -56,7 +64,7 @@ public class GroupsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 
     /// <summary>
@@ -121,7 +129,7 @@ public class GroupsController(IMediator mediator) : ControllerBase
 
         var studentId = await mediator.Send(command);
 
-        return Ok(studentId);
+        return Created(string.Empty, studentId.Value);
     }
 
     /// <summary>
@@ -165,6 +173,6 @@ public class GroupsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 }

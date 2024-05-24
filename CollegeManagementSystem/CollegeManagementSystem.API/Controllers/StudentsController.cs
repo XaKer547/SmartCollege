@@ -12,6 +12,8 @@ namespace CollegeManagementSystem.API.Controllers;
 [Route("/api/[controller]")]
 public class StudentsController(IMediator mediator) : ControllerBase
 {
+    private readonly IMediator mediator = mediator;
+
     /// <summary>
     /// Обновить студента
     /// </summary>
@@ -20,7 +22,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
     /// <response code="400">Запрос не прошел валидацию</response>
     /// <response code="403">Пользователь не имеет доступ на изменение студента</response>
     /// <response code="404">Студент не найден</response>
-    [HttpPut("{studentId}")]
+    [HttpPatch("{studentId}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
@@ -38,7 +40,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 
     /// <summary>
@@ -84,7 +86,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 
     /// <summary>
@@ -96,7 +98,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
     /// <response code="403">Пользователь не имеет доступ на перевод в выпускники</response>
     /// <response code="404">Студент не найден</response>
     /// <response code="409">Дипломная работа студента не закрыты</response>
-    [HttpPatch("{studentId}")]
+    [HttpPatch("{studentId}/Graduate")]
     [ProducesResponseType(204)]
     [ProducesResponseType(403)]
     [ProducesResponseType(404)]
@@ -111,6 +113,6 @@ public class StudentsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 }

@@ -1,19 +1,16 @@
 ﻿using CollegeManagementSystem.Domain.Employees.Events;
-using SharedKernel;
+using CollegeManagementSystem.Domain.Users;
 using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Domain.Employees;
 
-public sealed class Employee : Entity<EmployeeId>
+public sealed class Employee : User<EmployeeId>
 {
-    private Employee() { }
-    public EmployeeId Id { get; init; }
-    public string FirstName { get; private set; }
-    public string MiddleName { get; private set; }
-    public string LastName { get; private set; }
-    public bool Blocked { get; private set; }
-    public Roles[] Roles { get; private set; }
-    public string Email { get; private set; }
+    private Employee()
+    {
+        Id = new EmployeeId();
+    }
+
     public static Employee Create(string firstName, string middleName, string lastName, Roles[] posts, string email)
     {
         var employee = new Employee()
@@ -22,43 +19,41 @@ public sealed class Employee : Entity<EmployeeId>
             MiddleName = middleName,
             LastName = lastName,
             Email = email,
-            Roles = posts
+            Posts = posts
         };
 
-        var employeeCreatedEvent = new EmployeeCreatedEvent()
-        {
-            Employee = employee
-        };
+        var employeeCreatedEvent = new EmployeeCreatedEvent(employee);
 
         employee.AddEvent(employeeCreatedEvent);
 
         return employee;
     }
-    public void Update(string firstName, string middlename, string lastName, bool blocked, Roles[] posts, string email)
+    public void Update(string firstName, string middlename, string lastName)
     {
-        Roles = posts;
-
         FirstName = firstName;
         MiddleName = middlename;
         LastName = lastName;
-        Email = email;
-        Blocked = blocked;
 
-        var employeeeUpdatedEvent = new EmployeeUpdatedEvent()
-        {
-            Employee = this
-        };
+        var employeeeUpdatedEvent = new EmployeeUpdatedEvent(this);
 
         AddEvent(employeeeUpdatedEvent);
     }
+    public void Update(string password, Roles[] roles, bool blocked)
+    {
+        Posts = roles;
+        Blocked = blocked;
+
+        var employeeeUpdatedEvent = new EmployeeUpdatedEvent(this);
+
+        AddEvent(employeeeUpdatedEvent);
+
+        UpdateAccount(password, Posts, Blocked);
+    }
     public void Delete()
     {
-        Deleted = true;
+        DeleteAccount();
 
-        var employeeDeletedEvent = new EmployeeDeletedEvent()
-        {
-            EmployeeId = Id
-        };
+        var employeeDeletedEvent = new EmployeeDeletedEvent(Email);
 
         AddEvent(employeeDeletedEvent);
     }

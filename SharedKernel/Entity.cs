@@ -2,11 +2,15 @@
 
 namespace SharedKernel;
 
-public abstract class Entity<TEntityId>
-    where TEntityId : class
+public abstract class Entity<TEntityId> : Entity
+    where TEntityId : EntityId
 {
     public TEntityId Id { get; protected set; }
-    public bool Deleted { get; protected set; }
+}
+
+public abstract class Entity
+{
+    public bool Deleted { get; protected set; } = false;
 
     private readonly List<IDomainEvent> _events = [];
     protected void AddEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);

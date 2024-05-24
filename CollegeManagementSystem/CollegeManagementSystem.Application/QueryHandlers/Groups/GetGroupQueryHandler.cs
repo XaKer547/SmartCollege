@@ -6,21 +6,21 @@ using SharedKernel.DTOs.Groups;
 
 namespace CollegeManagementSystem.Application.QueryHandlers.Groups;
 
-public sealed class GetGroupQueryHandler(ICollegeManagementSystemRepository repository, IValidator<GetGroupQuery> validator) : IRequestHandler<GetGroupQuery, GroupDTO>
+public sealed class GetGroupQueryHandler(IUnitOfWork unitOfWork, IValidator<GetGroupQuery> validator) : IRequestHandler<GetGroupQuery, GroupDTO>
 {
-    private readonly ICollegeManagementSystemRepository repository = repository;
+    private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IValidator<GetGroupQuery> validator = validator;
 
     public async Task<GroupDTO> Handle(GetGroupQuery request, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var group = repository.Groups.Select(g => new GroupDTO
+        var group = unitOfWork.Repository.Groups.Select(g => new GroupDTO
         {
-            GroupId = g.Id.Value,
+            Id = g.Id.Value,
             Name = g.Name,
             SpecializationId = g.Specialization.Id.Value
-        }).Single(g => g.GroupId == request.GroupId.Value);
+        }).Single(g => g.Id == request.GroupId.Value);
 
         return group;
     }

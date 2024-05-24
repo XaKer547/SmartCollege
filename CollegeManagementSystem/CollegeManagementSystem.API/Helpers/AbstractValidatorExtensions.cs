@@ -8,7 +8,7 @@ using CollegeManagementSystem.Domain.Employees;
 using CollegeManagementSystem.Domain.Groups;
 using CollegeManagementSystem.Domain.Specializations;
 using CollegeManagementSystem.Domain.Students;
-using CollegeManagementSystem.Infrastucture.Data;
+using CollegeManagementSystem.Infrastucture.Common;
 using FluentValidation;
 
 namespace CollegeManagementSystem.API.Helpers;

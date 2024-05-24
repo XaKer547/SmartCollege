@@ -1,6 +1,6 @@
 ﻿using CollegeManagementSystem.API.Helpers;
 using CollegeManagementSystem.Application.Commands.Disciplines;
-using CollegeManagementSystem.Infrastucture.Data;
+using CollegeManagementSystem.Infrastucture.Common;
 using FluentValidation;
 
 namespace CollegeManagementSystem.API.Validators.Disciplines;
