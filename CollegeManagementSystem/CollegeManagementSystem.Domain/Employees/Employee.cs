@@ -53,7 +53,7 @@ public sealed class Employee : User<EmployeeId>
     {
         DeleteAccount();
 
-        var employeeDeletedEvent = new EmployeeDeletedEvent(Id);
+        var employeeDeletedEvent = new EmployeeDeletedEvent(Email);
 
         AddEvent(employeeDeletedEvent);
     }

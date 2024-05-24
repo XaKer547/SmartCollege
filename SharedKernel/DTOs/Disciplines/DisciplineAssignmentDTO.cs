@@ -1,4 +1,4 @@
-﻿namespace CollegeManagementSystem.Application.CommandHandlers.Disciplines;
+﻿namespace SharedKernel.DTOs.Disciplines;
 
 public sealed record DisciplineAssignmentDTO
 {

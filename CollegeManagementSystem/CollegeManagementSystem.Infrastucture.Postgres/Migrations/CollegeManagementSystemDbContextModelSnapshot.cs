@@ -186,7 +186,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                     b.Property<bool>("Graduated")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("GroupId")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
                     b.Property<string>("LastName")
@@ -206,7 +206,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("Id");
 
                     b.ToTable("Student");
                 });
@@ -226,7 +226,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                 {
                     b.HasOne("CollegeManagementSystem.Domain.Groups.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

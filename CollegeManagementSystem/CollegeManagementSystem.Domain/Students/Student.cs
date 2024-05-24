@@ -41,7 +41,7 @@ public sealed class Student : User<StudentId>
     {
         DeleteAccount();
 
-        var studentDeletedEvent = new StudentDeletedEvent(Id);
+        var studentDeletedEvent = new StudentDeletedEvent(Email);
 
         AddEvent(studentDeletedEvent);
     }

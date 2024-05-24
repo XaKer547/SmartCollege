@@ -1,5 +1,4 @@
-﻿using CollegeManagementSystem.Application.CommandHandlers.Disciplines;
-using CollegeManagementSystem.Application.Commands.Disciplines;
+﻿using CollegeManagementSystem.Application.Commands.Disciplines;
 using CollegeManagementSystem.Application.Queries.Disciplines;
 using CollegeManagementSystem.Domain.Disciplines;
 using CollegeManagementSystem.Domain.Employees;

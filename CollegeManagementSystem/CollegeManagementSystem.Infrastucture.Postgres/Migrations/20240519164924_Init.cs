@@ -147,7 +147,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Student_GroupId",
                 table: "Student",
-                column: "GroupId");
+                column: "Id");
         }
 
         /// <inheritdoc />

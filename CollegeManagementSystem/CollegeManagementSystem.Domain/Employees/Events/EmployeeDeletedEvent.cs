@@ -4,10 +4,10 @@ namespace CollegeManagementSystem.Domain.Employees.Events;
 
 public sealed class EmployeeDeletedEvent : IDomainEvent
 {
-    public EmployeeDeletedEvent(EmployeeId employeeId)
+    public EmployeeDeletedEvent(string email)
     {
-        EmployeeId = employeeId;    
+        Email = email;
     }
 
-    public  EmployeeId EmployeeId { get; init; }
+    public string Email { get; init; }
 }

@@ -17,10 +17,10 @@ public sealed class GetGroupQueryHandler(IUnitOfWork unitOfWork, IValidator<GetG
 
         var group = unitOfWork.Repository.Groups.Select(g => new GroupDTO
         {
-            GroupId = g.Id.Value,
+            Id = g.Id.Value,
             Name = g.Name,
             SpecializationId = g.Specialization.Id.Value
-        }).Single(g => g.GroupId == request.GroupId.Value);
+        }).Single(g => g.Id == request.GroupId.Value);
 
         return group;
     }

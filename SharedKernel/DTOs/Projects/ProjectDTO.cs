@@ -11,4 +11,7 @@ public sealed record ProjectDTO
 
     public Guid DisciplineId { get; init; }
     public string DisciplineName { get; init; }
+
+    public bool Completed { get; init; }
+    public int Mark { get; init; }
 }
