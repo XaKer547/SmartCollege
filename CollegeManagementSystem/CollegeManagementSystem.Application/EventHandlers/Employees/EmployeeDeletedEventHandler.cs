@@ -14,7 +14,7 @@ public sealed class EmployeeDeletedEventHandler(IPublishEndpoint publishEndpoint
     {
         await publishEndpoint.Publish<IUserDeleted>(new
         {
-            notification.Email
+            notification.Id
         }, cancellationToken);
     }
 }

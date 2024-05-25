@@ -11,8 +11,8 @@ public sealed class GetGroupsQueryHandler(IUnitOfWork unitOfWork) : IRequestHand
     {
         IReadOnlyCollection<GroupDTO> groups = [.. unitOfWork.Repository.Groups.Select(g => new GroupDTO
         {
+            Id = g.Id.Value,
             SpecializationId = g.Specialization.Id.Value,
-            Id = g.Specialization.Id.Value,
             Name = g.Name,
         })];
 

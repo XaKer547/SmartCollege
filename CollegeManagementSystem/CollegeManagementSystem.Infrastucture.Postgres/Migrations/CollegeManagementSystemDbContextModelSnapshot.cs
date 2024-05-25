@@ -37,7 +37,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Id")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -63,7 +63,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
+                    b.HasIndex("Id")
                         .IsUnique();
 
                     b.ToTable("CompanyRepresentative");
@@ -97,7 +97,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Id")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -119,7 +119,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
+                    b.HasIndex("Id")
                         .IsUnique();
 
                     b.ToTable("Employee");
@@ -175,7 +175,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Id")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -203,7 +203,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
+                    b.HasIndex("Id")
                         .IsUnique();
 
                     b.HasIndex("Id");

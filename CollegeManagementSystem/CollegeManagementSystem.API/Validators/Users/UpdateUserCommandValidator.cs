@@ -10,10 +10,12 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
     {
         RuleFor(x => x.Email)
             .NotEmpty()
-            .EmailAddress()
-            .Must(context.UserExists)
-            .WithMessage("Пользователь не найден")
-            .WithErrorCode("404");
+            .EmailAddress();
+
+        //RuleFor(x => x.)
+        //.Must(context.UserExists)
+        //.WithMessage("Пользователь не найден")
+        //.WithErrorCode("404");
 
         RuleForEach(x => x.Roles)
             .IsInEnum();

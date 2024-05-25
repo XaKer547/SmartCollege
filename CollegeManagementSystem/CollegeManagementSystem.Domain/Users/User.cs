@@ -1,50 +1,44 @@
-﻿using CollegeManagementSystem.Domain.Users.Events;
-using SharedKernel;
+﻿using SharedKernel;
 using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Domain.Users;
 
 public abstract class User<TEntityId> : User
-    where TEntityId : EntityId
+    where TEntityId : UserId
 {
     public TEntityId Id { get; protected set; }
 }
+
 public abstract class User : Entity
 {
     public string FirstName { get; protected set; }
     public string MiddleName { get; protected set; }
     public string LastName { get; protected set; }
-    public string Email { get; protected set; }
     public bool Blocked { get; protected set; } = false;
-    public Roles[] Posts { get; protected set; }
-
-    private string[] RoleNames => [.. Posts.Select(r => r.ToString())];
-
-    protected void CreateAccount(string password, Roles[] roles)
-    {
-        Posts = roles;
-
-        var userCreatedEvent = new UserCreatedEvent(Email, password, RoleNames);
-
-        AddEvent(userCreatedEvent);
-    }
-
-    public void UpdateAccount(string password, Roles[] roles, bool blocked)
-    {
-        Posts = roles;
-        Blocked = blocked;
-
-        var userUpdatedEvent = new UserUpdatedEvent(Email, password, RoleNames, Blocked);
-
-        AddEvent(userUpdatedEvent);
-    }
-
     protected void DeleteAccount()
     {
         Deleted = true;
 
-        var userDeletedEvent = new UserDeletedEvent(Email);
+        //var userDeletedEvent = new UserDeletedEvent(Email);
 
-        AddEvent(userDeletedEvent);
+        //AddEvent(userDeletedEvent);
+    }
+}
+
+public class UserRole : Entity
+{
+    public int Id { get; private set; }
+    public UserId User { get; protected set; }
+    public Roles[] Roles { get; private set; }
+
+    public static UserRole Create(UserId userId, Roles[] roles)
+    {
+        var role = new UserRole()
+        {
+            User = userId,
+            Roles = roles
+        };
+
+        return role;
     }
 }

@@ -14,7 +14,7 @@ public sealed class StudentDeletedEventHandler(IPublishEndpoint publishEndpoint)
     {
         await publishEndpoint.Publish<IStudentDeleted>(new
         {
-            Id = notification.Email,
+            Id = notification.Id,
         }, cancellationToken);
     }
 }

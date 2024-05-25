@@ -9,6 +9,5 @@ public sealed record CreateEmployeeCommand : IRequest<EmployeeId>
     public string FirstName { get; init; }
     public string MiddleName { get; init; }
     public string LastName { get; init; }
-    public Roles[] Posts { get; init; }
-    public string Email { get; init; }
+    public Roles[] Roles { get; init; }
 }

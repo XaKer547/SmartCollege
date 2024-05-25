@@ -1,10 +1,9 @@
 ﻿using CollegeManagementSystem.Application.Commands.Employees;
 using CollegeManagementSystem.Domain.Employees;
-using CollegeManagementSystem.Domain.Helpers;
 using CollegeManagementSystem.Domain.Services;
+using CollegeManagementSystem.Domain.Users;
 using FluentValidation;
 using MediatR;
-using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Application.CommandHandlers.Employees;
 
@@ -17,9 +16,13 @@ public sealed class CreateEmployeeCommandHandler(IUnitOfWork unitOfWork, IValida
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var employee = Employee.Create(request.FirstName, request.MiddleName, request.LastName, request.Posts, request.Email);
+        var employee = Employee.Create(request.FirstName, request.MiddleName, request.LastName);
 
         unitOfWork.Repository.AddEntity(employee);
+
+        var role = UserRole.Create(employee.Id, request.Roles);
+
+        unitOfWork.Repository.AddEntity(role);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

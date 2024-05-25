@@ -13,7 +13,7 @@ public abstract class EntityExistsValidator<TEntityId, TEntity> : AbstractValida
     {
         RuleFor(x => x)
             .NotNull()
-            .Must(x=> context.Set<TEntity>()
+            .Must(x => context.Set<TEntity>()
             .Any(e => e.Id == x))
             .WithMessage($"Объект c таким идентификатором не найден или не существует")
             .WithErrorCode("404");
@@ -21,7 +21,7 @@ public abstract class EntityExistsValidator<TEntityId, TEntity> : AbstractValida
 }
 
 public abstract class UserExistsValidator<TEntityId, TEntity> : AbstractValidator<TEntityId>
-    where TEntityId : EntityId
+    where TEntityId : UserId
     where TEntity : User<TEntityId>
 {
     public UserExistsValidator(CollegeManagementSystemDbContext context)

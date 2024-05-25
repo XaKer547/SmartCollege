@@ -27,7 +27,7 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
     {
         var specializationId = await mediator.Send(createSpecialization);
 
-        return Created(string.Empty, specializationId);
+        return Created(string.Empty, specializationId.Value);
     }
 
     /// <summary>

@@ -124,13 +124,13 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_CompanyRepresentative_Email",
                 table: "CompanyRepresentative",
-                column: "Email",
+                column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_Email",
                 table: "Employee",
-                column: "Email",
+                column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -141,7 +141,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Student_Email",
                 table: "Student",
-                column: "Email",
+                column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(

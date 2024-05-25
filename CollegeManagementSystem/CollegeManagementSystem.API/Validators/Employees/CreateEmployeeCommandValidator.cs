@@ -1,4 +1,5 @@
-﻿using CollegeManagementSystem.Application.Commands.Employees;
+﻿using CollegeManagementSystem.API.Helpers;
+using CollegeManagementSystem.Application.Commands.Employees;
 using CollegeManagementSystem.Infrastucture.Common;
 using FluentValidation;
 
@@ -17,10 +18,7 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
         RuleFor(x => x.LastName)
             .NotEmpty();
 
-        RuleFor(x => x.Email)
-            .EmailAddress();
-
-        RuleForEach(x => x.Posts)
+        RuleForEach(x => x.Roles)
             .NotNull()
             .IsInEnum();
     }

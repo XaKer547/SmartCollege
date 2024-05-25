@@ -1,8 +1,6 @@
 ﻿using CollegeManagementSystem.Domain.Groups;
-using CollegeManagementSystem.Domain.Helpers;
 using CollegeManagementSystem.Domain.Students.Events;
 using CollegeManagementSystem.Domain.Users;
-using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Domain.Students;
 
@@ -13,23 +11,18 @@ public sealed class Student : User<StudentId>
         Id = new StudentId();
     }
 
-    public new Roles Roles => Roles.Student;
-
     public bool Graduated { get; private set; }
     public Group Group { get; private set; }
 
-    public static Student Create(string firstName, string middlename, string lastName, Group group, string email, string password)
+    public static Student Create(string firstName, string middlename, string lastName, Group group)
     {
         var student = new Student()
         {
             FirstName = firstName,
             MiddleName = middlename,
             LastName = lastName,
-            Email = email,
             Group = group,
         };
-
-        student.CreateAccount(password, [Roles.Student]);
 
         var studentCreatedEvent = new StudentCreatedEvent(student);
 
@@ -41,7 +34,7 @@ public sealed class Student : User<StudentId>
     {
         DeleteAccount();
 
-        var studentDeletedEvent = new StudentDeletedEvent(Email);
+        var studentDeletedEvent = new StudentDeletedEvent(Id);
 
         AddEvent(studentDeletedEvent);
     }
@@ -64,17 +57,14 @@ public sealed class Student : User<StudentId>
 
         AddEvent(studentUpdatedEvent);
     }
-    public void Update(string password, bool blocked)
+
+    //возможно тоже не пригодится
+    public void BlockAccount(string password, bool blocked)
     {
-        UpdateAccount(password, [Roles], blocked);
+        Blocked = blocked;
 
         var studentUpdatedEvent = new StudentUpdatedEvent(this);
 
         AddEvent(studentUpdatedEvent);
-    }
-
-    public new void UpdateAccount(string password, Roles[] roles, bool blocked)
-    {
-        Update(password, blocked);
     }
 }

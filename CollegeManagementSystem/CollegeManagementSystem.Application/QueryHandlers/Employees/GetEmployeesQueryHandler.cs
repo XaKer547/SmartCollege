@@ -20,7 +20,7 @@ public sealed class GetEmployeesQueryHandler(IUnitOfWork unitOfWork) : IRequestH
             FirstName = e.FirstName,
             MiddleName = e.MiddleName,
             LastName = e.LastName,
-            Posts = e.Posts.MapFromEnum(),
+            //Posts = e.Roles.MapFromEnum(),
             Blocked = e.Blocked,
         }).ToArray();
 

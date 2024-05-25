@@ -1,5 +1,4 @@
 ﻿using CollegeManagementSystem.Application.Commands.Users;
-using CollegeManagementSystem.Domain.Helpers;
 using CollegeManagementSystem.Domain.Services;
 using FluentValidation;
 using MediatR;
@@ -15,11 +14,11 @@ public sealed class UpdateUserCommandHandler(IUnitOfWork unitOfWork, IValidator<
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var user = unitOfWork.Repository.GetUser(request.Email);
+        //var user = unitOfWork.Repository.GetUser(request.Email);
 
-        user.UpdateAccount(request.Password, request.Roles ?? user.Posts.ToArray(), request.Blocked ?? user.Blocked);
+        //user.UpdateAccount(request.Password, request.Roles ?? user.Roles.ToArray(), request.Blocked ?? user.Blocked);
 
-        unitOfWork.Repository.UpdateEntity(user);
+        //unitOfWork.Repository.UpdateEntity(user);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }

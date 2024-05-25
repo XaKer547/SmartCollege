@@ -28,7 +28,7 @@ public class DisciplinesController(IMediator mediator) : ControllerBase
     {
         var disciplineId = await mediator.Send(createDiscipline);
 
-        return Created(string.Empty, disciplineId);
+        return Created(string.Empty, disciplineId.Value);
     }
 
     /// <summary>

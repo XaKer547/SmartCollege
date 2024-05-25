@@ -27,7 +27,7 @@ public class EmployeesController(IMediator mediator) : ControllerBase
     {
         var employeeId = await mediator.Send(createEmployee);
 
-        return Created(string.Empty, employeeId);
+        return Created(string.Empty, employeeId.Value);
     }
 
     /// <summary>

@@ -4,11 +4,11 @@ namespace CollegeManagementSystem.Domain.Students.Events
 {
     public sealed class StudentDeletedEvent : IDomainEvent
     {
-        public StudentDeletedEvent(string email)
+        public StudentDeletedEvent(StudentId id)
         {
-            Email = email;
+            Id = id;
         }
 
-        public string Email { get; set; }
+        public StudentId Id { get; set; }
     }
 }

@@ -10,7 +10,7 @@ public class AdminController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator mediator = mediator;
 
-    [HttpPatch("Update")]
+    [HttpPatch("BlockAccount")]
     public async Task<IActionResult> Update(UpdateUserCommand command)
     {
         await mediator.Send(command);

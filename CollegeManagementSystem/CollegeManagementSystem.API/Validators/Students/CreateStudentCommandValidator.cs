@@ -18,9 +18,6 @@ public class CreateStudentCommandValidator : AbstractValidator<CreateStudentComm
         RuleFor(x => x.LastName)
             .NotEmpty();
 
-        RuleFor(x => x.Email)
-            .EmailAddress();
-
         RuleFor(x => x.GroupId)
             .Exists(context);
     }

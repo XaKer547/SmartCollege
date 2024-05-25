@@ -9,13 +9,10 @@ public sealed class CompanyRepresentative : User<CompanyRepresentativeId>
     {
         Id = new CompanyRepresentativeId();
     }
-
     public string CompanyName { get; private set; }
     public string PhoneNumber { get; private set; }
 
-    public new Roles Roles => Roles.RepresentativeOfTheCompany;
-
-    public static CompanyRepresentative Create(string firstName, string middlename, string lastName, string companyName, string phoneNumber, string email)
+    public static CompanyRepresentative Create(string firstName, string middlename, string lastName, string companyName, string phoneNumber)
     {
         var companyRepresentative = new CompanyRepresentative()
         {
@@ -24,7 +21,6 @@ public sealed class CompanyRepresentative : User<CompanyRepresentativeId>
             LastName = lastName,
             CompanyName = companyName,
             PhoneNumber = phoneNumber,
-            Email = email,
         };
 
         return companyRepresentative;
@@ -37,11 +33,6 @@ public sealed class CompanyRepresentative : User<CompanyRepresentativeId>
         LastName = lastName;
         CompanyName = companyName;
         PhoneNumber = phoneNumber;
-    }
-
-    public new void UpdateAccount(string password, Roles[] roles, bool blocked)
-    {
-        UpdateAccount(password, [Roles.RepresentativeOfTheCompany], blocked);
     }
 
     public void Delete()
