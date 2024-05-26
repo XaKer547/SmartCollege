@@ -9,6 +9,7 @@ using SmartCollege.SSO.Data;
 using SmartCollege.SSO.Data.Entities;
 using SmartCollege.SSO.HostedServices;
 using SmartCollege.SSO.Models.Commands;
+using SmartCollege.SSO.Models.Commands.RepresentativeOfCompany;
 using SmartCollege.SSO.Shared;
 using SmartCollege.SSO.Validators;
 using SmartCollege.SSO.Validators.AccountCommands;
@@ -61,8 +62,6 @@ builder.Services.AddAntiforgery();
 
 var identitySettings = builder.Configuration.GetRequiredSection(nameof(IdentityServerSettings))
                                             .Get<IdentityServerSettings>()!;
-
-//var migrationsAssembly = Assembly.GetExecutingAssembly().GetName().Name;
 
 builder.Services.AddAuthorization(x =>
 {

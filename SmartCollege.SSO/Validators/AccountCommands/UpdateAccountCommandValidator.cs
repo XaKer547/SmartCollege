@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using SmartCollege.SSO.Models.Commands;
+using SmartCollege.SSO.Models.Commands.RepresentativeOfCompany;
 using System.Text.RegularExpressions;
 
 namespace SmartCollege.SSO.Validators.AccountCommands

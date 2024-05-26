@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using SmartCollege.SSO.Data;
 using SmartCollege.SSO.Data.Entities;
 using SmartCollege.SSO.Models;
-using SmartCollege.SSO.Models.Commands;
+using SmartCollege.SSO.Models.Commands.RepresentativeOfCompany;
 using SmartCollege.SSO.Models.Events;
-using SmartCollege.SSO.Shared;
 
 namespace SmartCollege.SSO.Handlers.Commands
 {
@@ -35,32 +34,10 @@ namespace SmartCollege.SSO.Handlers.Commands
 
             try
             {
-                var account = new AccountIdentity
-                {
-                    Email = request.Account.Email,
-                    UserName = request.Account.Email,
-                    EmailConfirmed = false,
-                    ChangeTempPassword = true,
-                    LockoutEnabled = true,
-                };
+                var result = await _mediator.Send(request.Account);
 
-                var result = await _userManager.CreateAsync(account, request.Account.Password);
-
-                if (!result.Succeeded)
-                    return HandleResult.Failure(StatusCodes.Status400BadRequest, string.Concat(',', result.Errors
-                        .Select(x => x.Description)));
-
-                try
-                {
-                    await _userManager.AddToRoleAsync(account, Roles.RepresentativeOfTheCompany.ToString());
-                }
-                catch
-                {
-                    await _userManager.DeleteAsync(account);
-
-                    throw;
-                }
-
+                var account = await _userManager.FindByIdAsync(result.Result!.UserId) ?? throw new Exception();
+                
                 await _authorizationDbContext.RepresentationOfTheCompanies.AddAsync(new RepresentationOfTheCompany
                 {
                     Company = request.Company,
@@ -83,7 +60,7 @@ namespace SmartCollege.SSO.Handlers.Commands
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "При создании аккаунта с почтой {@request} произошла ошибка", request);
+                _logger.LogError(ex, "При создании аккаунта {@request} произошла ошибка", request);
 
                 return HandleResult.Failure(StatusCodes.Status500InternalServerError, "Неизвестная ошибка!");
             }

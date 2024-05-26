@@ -1,6 +1,7 @@
 ﻿using MediatR;
+using SmartCollege.SSO.Models.Commands.Account;
 
-namespace SmartCollege.SSO.Models.Commands
+namespace SmartCollege.SSO.Models.Commands.RepresentativeOfCompany
 {
     public record CreateRepresentativeOfCompanyCommand(
         string MiddleName,
@@ -8,9 +9,5 @@ namespace SmartCollege.SSO.Models.Commands
         string LastName,
         string Phone,
         string Company,
-        CreateAccountDto Account) : IRequest<HandleResult>;
-
-    public record CreateAccountDto(
-        string Email,
-        string Password);
+        CreateRepresentativeOfCompanyAccountCommand Account) : IRequest<HandleResult>;
 }

@@ -29,4 +29,18 @@ public class UserHierarchy
 
         return roles.Contains(role);
     }
+
+    public bool CheckHierarchyByRoles(IReadOnlyCollection<Roles> createrRoles, IReadOnlyCollection<Roles> roles)
+    {
+        foreach (var createrRole in createrRoles)
+        {
+            foreach (var role in roles)
+            {
+                if (CheckHierarchyByRole(createrRole, role))
+                    return true;
+            }
+        }
+
+        return false;
+    }
 }

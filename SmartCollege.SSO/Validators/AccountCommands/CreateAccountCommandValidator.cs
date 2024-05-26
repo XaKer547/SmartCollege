@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using SmartCollege.SSO.Models;
-using SmartCollege.SSO.Models.Commands;
+using SmartCollege.SSO.Models.Commands.RepresentativeOfCompany;
 
 namespace SmartCollege.SSO.Validators.AccountCommands
 {

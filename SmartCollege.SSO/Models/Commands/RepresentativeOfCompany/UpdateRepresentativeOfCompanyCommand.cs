@@ -1,6 +1,7 @@
 ﻿using MediatR;
+using SmartCollege.SSO.Handlers.Commands;
 
-namespace SmartCollege.SSO.Models.Commands
+namespace SmartCollege.SSO.Models.Commands.RepresentativeOfCompany
 {
     public record UpdateRepresentativeOfCompanyCommand(
         string? MiddleName,
@@ -8,10 +9,7 @@ namespace SmartCollege.SSO.Models.Commands
         string? LastName,
         string? Phone,
         string? Company,
-        UpdateAccountDto? Account) : IRequest<HandleResult>;
-
-    public record UpdateAccountDto(
-        string? Password);
+        UpdateRepresentativeOfCompanyAccountDto Account) : IRequest<HandleResult>;
 
     public record UpdateRepresentativeOfCompanyWithEmailCommand(
         string CurrentEmail,

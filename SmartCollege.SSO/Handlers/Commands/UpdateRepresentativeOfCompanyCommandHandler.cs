@@ -4,23 +4,27 @@ using Microsoft.EntityFrameworkCore;
 using SmartCollege.SSO.Data;
 using SmartCollege.SSO.Data.Entities;
 using SmartCollege.SSO.Models;
-using SmartCollege.SSO.Models.Commands;
+using SmartCollege.SSO.Models.Commands.Account;
+using SmartCollege.SSO.Models.Commands.RepresentativeOfCompany;
 
 namespace SmartCollege.SSO.Handlers.Commands
 {
-    public class UpdateAccountCommandHandler : IRequestHandler<UpdateRepresentativeOfCompanyWithEmailCommand, HandleResult>
+    public class UpdateRepresentativeOfCompanyCommandHandler : IRequestHandler<UpdateRepresentativeOfCompanyWithEmailCommand, HandleResult>
     {
         private readonly UserManager<AccountIdentity> _userManager;
 
         private readonly AuthorizationDbContext _authorizationDbContext;
 
-        private readonly ILogger<UpdateAccountCommandHandler> _logger;
+        private readonly ILogger<UpdateRepresentativeOfCompanyCommandHandler> _logger;
 
-        public UpdateAccountCommandHandler(UserManager<AccountIdentity> userManager, AuthorizationDbContext authorizationDbContext, ILogger<UpdateAccountCommandHandler> logger)
+        private readonly IMediator _mediator;
+
+        public UpdateRepresentativeOfCompanyCommandHandler(UserManager<AccountIdentity> userManager, AuthorizationDbContext authorizationDbContext, ILogger<UpdateRepresentativeOfCompanyCommandHandler> logger, IMediator mediator)
         {
             _userManager = userManager;
             _authorizationDbContext = authorizationDbContext;
             _logger = logger;
+            _mediator = mediator;
         }
 
         public async Task<HandleResult> Handle(UpdateRepresentativeOfCompanyWithEmailCommand request, CancellationToken cancellationToken)
@@ -40,12 +44,7 @@ namespace SmartCollege.SSO.Handlers.Commands
                 representative.Company = request.Company is not null ? request.Company : representative.Company;
 
                 if (request.Account?.Password is not null)
-                {
-                    var resetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    await _userManager.ResetPasswordAsync(user, resetPasswordToken, request.Account.Password);
-
-                    await _userManager.UpdateAsync(user);
-                }
+                    await _mediator.Send(new UpdateRepresentativeAccountCommand(request.CurrentEmail, request.Account.Password));
 
                 return HandleResult.Success(StatusCodes.Status204NoContent, "Пользователь обновлен!");
             }
