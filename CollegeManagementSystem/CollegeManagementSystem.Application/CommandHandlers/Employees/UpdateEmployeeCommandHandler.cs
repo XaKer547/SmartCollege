@@ -16,7 +16,7 @@ public sealed class UpdateEmployeeCommandHandler(IUnitOfWork unitOfWork, IValida
 
         var employee = unitOfWork.Repository.Employees.Single(e => e.Id == request.EmployeeId);
 
-        employee.Update(request.FirstName ?? employee.FirstName, request.MiddleName ?? employee.MiddleName, request.LastName ?? employee.LastName);
+        employee.Update(request.FirstName ?? employee.FirstName, request.MiddleName ?? employee.MiddleName, request.LastName ?? employee.LastName, request.Roles ?? employee.Roles);
 
         unitOfWork.Repository.UpdateEntity(employee);
 

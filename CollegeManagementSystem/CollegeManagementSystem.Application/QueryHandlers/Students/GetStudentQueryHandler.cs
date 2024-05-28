@@ -15,14 +15,16 @@ public sealed class GetStudentQueryHandler(IUnitOfWork unitOfWork, IValidator<Ge
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var student = unitOfWork.Repository.Students.Select(s => new StudentDTO
-        {
-            Id = s.Id.Value,
-            FirstName = s.FirstName,
-            MiddleName = s.MiddleName,
-            LastName = s.LastName,
-            Graduated = s.Graduated,
-        }).Single(s => s.Id == request.StudentId.Value);
+        var student = unitOfWork.Repository.Students.Where(s => s.Id == request.StudentId)
+            .Select(s => new StudentDTO
+            {
+                Id = s.Id.Value,
+                FirstName = s.FirstName,
+                MiddleName = s.MiddleName,
+                LastName = s.LastName,
+                Graduated = s.Graduated,
+                Blocked = s.Blocked,
+            }).Single();
 
         return student;
     }

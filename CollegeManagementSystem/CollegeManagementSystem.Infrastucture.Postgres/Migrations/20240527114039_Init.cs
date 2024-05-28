@@ -22,9 +22,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     MiddleName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    Blocked = table.Column<bool>(type: "boolean", nullable: false),
-                    Posts = table.Column<int[]>(type: "integer[]", nullable: false)
+                    Blocked = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,13 +47,12 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Roles = table.Column<int[]>(type: "integer[]", nullable: false),
                     Deleted = table.Column<bool>(type: "boolean", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     MiddleName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    Blocked = table.Column<bool>(type: "boolean", nullable: false),
-                    Posts = table.Column<string>(type: "text", nullable: false)
+                    Blocked = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,9 +103,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     MiddleName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    Blocked = table.Column<bool>(type: "boolean", nullable: false),
-                    Posts = table.Column<int[]>(type: "integer[]", nullable: false)
+                    Blocked = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -122,32 +117,14 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompanyRepresentative_Email",
-                table: "CompanyRepresentative",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Employee_Email",
-                table: "Employee",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Group_SpecializationId",
                 table: "Group",
                 column: "SpecializationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Student_Email",
-                table: "Student",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Student_GroupId",
                 table: "Student",
-                column: "Id");
+                column: "GroupId");
         }
 
         /// <inheritdoc />

@@ -20,7 +20,7 @@ public sealed class GetEmployeesQueryHandler(IUnitOfWork unitOfWork) : IRequestH
             FirstName = e.FirstName,
             MiddleName = e.MiddleName,
             LastName = e.LastName,
-            //Posts = e.Roles.MapFromEnum(),
+            Posts = e.Roles.MapFromEnum(),
             Blocked = e.Blocked,
         }).ToArray();
 
@@ -28,7 +28,7 @@ public sealed class GetEmployeesQueryHandler(IUnitOfWork unitOfWork) : IRequestH
     }
 }
 
-file static class RoleExtenstions
+internal static class RoleExtenstions
 {
     public static IReadOnlyCollection<PostDTO> MapFromEnum(this Roles[] roles)
     {

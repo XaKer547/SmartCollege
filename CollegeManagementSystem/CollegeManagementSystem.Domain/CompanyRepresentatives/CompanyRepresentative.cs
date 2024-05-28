@@ -1,5 +1,4 @@
 ﻿using CollegeManagementSystem.Domain.Users;
-using SmartCollege.SSO.Shared;
 
 namespace CollegeManagementSystem.Domain.CompanyRepresentatives;
 

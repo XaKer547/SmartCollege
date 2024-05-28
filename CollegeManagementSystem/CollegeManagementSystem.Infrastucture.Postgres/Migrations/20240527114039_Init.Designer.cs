@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
 {
     [DbContext(typeof(CollegeManagementSystemDbContext))]
-    [Migration("20240519164924_Init")]
+    [Migration("20240527114039_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -40,10 +40,6 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Id")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -60,14 +56,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int[]>("Posts")
-                        .IsRequired()
-                        .HasColumnType("integer[]");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
 
                     b.ToTable("CompanyRepresentative");
                 });
@@ -100,10 +89,6 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Id")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -116,14 +101,11 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Posts")
+                    b.Property<int[]>("Roles")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("integer[]");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
 
                     b.ToTable("Employee");
                 });
@@ -178,10 +160,6 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Id")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -189,7 +167,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                     b.Property<bool>("Graduated")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("GroupId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("LastName")
@@ -200,16 +178,9 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int[]>("Posts")
-                        .IsRequired()
-                        .HasColumnType("integer[]");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("Id");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Student");
                 });
@@ -229,7 +200,7 @@ namespace CollegeManagementSystem.Infrastucture.Postgres.Migrations
                 {
                     b.HasOne("CollegeManagementSystem.Domain.Groups.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -5,7 +5,6 @@ using CollegeManagementSystem.Domain.Groups;
 using CollegeManagementSystem.Domain.Services;
 using CollegeManagementSystem.Domain.Specializations;
 using CollegeManagementSystem.Domain.Students;
-using CollegeManagementSystem.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedKernel;
@@ -20,7 +19,6 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
     public IQueryable<Discipline> Disciplines => Set<Discipline>();
     public IQueryable<Employee> Employees => Set<Employee>();
     public IQueryable<CompanyRepresentative> CompanyRepresentatives => Set<CompanyRepresentative>();
-    public IQueryable<UserRole> Roles => Set<UserRole>();
 
     public void AddEntity<TEntity>(TEntity entity) where TEntity : Entity
     {
@@ -37,11 +35,6 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<UserRole>()
-            .UsePropertyAccessMode(PropertyAccessMode.Property)
-            .Property(e => e.User)
-            .HasConversion(e => e.Value, e => new UserId(e));
-
         modelBuilder.ApplyConfiguration(new GroupConfiguration());
 
         modelBuilder.ApplyConfiguration(new DisciplineConfiguration());

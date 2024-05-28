@@ -24,21 +24,3 @@ public abstract class User : Entity
         //AddEvent(userDeletedEvent);
     }
 }
-
-public class UserRole : Entity
-{
-    public int Id { get; private set; }
-    public UserId User { get; protected set; }
-    public Roles[] Roles { get; private set; }
-
-    public static UserRole Create(UserId userId, Roles[] roles)
-    {
-        var role = new UserRole()
-        {
-            User = userId,
-            Roles = roles
-        };
-
-        return role;
-    }
-}

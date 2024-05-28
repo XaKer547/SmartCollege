@@ -17,7 +17,7 @@ public sealed class StudentUpdatedEventHandler(IPublishEndpoint publishEndpoint)
             notification.Student.FirstName,
             notification.Student.MiddleName,
             notification.Student.LastName,
-            GroupId = notification.Student.Group.Id,
+            GroupId = notification.Student.Group?.Id,
         }, cancellationToken);
     }
 }

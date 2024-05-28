@@ -7,4 +7,5 @@ public sealed record StudentDTO
     public string MiddleName { get; init; }
     public string LastName { get; init; }
     public bool Graduated { get; init; }
+    public bool Blocked { get; init; }
 }

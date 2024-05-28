@@ -15,7 +15,7 @@ public sealed class GetStudentsQueryHandler(IUnitOfWork unitOfWork, IValidator<G
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        IReadOnlyCollection<StudentDTO> students = [.. unitOfWork.Repository.Students.Where(s => s.Group.Id == request.GroupId)
+        var students = unitOfWork.Repository.Students.Where(s => s.Group.Id == request.GroupId)
             .Select(s => new StudentDTO
             {
                 Id = s.Id.Value,
@@ -23,7 +23,8 @@ public sealed class GetStudentsQueryHandler(IUnitOfWork unitOfWork, IValidator<G
                 MiddleName = s.MiddleName,
                 LastName = s.LastName,
                 Graduated = s.Graduated,
-            })];
+                Blocked = s.Blocked,
+            }).ToArray();
 
         return students;
     }

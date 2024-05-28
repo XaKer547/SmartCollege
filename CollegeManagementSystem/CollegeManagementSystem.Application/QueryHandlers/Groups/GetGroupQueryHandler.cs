@@ -15,12 +15,13 @@ public sealed class GetGroupQueryHandler(IUnitOfWork unitOfWork, IValidator<GetG
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var group = unitOfWork.Repository.Groups.Select(g => new GroupDTO
-        {
-            Id = g.Id.Value,
-            Name = g.Name,
-            SpecializationId = g.Specialization.Id.Value
-        }).Single(g => g.Id == request.GroupId.Value);
+        var group = unitOfWork.Repository.Groups.Where(g => g.Id == request.GroupId)
+            .Select(g => new GroupDTO
+            {
+                Id = g.Id.Value,
+                Name = g.Name,
+                SpecializationId = g.Specialization.Id.Value
+            }).Single();
 
         return group;
     }

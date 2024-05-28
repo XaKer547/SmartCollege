@@ -11,13 +11,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SharedKernel;
-using System.Globalization;
 using System.Reflection;
 using static IdentityModel.OidcConstants;
 
 var builder = WebApplication.CreateBuilder(args);
-
-ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("ru");
 
 builder.Services.AddMediatR(m =>
 {

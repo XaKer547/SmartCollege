@@ -1,8 +1,6 @@
 ﻿using CollegeManagementSystem.Application.Commands.Students;
-using CollegeManagementSystem.Domain.Employees;
 using CollegeManagementSystem.Domain.Services;
 using CollegeManagementSystem.Domain.Students;
-using CollegeManagementSystem.Domain.Users;
 using FluentValidation;
 using MediatR;
 
@@ -20,10 +18,6 @@ public sealed class CreateStudentCommandHandler(IUnitOfWork unitOfWork, IValidat
         var group = unitOfWork.Repository.Groups.Single(g => g.Id == request.GroupId);
 
         var student = Student.Create(request.FirstName, request.MiddleName, request.LastName, group);
-
-        var role = UserRole.Create(student.Id, [SmartCollege.SSO.Shared.Roles.Student]);
-
-        unitOfWork.Repository.AddEntity(role);
 
         unitOfWork.Repository.AddEntity(student);
 

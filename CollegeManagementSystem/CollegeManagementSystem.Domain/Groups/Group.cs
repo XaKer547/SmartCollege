@@ -1,5 +1,6 @@
 ﻿using CollegeManagementSystem.Domain.Groups.Events;
 using CollegeManagementSystem.Domain.Specializations;
+using CollegeManagementSystem.Domain.Students;
 using SharedKernel;
 
 namespace CollegeManagementSystem.Domain.Groups;
@@ -13,7 +14,6 @@ public sealed class Group : Entity<GroupId>
 
     public string Name { get; private set; }
     public Specialization Specialization { get; private set; }
-
     public static Group Create(string name, Specialization specialization)
     {
         var group = new Group

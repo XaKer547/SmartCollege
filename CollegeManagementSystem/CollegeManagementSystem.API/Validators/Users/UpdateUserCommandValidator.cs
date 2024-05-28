@@ -8,16 +8,10 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
 {
     public UpdateUserCommandValidator(CollegeManagementSystemDbContext context)
     {
-        RuleFor(x => x.Email)
-            .NotEmpty()
-            .EmailAddress();
+        //RuleFor(x => new EmployeeId(x.UserId))
+        //    .Exists(context);
 
-        //RuleFor(x => x.)
-        //.Must(context.UserExists)
-        //.WithMessage("Пользователь не найден")
-        //.WithErrorCode("404");
-
-        RuleForEach(x => x.Roles)
-            .IsInEnum();
+        //RuleForEach(x => x.Roles)
+        //    .IsInEnum();
     }
 }

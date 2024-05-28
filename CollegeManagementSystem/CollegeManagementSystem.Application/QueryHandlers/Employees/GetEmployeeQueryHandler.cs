@@ -25,12 +25,7 @@ public sealed class GetEmployeeQueryHandler(IUnitOfWork unitOfWork, IValidator<G
             FirstName = employee.FirstName,
             MiddleName = employee.MiddleName,
             LastName = employee.LastName,
-            //Posts = employee.Roles.Select(x => new PostDTO
-            //{
-            //    Id = (int)x,
-            //    Name = x.GetDisplayName()!
-            //})
-            //.ToArray(),
+            Posts = employee.Roles.MapFromEnum(),
             Blocked = employee.Blocked,
         };
     }

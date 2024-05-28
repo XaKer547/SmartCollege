@@ -16,13 +16,9 @@ public sealed class CreateEmployeeCommandHandler(IUnitOfWork unitOfWork, IValida
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var employee = Employee.Create(request.FirstName, request.MiddleName, request.LastName);
+        var employee = Employee.Create(request.FirstName, request.MiddleName, request.LastName, request.Roles);
 
         unitOfWork.Repository.AddEntity(employee);
-
-        var role = UserRole.Create(employee.Id, request.Roles);
-
-        unitOfWork.Repository.AddEntity(role);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
