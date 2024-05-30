@@ -35,6 +35,11 @@ public sealed class CollegeManagementSystemDbContext(DbContextOptions options) :
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>()
+            .UsePropertyAccessMode(PropertyAccessMode.Property)
+            .Property(e => e.Id)
+            .HasConversion(e => e.Value, e => new UserId(e));
+
         modelBuilder.ApplyConfiguration(new GroupConfiguration());
 
         modelBuilder.ApplyConfiguration(new DisciplineConfiguration());

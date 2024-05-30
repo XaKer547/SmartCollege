@@ -1,5 +1,5 @@
 ﻿using CollegeManagementSystem.Application.Commands.Users;
-using MassTransit.Mediator;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CollegeManagementSystem.API.Controllers;

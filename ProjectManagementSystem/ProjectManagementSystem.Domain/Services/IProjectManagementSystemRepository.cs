@@ -2,7 +2,6 @@
 using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStages;
-using ProjectManagementSystem.Domain.ProjectTypes;
 using ProjectManagementSystem.Domain.Students;
 
 namespace ProjectManagementSystem.Domain.Services;
@@ -10,7 +9,6 @@ namespace ProjectManagementSystem.Domain.Services;
 public interface IProjectManagementSystemRepository
 {
     IQueryable<Project> Projects { get; }
-    IQueryable<ProjectType> ProjectTypes { get; }
     IQueryable<ProjectStage> ProjectStages { get; }
     IQueryable<Student> Students { get; }
     IQueryable<Discipline> Disciplines { get; }
