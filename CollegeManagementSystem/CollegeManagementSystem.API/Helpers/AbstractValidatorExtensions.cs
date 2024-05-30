@@ -3,7 +3,6 @@ using CollegeManagementSystem.API.Validators.Employees;
 using CollegeManagementSystem.API.Validators.Grops;
 using CollegeManagementSystem.API.Validators.Specializations;
 using CollegeManagementSystem.API.Validators.Students;
-using CollegeManagementSystem.API.Validators.Users;
 using CollegeManagementSystem.Domain.Disciplines;
 using CollegeManagementSystem.Domain.Employees;
 using CollegeManagementSystem.Domain.Groups;
@@ -35,10 +34,5 @@ public static class AbstractValidatorExtensions
     public static IRuleBuilderOptions<T, SpecializationId> Exists<T>(this IRuleBuilder<T, SpecializationId> ruleBuilder, CollegeManagementSystemDbContext context)
     {
         return ruleBuilder.SetValidator(new SpecializationExistsValidator(context));
-    }
-
-    public static IRuleBuilderOptions<T, string> HasUniqueEmail<T>(this IRuleBuilder<T, string> ruleBuilder, CollegeManagementSystemDbContext context)
-    {
-        return ruleBuilder.SetValidator(new UniqueEmailValidator(context));
     }
 }

@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
 using ProjectManagementSystem.Application.Commands.ProjectStagesAnswers;
+using ProjectManagementSystem.Application.Models;
 using ProjectManagementSystem.Application.Queries.Projects;
 using ProjectManagementSystem.Application.Queries.ProjectStages;
 using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStages;
-using ProjectManagementSystem.Domain.ProjectTypes;
 using ProjectManagementSystem.Domain.Students;
 using SharedKernel.DTOs.Projects;
 using SharedKernel.DTOs.ProjectStages;
@@ -122,7 +122,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
             SubjectArea = updateProject.SubjectArea,
             DisciplineId = new DisciplineId(updateProject.DisciplineId),
             GroupId = new GroupId(updateProject.GroupId),
-            ProjectTypeId = new ProjectTypeId(updateProject.ProjectTypeId)
+            ProjectType = updateProject.ProjectType
         };
 
         await mediator.Send(command);
@@ -143,24 +143,44 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> AddProjectStage(Guid projectId, IEnumerable<IFormFile>? files, CreateProjectStageDTO createProjectStage)
+    public async Task<IActionResult> AddProjectStage(Guid projectId, IEnumerable<IFormFile>? files)
     {
-        //Handle files
-
-        //
-
-        var command = new CreateProjectStageCommand()
+        files.Select(f =>
         {
-            ProjectId = new ProjectId(projectId),
-            Deadline = createProjectStage.Deadline,
-            Description = createProjectStage.Description,
-            Name = createProjectStage.Name,
-            //PinnedFiles =
-        };
+            long fileSize = f.Length;
+            string fileType = f.ContentType;
 
-        var projectStageId = await mediator.Send(command);
+            byte[] bytes;
 
-        return Created(string.Empty, projectStageId);
+            using (var stream = new MemoryStream())
+            {
+                f.CopyTo(stream);
+
+                bytes = stream.ToArray();
+            }
+
+            var dto = new FileDTO()
+            {
+                Name = f.Name + Path.GetExtension(f.FileName),
+                File = bytes
+            };
+
+            return dto;
+        });
+
+        //var command = new CreateProjectStageCommand()
+        //{
+        //    ProjectId = new ProjectId(projectId),
+        //    Deadline = createProjectStage.Deadline,
+        //    Description = createProjectStage.Description,
+        //    Name = createProjectStage.Name,
+        //};
+
+        //var projectStageId = await mediator.Send(command);
+        
+        return Ok();
+
+        //return Created(string.Empty, projectStageId);
     }
 
     /// <summary>
@@ -412,16 +432,14 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetFinalGradesReport(Guid projectId)
     {
-        var query = new GetFinalGradesQuery()
+        var query = new GetProjectFinalGradesQuery()
         {
             ProjectId = new ProjectId(projectId)
         };
 
         var grades = await mediator.Send(query);
 
-        //var report = await
-
-        return Ok();
+        return File(grades.File, "text/csv", grades.Name);
     }
 
     /// <summary>
@@ -435,15 +453,13 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetWorkAssingmentReport(Guid projectId)
     {
-        var query = new GetWorkAssignmentQuery()
+        var query = new GetProjectWorkAssignmentQuery()
         {
             ProjectId = new ProjectId(projectId)
         };
 
         var assignment = await mediator.Send(query);
 
-        //var report = await
-
-        return Ok();
+        return File(assignment.File, "text/csv", assignment.Name);
     }
 }
