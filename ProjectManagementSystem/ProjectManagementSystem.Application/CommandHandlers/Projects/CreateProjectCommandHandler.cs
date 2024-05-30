@@ -6,24 +6,22 @@ using ProjectManagementSystem.Domain.Services;
 
 namespace ProjectManagementSystem.Application.CommandHandlers.Projects;
 
-public sealed class CreateProjectCommandHandler(IUnitOfWork unitOfWork, IValidator<CreateProjectCommand> validator) : IRequestHandler<CreateProjectCommand, ProjectId>
+public sealed class CreateProjectCommandHandler(IProjectManagementSystemRepository repository, IValidator<CreateProjectCommand> validator) : IRequestHandler<CreateProjectCommand, ProjectId>
 {
-    private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly IProjectManagementSystemRepository repository = repository;
     private readonly IValidator<CreateProjectCommand> validator = validator;
 
     public async Task<ProjectId> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var discipline = unitOfWork.Repository.Disciplines.Single(d => d.Id == request.DisciplineId);
+        var projectType = repository.ProjectTypes.Single(p => p.Id == request.ProjectTypeId);
 
-        var group = unitOfWork.Repository.Groups.Single(g => g.Id == request.GroupId);
+        var discipline = repository.Disciplines.Single(d => d.Id == request.DisciplineId);
 
-        var project = Project.Create(request.Name, request.SubjectArea, request.ProjectType, discipline, group);
+        var group = repository.Groups.Single(g => g.Id == request.GroupId);
 
-        unitOfWork.Repository.AddEntity(project);
-
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        var project = Project.Create(request.Name, request.SubjectArea, projectType, discipline, group);
 
         return project.Id;
     }

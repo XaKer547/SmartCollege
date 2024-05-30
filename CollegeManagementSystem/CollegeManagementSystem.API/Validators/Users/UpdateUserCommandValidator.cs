@@ -1,6 +1,4 @@
 ﻿using CollegeManagementSystem.Application.Commands.Users;
-using CollegeManagementSystem.Domain.Students;
-using CollegeManagementSystem.Domain.Users;
 using CollegeManagementSystem.Infrastucture.Common;
 using FluentValidation;
 
@@ -10,12 +8,10 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
 {
     public UpdateUserCommandValidator(CollegeManagementSystemDbContext context)
     {
-        RuleFor(x => x.UserId)
-            .Must(x =>
-            {
-                var user = context.Users.FirstOrDefault();
+        //RuleFor(x => new EmployeeId(x.UserId))
+        //    .Exists(context);
 
-                return user != null;
-            });
+        //RuleForEach(x => x.Roles)
+        //    .IsInEnum();
     }
 }

@@ -6,29 +6,17 @@ using ProjectManagementSystem.Domain.Services;
 
 namespace ProjectManagementSystem.Application.CommandHandlers.ProjectStages;
 
-public sealed class CreateProjectStageCommandValidator(IUnitOfWork unitOfWork, IValidator<CreateProjectStageCommand> validator) : IRequestHandler<CreateProjectStageCommand, ProjectStageId>
+public sealed class CreateProjectStageCommandValidator(IProjectManagementSystemRepository repository, IValidator<CreateProjectStageCommand> validator) : IRequestHandler<CreateProjectStageCommand, ProjectStageId>
 {
-    private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly IProjectManagementSystemRepository repository = repository;
     private readonly IValidator<CreateProjectStageCommand> validator = validator;
 
     public async Task<ProjectStageId> Handle(CreateProjectStageCommand request, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var project = unitOfWork.Repository.Projects.Single(p => p.Id == request.ProjectId);
+        var projectStage = ProjectStage.Create(request.Name, request.Description, request.Deadline, request.PinnedFiles);
 
-        //var students =
-
-        //var projectStage = ProjectStage.Create(null, request.Name, request.Description, request.Deadline, request.PinnedFiles);
-
-        //project.Stages.Add(projectStage);
-
-        //unitOfWork.Repository.UpdateEntity(project);
-
-        //await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        //return projectStage.Id;
-        
-        return null;
+        return projectStage.Id;
     }
 }

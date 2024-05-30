@@ -6,22 +6,22 @@ using SharedKernel.DTOs.ProjectStages;
 
 namespace ProjectManagementSystem.Application.QueryHandlers.ProjectStages;
 
-public sealed class GetProjectStagesQueryHandler(IUnitOfWork unitOfWork, IValidator<GetProjectStagesQuery> validator) : IRequestHandler<GetProjectStagesQuery, IReadOnlyCollection<ProjectStageDTO>>
+public sealed class GetProjectStagesQueryHandler(IProjectManagementSystemRepository repository, IValidator<GetProjectStagesQuery> validator) : IRequestHandler<GetProjectStagesQuery, IReadOnlyCollection<ProjectStageDTO>>
 {
-    private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly IProjectManagementSystemRepository repository = repository;
     private readonly IValidator<GetProjectStagesQuery> validator = validator;
 
     public async Task<IReadOnlyCollection<ProjectStageDTO>> Handle(GetProjectStagesQuery request, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        IReadOnlyCollection<ProjectStageDTO> projectStages = [.. unitOfWork.Repository.ProjectStages.Select(p => new ProjectStageDTO
+        IReadOnlyCollection<ProjectStageDTO> projectStages = [.. repository.ProjectStages.Select(p => new ProjectStageDTO
         {
             Id = p.Id.Value,
             Name = p.Name,
             Description = p.Description,
             Deadline = p.Deadline,
-            //PinnedFiles = p.PinnedFiles,
+            PinnedFiles = p.PinnedFiles,
           //StudentWork = p
         })];
 

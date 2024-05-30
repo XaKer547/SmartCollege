@@ -1,32 +1,8 @@
-using FluentValidation;
-using ProjectManagementSystem.API.Validators.Behaviors;
-using ProjectManagementSystem.Domain.Services;
-using ProjectManagementSystem.Infrastucture.Common;
-using ProjectManagementSystem.Infrastucture.Data.UnitOfWork;
-using System.Reflection;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddMediatR(m =>
-{
-    var assembly = Assembly.Load("ProjectManagementSystem.Application");
-
-    m.RegisterServicesFromAssembly(assembly);
-
-    m.AddOpenBehavior(typeof(ValidationBehavior<,>));
-});
-
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
-
-builder.Services.AddDbContext<ProjectManagementSystemDbContext>();
-
-builder.Services.AddScoped<IProjectManagementSystemRepository, ProjectManagementSystemDbContext>();
-
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 

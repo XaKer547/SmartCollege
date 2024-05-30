@@ -11,11 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel", "..\SharedKe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectManagementSystem.Application", "ProjectManagementSystem.Application\ProjectManagementSystem.Application.csproj", "{AE412D86-F502-4376-A59B-E2FA4AC6F1E1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectManagementSystem.API", "ProjectManagementSystem.API\ProjectManagementSystem.API.csproj", "{ABBF938C-5A62-490B-9EB9-509E016FAB45}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagementSystem.Infrastucture.Common", "ProjectManagementSustem.Infrastucture.Common\ProjectManagementSystem.Infrastucture.Common.csproj", "{A6DFCC81-9AC0-4EC2-B310-98710A8228A8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagementSystem.Infrastucture", "ProjectManagementSystem.Infrastucture\ProjectManagementSystem.Infrastucture.csproj", "{76F59953-AD82-4059-8754-7FE27D367D7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagementSystem.API", "ProjectManagementSystem.API\ProjectManagementSystem.API.csproj", "{ABBF938C-5A62-490B-9EB9-509E016FAB45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +39,6 @@ Global
 		{ABBF938C-5A62-490B-9EB9-509E016FAB45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABBF938C-5A62-490B-9EB9-509E016FAB45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABBF938C-5A62-490B-9EB9-509E016FAB45}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6DFCC81-9AC0-4EC2-B310-98710A8228A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6DFCC81-9AC0-4EC2-B310-98710A8228A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6DFCC81-9AC0-4EC2-B310-98710A8228A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6DFCC81-9AC0-4EC2-B310-98710A8228A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76F59953-AD82-4059-8754-7FE27D367D7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76F59953-AD82-4059-8754-7FE27D367D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76F59953-AD82-4059-8754-7FE27D367D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76F59953-AD82-4059-8754-7FE27D367D7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

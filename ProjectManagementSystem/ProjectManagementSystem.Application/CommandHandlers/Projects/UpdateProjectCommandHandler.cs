@@ -1,29 +1,28 @@
 ﻿using FluentValidation;
 using MediatR;
 using ProjectManagementSystem.Application.Commands.Projects;
+using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.Services;
 
 namespace ProjectManagementSystem.Application.CommandHandlers.Projects;
 
-public sealed class UpdateProjectCommandHandler(IUnitOfWork unitOfWork, IValidator<UpdateProjectCommand> validator) : IRequestHandler<UpdateProjectCommand>
+public sealed class UpdateProjectCommandHandler(IProjectManagementSystemRepository repository, IValidator<UpdateProjectCommand> validator) : IRequestHandler<UpdateProjectCommand>
 {
-    private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly IProjectManagementSystemRepository repository = repository;
     private readonly IValidator<UpdateProjectCommand> validator = validator;
 
     public async Task Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var project = unitOfWork.Repository.Projects.Single(p => p.Id == request.ProjectId);
+        var project = repository.Projects.Single(p => p.Id == request.ProjectId);
 
-        var discipline = unitOfWork.Repository.Disciplines.Single(d => d.Id == request.DisciplineId);
+        var projectType = repository.ProjectTypes.Single(p => p.Id == request.ProjectTypeId);
 
-        var group = unitOfWork.Repository.Groups.Single(g => g.Id == request.GroupId);
+        var discipline = repository.Disciplines.Single(d => d.Id == request.DisciplineId);
 
-        project.Update(request.Name, request.SubjectArea, request.ProjectType, discipline, group);
+        var group = repository.Groups.Single(g => g.Id == request.GroupId);
 
-        unitOfWork.Repository.UpdateEntity(project);
-
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        project.Update(request.Name, request.SubjectArea, projectType, discipline, group);
     }
 }

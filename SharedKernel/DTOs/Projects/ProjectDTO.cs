@@ -6,7 +6,7 @@ public sealed record ProjectDTO
     public string Name { get; init; }
     public string SubjectArea { get; init; }
 
-    public int ProjectTypeId { get; init; }
+    public Guid ProjectTypeId { get; init; }
     public string ProjectType { get; init; }
 
     public Guid DisciplineId { get; init; }

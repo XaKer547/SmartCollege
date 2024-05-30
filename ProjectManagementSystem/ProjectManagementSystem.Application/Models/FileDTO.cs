@@ -2,6 +2,6 @@
 
 public sealed record FileDTO
 {
-    public byte[] File { get; init; }
+    public byte[] FIle { get; init; }
     public string Name { get; init; }
 }

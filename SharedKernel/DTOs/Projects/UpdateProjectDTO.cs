@@ -1,5 +1,4 @@
-﻿using SharedKernel.DTOs.ProjectType;
-
+﻿
 namespace SharedKernel.DTOs.Projects;
 
 public sealed record UpdateProjectDTO
@@ -8,5 +7,5 @@ public sealed record UpdateProjectDTO
     public string SubjectArea { get; init; }
     public Guid GroupId { get; init; }
     public Guid DisciplineId { get; init; }
-    public ProjectTypes ProjectType { get; init; }
+    public Guid ProjectTypeId { get; init; }
 }
