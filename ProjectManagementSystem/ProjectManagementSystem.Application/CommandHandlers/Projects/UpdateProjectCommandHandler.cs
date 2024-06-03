@@ -16,11 +16,11 @@ public sealed class UpdateProjectCommandHandler(IUnitOfWork unitOfWork, IValidat
 
         var project = unitOfWork.Repository.Projects.Single(p => p.Id == request.ProjectId);
 
-        var discipline = unitOfWork.Repository.Disciplines.Single(d => d.Id == request.DisciplineId);
+        var discipline = unitOfWork.Repository.Disciplines.SingleOrDefault(d => d.Id == request.DisciplineId);
 
-        var group = unitOfWork.Repository.Groups.Single(g => g.Id == request.GroupId);
+        var group = unitOfWork.Repository.Groups.SingleOrDefault(g => g.Id == request.GroupId);
 
-        project.Update(request.Name, request.SubjectArea, request.ProjectType, discipline, group);
+        project.Update(request.Name ?? project.Name, request.SubjectArea ?? project.SubjectArea, request.ProjectType ?? project.Type, discipline ?? project.Discipline, group ?? project.Group);
 
         unitOfWork.Repository.UpdateEntity(project);
 

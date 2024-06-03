@@ -17,7 +17,7 @@ public sealed class CreateProjectStageCommandValidator(IUnitOfWork unitOfWork, I
 
         var project = unitOfWork.Repository.Projects.Single(p => p.Id == request.ProjectId);
 
-        //var students =
+        //var students = unitOfWork.Repository.Students.Where(s => s.);
 
         //var projectStage = ProjectStage.Create(null, request.Name, request.Description, request.Deadline, request.PinnedFiles);
 
@@ -28,7 +28,7 @@ public sealed class CreateProjectStageCommandValidator(IUnitOfWork unitOfWork, I
         //await unitOfWork.SaveChangesAsync(cancellationToken);
 
         //return projectStage.Id;
-        
+
         return null;
     }
 }

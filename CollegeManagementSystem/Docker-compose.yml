@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  cms:
+    container_name: smartcollege-cms
+    restart: on-failure
+    build: .
+    links: 
+        - "db:database"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_CONNECTIONSTRING=Production
+    depends_on:
+      - db
+    ports:
+      - 5000:7096
+      - 5001:5087
+
+  db:
+    container_name: collegemanagementsystem-db
+    image: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_PASSWORD=qwegjghj01 
+    volumes:
+      - pgsqlvolume:/var/lib/postgresql/data

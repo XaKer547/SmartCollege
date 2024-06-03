@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using ProjectManagementSystem.API.Validators.Behaviors;
 using ProjectManagementSystem.Domain.Services;
 using ProjectManagementSystem.Infrastucture.Common;
@@ -22,7 +23,10 @@ builder.Services.AddMediatR(m =>
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
-builder.Services.AddDbContext<ProjectManagementSystemDbContext>();
+builder.Services.AddDbContext<ProjectManagementSystemDbContext>(opt =>
+{
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("PgLocalConnection"));
+});
 
 builder.Services.AddScoped<IProjectManagementSystemRepository, ProjectManagementSystemDbContext>();
 
