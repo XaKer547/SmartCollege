@@ -48,9 +48,9 @@ namespace SmartCollege.SSO.Handlers.Commands.College
             var roles = request.Roles.Select(x => x.ToString())
                 .ToArray();
 
-            await _mediator.Publish(new UpdateCollegeAccountEvent(
-                Guid.Parse(request.UserId),
-                roles));
+            //await _mediator.Publish(new UpdateCollegeAccountEvent(
+            //    Guid.Parse(request.UserId),
+            //    roles));
 
 
             if (needUpdateEmail)
