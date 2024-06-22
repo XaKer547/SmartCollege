@@ -19,7 +19,7 @@ namespace SmartCollege.SSO.Handlers.Commands
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user is null)
-                return HandleResult.Failure(StatusCodes.Status404NotFound, "User not found"); ;
+                return HandleResult.Failure(StatusCodes.Status404NotFound, "User not found");
 
             if (request?.Password is not null)
             {
@@ -55,6 +55,13 @@ namespace SmartCollege.SSO.Handlers.Commands
 
                     throw;
                 }
+            }
+
+            if (request!.IsBlocked != user.LockoutEnabled)
+            {
+                user.LockoutEnabled = request!.IsBlocked.GetValueOrDefault();
+                
+                await _userManager.UpdateAsync(user);
             }
 
             return HandleResult.Success(StatusCodes.Status204NoContent, "Account updated!");

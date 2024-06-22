@@ -2,12 +2,12 @@
 {
     public interface IUpdateRepresentativeOfTheCompanyAccountContract
     {
-        string Email { get; set; }
+        string Email { get; }
 
-        string FullName { get; set; }
+        string FullName { get; }
 
-        string Phone { get; set; }
+        string Phone { get; }
 
-        string Company { get; set; }
+        string Company { get; }
     }
 }

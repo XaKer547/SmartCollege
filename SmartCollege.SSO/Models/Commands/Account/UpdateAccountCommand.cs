@@ -7,14 +7,16 @@ namespace SmartCollege.SSO.Models.Commands.Account
         string Email,
         string? Password,
         IReadOnlyCollection<Roles>? Roles,
+        bool? IsBlocked,
         bool NeedSetPasswordByUser = true) : IRequest<HandleResult>;
 
     public record UpdateAccountByAdminCommand(
         string Email,
         string? Password,
-        IReadOnlyCollection<Roles>? Roles) : UpdateAccountCommand(Email, Password, Roles, true);
+        bool? IsBlocked,
+        IReadOnlyCollection<Roles>? Roles) : UpdateAccountCommand(Email, Password, Roles, IsBlocked, true);
 
     public record UpdateRepresentativeAccountCommand(
         string Email,
-        string? Password) : UpdateAccountCommand(Email, Password, null, false);
+        string? Password) : UpdateAccountCommand(Email, Password, null, false, false);
 }

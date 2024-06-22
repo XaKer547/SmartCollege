@@ -2,8 +2,8 @@
 {
     public interface IUpdateBlockingRepresentativeOfTheCompanyAccountContract
     {
-        string Email { get; set; }
+        string Email { get; }
 
-        bool IsBlocked { get; set; }
+        bool IsBlocked { get; }
     }
 }

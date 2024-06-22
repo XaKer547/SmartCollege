@@ -8,10 +8,12 @@ using SmartCollege.SSO;
 using SmartCollege.SSO.Data;
 using SmartCollege.SSO.Data.Entities;
 using SmartCollege.SSO.HostedServices;
+using SmartCollege.SSO.Models.Accounts;
 using SmartCollege.SSO.Models.Commands;
 using SmartCollege.SSO.Models.Commands.RepresentativeOfCompany;
 using SmartCollege.SSO.Shared;
 using SmartCollege.SSO.Validators;
+using SmartCollege.SSO.Validators.AccountByAdmin;
 using SmartCollege.SSO.Validators.AccountCommands;
 using System.Reflection;
 using System.Security.Claims;
@@ -23,11 +25,16 @@ builder.Services.AddLogging(x =>
     x.AddSeq(builder.Configuration.GetSection("SeqLogging"));
 });
 
-builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddScoped<IValidator<CreateRepresentativeOfCompanyCommand>, CreateAccountCommandValidator>();
 builder.Services.AddScoped<IValidator<UpdatePasswordCommand>, UpdatePasswordCommandValidator>();
 builder.Services.AddScoped<IValidator<UpdateRepresentativeOfCompanyCommand>, UpdateAccountCommandValidator>();
+
+builder.Services.AddScoped<IValidator<UpdateAccountByAdminDto>, UpdateAccountByAdminValidator>();
+builder.Services.AddScoped<IValidator<CreateAccountByAdminDto>, CreateAccountByAdminValidator>();
+
+builder.Services.AddTransient<UserHierarchy>();
 
 builder.Services.AddMassTransit(x =>
 {

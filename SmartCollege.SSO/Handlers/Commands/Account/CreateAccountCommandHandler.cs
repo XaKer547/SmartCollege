@@ -21,9 +21,9 @@ namespace SmartCollege.SSO.Handlers.Commands
             {
                 Email = request.Email,
                 UserName = request.Email,
-                EmailConfirmed = false,
-                ChangeTempPassword = true,
-                LockoutEnabled = true,
+                EmailConfirmed = !request.NeedSetNewPassword,
+                ChangeTempPassword = request.NeedSetNewPassword,
+                LockoutEnabled = !request.NeedSetNewPassword,
             };
 
             var result = await _userManager.CreateAsync(account, request.Password);

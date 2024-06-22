@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using SmartCollege.SSO.Handlers.Commands;
 
 namespace SmartCollege.SSO.Models.Commands.RepresentativeOfCompany
 {

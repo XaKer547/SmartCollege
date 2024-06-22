@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartCollege.SSO.Models.Commands;
 using SmartCollege.SSO.Models.Commands.Account;
+using SmartCollege.SSO.Models.Commands.College;
 using SmartCollege.SSO.Models.Commands.RepresentativeOfCompany;
+using SmartCollege.SSO.Models.Queries;
 using SmartCollege.SSO.Shared;
 using System.Security.Claims;
 
@@ -15,12 +17,9 @@ public class AccountsController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    private readonly UserHierarchy _userHierarchy;
-
-    public AccountsController(IMediator mediator, UserHierarchy userHierarchy)
+    public AccountsController(IMediator mediator)
     {
         _mediator = mediator;
-        _userHierarchy = userHierarchy;
     }
 
     [HttpPost]
@@ -63,53 +62,6 @@ public class AccountsController : ControllerBase
         var email = User.FindFirst(ClaimsIdentity.DefaultNameClaimType)!;
 
         var result = await _mediator.Send(new UpdateRepresentativeOfCompanyWithEmailCommand(email.Value, command));
-
-        return StatusCode(result.StatusCode,
-            new
-            {
-                result.Description
-            });
-    }
-
-    [HttpPost]
-    [Authorize]
-    public async Task<IActionResult> CreateAccount(CreateAccountCommand command)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
-
-        var claims = User.FindAll(ClaimsIdentity.DefaultRoleClaimType)!;
-        var roles = claims.Select(x=> Enum.Parse<Roles>(x.Value))
-            .ToArray();
-
-        if (!_userHierarchy.CheckHierarchyByRoles(roles, command.Roles))
-            return Forbid();
-
-        var result = await _mediator.Send(command);
-
-        return StatusCode(result.StatusCode,
-            new
-            {
-                result.Description
-            });
-    }
-
-    [HttpPatch]
-    [Authorize]
-    public async Task<IActionResult> UpdateAccount(UpdateAccountByAdminCommand command)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
-
-        var claims = User.FindAll(ClaimsIdentity.DefaultRoleClaimType)!;
-        var roles = claims.Select(x => Enum.Parse<Roles>(x.Value))
-            .ToArray();
-
-        if (command.Roles is not null
-            && !_userHierarchy.CheckHierarchyByRoles(roles, command.Roles))
-            return Forbid();
-
-        var result = await _mediator.Send(command);
 
         return StatusCode(result.StatusCode,
             new
