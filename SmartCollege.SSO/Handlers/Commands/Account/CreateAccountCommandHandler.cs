@@ -6,7 +6,9 @@ using SmartCollege.SSO.Models.Commands.Account;
 
 namespace SmartCollege.SSO.Handlers.Commands
 {
-    public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, HandleResult<CreateAccountResult>>
+    public class CreateAccountCommandHandler
+        : IRequestHandler<CreateRepresentativeOfCompanyAccountCommand, HandleResult<CreateAccountResult>>,
+         IRequestHandler<CreateAccountByAdminCommand, HandleResult<CreateAccountResult>>
     {
         private readonly UserManager<AccountIdentity> _userManager;
 
@@ -45,6 +47,16 @@ namespace SmartCollege.SSO.Handlers.Commands
             }
 
             return HandleResult<CreateAccountResult>.Success(StatusCodes.Status201Created, "Account created!", new CreateAccountResult(account.Id));
+        }
+
+        public Task<HandleResult<CreateAccountResult>> Handle(CreateRepresentativeOfCompanyAccountCommand request, CancellationToken cancellationToken)
+        {
+            return Handle((CreateAccountCommand)request, cancellationToken);
+        }
+
+        public Task<HandleResult<CreateAccountResult>> Handle(CreateAccountByAdminCommand request, CancellationToken cancellationToken)
+        {
+            return Handle((CreateAccountCommand)request, cancellationToken);
         }
     }
 }

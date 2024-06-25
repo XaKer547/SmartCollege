@@ -6,7 +6,9 @@ using SmartCollege.SSO.Models.Commands.Account;
 
 namespace SmartCollege.SSO.Handlers.Commands
 {
-    public class UpdateAccountHandler : IRequestHandler<UpdateAccountCommand, HandleResult>
+    public class UpdateAccountHandler
+         : IRequestHandler<UpdateAccountByAdminCommand, HandleResult>,
+         IRequestHandler<UpdateRepresentativeAccountCommand, HandleResult>
     {
         private readonly UserManager<AccountIdentity> _userManager;
 
@@ -60,11 +62,21 @@ namespace SmartCollege.SSO.Handlers.Commands
             if (request!.IsBlocked != user.LockoutEnabled)
             {
                 user.LockoutEnabled = request!.IsBlocked.GetValueOrDefault();
-                
+
                 await _userManager.UpdateAsync(user);
             }
 
             return HandleResult.Success(StatusCodes.Status204NoContent, "Account updated!");
+        }
+
+        public Task<HandleResult> Handle(UpdateAccountByAdminCommand request, CancellationToken cancellationToken)
+        {
+            return Handle((UpdateAccountCommand)request, cancellationToken);
+        }
+
+        public Task<HandleResult> Handle(UpdateRepresentativeAccountCommand request, CancellationToken cancellationToken)
+        {
+            return Handle((UpdateAccountCommand)request, cancellationToken);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SmartCollege.SSO.Models.Accounts.Representativies;
 using SmartCollege.SSO.Models.Commands;
 using SmartCollege.SSO.Models.Commands.Account;
 using SmartCollege.SSO.Models.Commands.College;
@@ -23,11 +24,19 @@ public class AccountsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Logup(CreateRepresentativeOfCompanyCommand command)
+    public async Task<IActionResult> Logup(CreateRepresentativeOfCompanyDto create)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
 
+        var command = new CreateRepresentativeOfCompanyCommand(create.MiddleName,
+            create.FirstName,
+            create.LastName,
+            create.Phone,
+            create.Company,
+            new CreateRepresentativeOfCompanyAccountCommand(
+                create.Account.Email,
+                create.Account.Password));
         var result = await _mediator.Send(command);
 
         return StatusCode(result.StatusCode,

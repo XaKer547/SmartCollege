@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using SmartCollege.SSO.Data;
 using SmartCollege.SSO.Data.Entities;
 using SmartCollege.SSO.Models;
+using SmartCollege.SSO.Models.Commands.Account;
 using SmartCollege.SSO.Models.Commands.RepresentativeOfCompany;
 using SmartCollege.SSO.Models.Events;
 
@@ -50,11 +51,11 @@ namespace SmartCollege.SSO.Handlers.Commands
 
                 await _authorizationDbContext.SaveChangesAsync();
 
-                await _mediator.Publish(new CreateRepresentativeAccountEvent(
-                    request.Account.Email,
-                    $"{request.MiddleName} {request.FirstName} {request.LastName}",
-                    request.Phone,
-                    request.Company));
+                //await _mediator.Publish(new CreateRepresentativeAccountEvent(
+                //    request.Account.Email,
+                //    $"{request.MiddleName} {request.FirstName} {request.LastName}",
+                //    request.Phone,
+                //    request.Company));
 
                 return HandleResult.Success(StatusCodes.Status201Created, "Пользователь успешно создан!");
             }

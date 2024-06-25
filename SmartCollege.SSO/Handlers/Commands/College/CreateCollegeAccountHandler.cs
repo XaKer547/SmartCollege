@@ -39,9 +39,9 @@ namespace SmartCollege.SSO.Handlers.Commands.College
                 var roles = request.Roles.Select(x=> x.ToString())
                     .ToArray();
 
-                await _mediator.Publish(new CreateCollegeAccountEvent(
-                    Guid.Parse(request.UserId),
-                    roles));
+                //await _mediator.Publish(new CreateCollegeAccountEvent(
+                //    Guid.Parse(request.UserId),
+                //    roles));
 
                 return HandleResult.Success(StatusCodes.Status201Created, "Пользователь успешно создан!");
             }

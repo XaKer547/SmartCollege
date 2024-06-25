@@ -3,11 +3,16 @@ using SmartCollege.SSO.Shared;
 
 namespace SmartCollege.SSO.Models.Commands.Account
 {
-    public record CreateAccountCommand(
+    public abstract record CreateAccountCommand(
         string Email,
         string Password,
-        bool NeedSetNewPassword = false,
+        bool NeedSetNewPassword,
         params Roles[] Roles) : IRequest<HandleResult<CreateAccountResult>>;
+
+    public record CreateAccountByAdminCommand(
+        string Email,
+        string Password,
+        params Roles[] Roles) : CreateAccountCommand(Email, Password, true, Roles);
 
     public record CreateRepresentativeOfCompanyAccountCommand(
         string Email,

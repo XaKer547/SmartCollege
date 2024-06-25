@@ -36,13 +36,10 @@ namespace SmartCollege.SSO.Controllers
                 });
         }
 
-        [HttpPost("{email}")]
+        [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateAccount(string email, CreateAccountByAdminDto create)
+        public async Task<IActionResult> CreateAccount(CreateAccountByAdminDto create)
         {
-            if (string.IsNullOrWhiteSpace(email))
-                ModelState.AddModelError(nameof(email), "Email не указан!");
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
 
@@ -53,7 +50,7 @@ namespace SmartCollege.SSO.Controllers
             if (!_userHierarchy.CheckHierarchyByRoles(roles, create.Roles))
                 return Forbid();
 
-            var command = new CreateAccountCommand(email, create.Password, true, create.Roles);
+            var command = new CreateAccountByAdminCommand(create.Email, create.Password, create.Roles);
 
             var result = await _mediator.Send(command);
 
